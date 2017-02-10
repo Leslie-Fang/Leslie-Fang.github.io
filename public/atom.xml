@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>沉思语录</title>
+  <subtitle>想对世界说真话，证明我们的存在</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-02-10T13:29:59.121Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Leslie</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>多台机器更新</title>
+    <link href="http://yoursite.com/2017/02/10/%E5%A4%9A%E5%8F%B0%E6%9C%BA%E5%99%A8%E6%9B%B4%E6%96%B0/"/>
+    <id>http://yoursite.com/2017/02/10/多台机器更新/</id>
+    <published>2017-02-10T13:15:20.000Z</published>
+    <updated>2017-02-10T13:29:59.121Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="单台机器更新"><a href="#单台机器更新" class="headerlink" title="单台机器更新"></a>单台机器更新</h2><p>本地是source的原始文件<br>修改之后部署在github是那个为编译之后的静态文件<br>test ssh for ubuntu</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;单台机器更新&quot;&gt;&lt;a href=&quot;#单台机器更新&quot; class=&quot;headerlink&quot; title=&quot;单台机器更新&quot;&gt;&lt;/a&gt;单台机器更新&lt;/h2&gt;&lt;p&gt;本地是source的原始文件&lt;br&gt;修改之后部署在github是那个为编译之后的静态文件&lt;br&gt;test s
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>德川家康-南征北战-读书笔记</title>
+    <link href="http://yoursite.com/2016/11/24/%E5%BE%B7%E5%B7%9D%E5%AE%B6%E5%BA%B7-%E5%8D%97%E5%BE%81%E5%8C%97%E6%88%98-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2016/11/24/德川家康-南征北战-读书笔记/</id>
+    <published>2016-11-24T14:40:09.000Z</published>
+    <updated>2016-12-06T15:36:17.199Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>连日来埋头在图书馆中写学位论文，头痛之余，扫到了山冈庄八的《德川家康》。想到刚上本科那会，对这系列小说爱不释手。当然在那个时候更喜欢的人物是织田信长，一直读到本能寺兵变，为信长的壮志未酬身先死而扼腕叹息。在那以后，对后来的历史演进也就少了几分兴趣，因此也只读完了前五部。尽管后来陆陆续续又读了《本能寺兵变》以及山冈庄八写的幕府三代将军《德川家光》,但是一直没有继续读完《德川家康》的最后几册。<br><img src="/images/nanzhnegbeizhan.jpg" alt="南征北战" title="南征北战"></p>
+<h2 id="一代枭雄-丰臣秀吉"><a href="#一代枭雄-丰臣秀吉" class="headerlink" title="一代枭雄_丰臣秀吉"></a>一代枭雄_丰臣秀吉</h2><p>或许是对于织田信长的过分喜爱，不得不承认一开始对信长口中的猴子——后来的关白、内阁大人羽柴秀吉有一些鄙视，认为他的成功不过是捡了个大便宜。秀吉原来是信长的家臣，明智光秀发动本能寺兵变时，秀吉正奉信长的命令围攻中国（应该是当今的九州岛到京都的中间一带位置）的毛利元辉。也许是上天给了他一个进一步改变命运的机会，他迅速与敌人议和（议和速度之快，令人不惊怀疑是否他早就知道了明智光秀的计划，早早做好了准备），率军赶回来剿灭了明智光秀。<br><a id="more"></a><br>而后秀吉又拿出了常人不具备的魄力，平定了诸多的大名。直到小牧野之战，遇上了信雄与家康联军的抵抗。小牧长久手之战之后，秀吉表现出了成为天下人的气度。用逼妹婿自杀，将妹妹朝日姬嫁与德川家康。这里我也一直有疑问，秀吉当时完全有消灭德川氏的能力，为什么家康能活下来。恐怕与1.家康在小牧野展现的实力2.家康异常的隐忍不无关系。任何一个重大的历史事件总是有很多的影响因素，也少不了运气的成分。推测家康在小牧野之战之后的想法，一是觉得自己比秀吉年轻，而且当时的秀吉无后（这也是秀吉的一个大悲剧），二是觉得秀吉也是有成为天下人的能力与气度。总之，家康当时一定觉得秀吉死后的天下就是他的，所以才表现得如此配合和忍耐。<br>之后的故事就是秀吉平定九州，二征朝鲜（可以看一部电影——明栾海战）。娶了信长的侄女（这里面又有很多故事）茶茶，后来的淀夫人。淀夫人给秀吉生了两个儿子，一个夭折了，一个就是后来的秀赖。淀夫人和秀赖经历了大阪冬之役、夏之役，在大阪城破之后自杀。</p>
+<h2 id="德川家康"><a href="#德川家康" class="headerlink" title="德川家康"></a>德川家康</h2><p>后人了解历史只能通过阅读文史资料，可是文史资料中难免会带有作者的个人喜好。山冈庄八对于德川家康就是有一种出于内心的喜好。说起德川家康，小时候就过着人质流离的生活，却也有幸认识了少年的信长(吉法师)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;连日来埋头在图书馆中写学位论文，头痛之余，扫到了山冈庄八的《德川家康》。想到刚上本科那会，对这系列小说爱不释手。当然在那个时候更喜欢的人物是织田信长，一直读到本能寺兵变，为信长的壮志未酬身先死而扼腕叹息。在那以后，对后来的历史演进也就少了几分兴趣，因此也只读完了前五部。尽管后来陆陆续续又读了《本能寺兵变》以及山冈庄八写的幕府三代将军《德川家光》,但是一直没有继续读完《德川家康》的最后几册。&lt;br&gt;&lt;img src=&quot;/images/nanzhnegbeizhan.jpg&quot; alt=&quot;南征北战&quot; title=&quot;南征北战&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;一代枭雄-丰臣秀吉&quot;&gt;&lt;a href=&quot;#一代枭雄-丰臣秀吉&quot; class=&quot;headerlink&quot; title=&quot;一代枭雄_丰臣秀吉&quot;&gt;&lt;/a&gt;一代枭雄_丰臣秀吉&lt;/h2&gt;&lt;p&gt;或许是对于织田信长的过分喜爱，不得不承认一开始对信长口中的猴子——后来的关白、内阁大人羽柴秀吉有一些鄙视，认为他的成功不过是捡了个大便宜。秀吉原来是信长的家臣，明智光秀发动本能寺兵变时，秀吉正奉信长的命令围攻中国（应该是当今的九州岛到京都的中间一带位置）的毛利元辉。也许是上天给了他一个进一步改变命运的机会，他迅速与敌人议和（议和速度之快，令人不惊怀疑是否他早就知道了明智光秀的计划，早早做好了准备），率军赶回来剿灭了明智光秀。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Daily" scheme="http://yoursite.com/tags/Daily/"/>
+    
+      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis学习笔记</title>
+    <link href="http://yoursite.com/2016/11/16/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2016/11/16/Redis学习笔记/</id>
+    <published>2016-11-16T15:42:08.000Z</published>
+    <updated>2016-12-05T13:08:50.688Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="用Redis的动机"><a href="#用Redis的动机" class="headerlink" title="用Redis的动机"></a>用Redis的动机</h2><p>本来想为网站添加一个统计同时在线人数的功能：）并不是因为网站用户太多，需要改善性能<br>觉得这些数据没有必要放在关系型数据库里，所以就放在内存里好了<br>内存数据库这些年来越来越火SAP的HANA是一个，Redis开源免费，所以为什么不是它哪？</p>
+<h2 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h2><p>当然，首先是要安装Redis，可以装在本机也可以用远程服务器上的，都是有办法连接的<br>然后第二步是在node里面添加redis的模块调用模块提供的一些方法，在redis的数据库里面添加修改数据<br>这个你至少要对redis常用的一些数据类型数据结构有点了解吧，姿势补起来<br>第三步最后就是根据具体的需要来使用这些数据了</p>
+<a id="more"></a>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>Redis包含的数据类型可以参考：<br>官网：<a href="http://redis.io/" target="_blank" rel="external">http://redis.io/</a><br>当然也有中文教程<br><a href="http://www.redis.cn/" target="_blank" rel="external">http://www.redis.cn/</a><br>中文入门菜鸟教程<br><a href="http://www.runoob.com/redis/redis-conf.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-conf.html</a></p>
+<p>node里面redis模块的API:<br><a href="https://github.com/NodeRedis/node_redis" target="_blank" rel="external">https://github.com/NodeRedis/node_redis</a></p>
+<p>也有一些实战的教程：<br><a href="https://www.sitepoint.com/using-redis-node-js/" target="_blank" rel="external">https://www.sitepoint.com/using-redis-node-js/</a><br><a href="http://blog.csdn.net/billfeller/article/details/40960613" target="_blank" rel="external">http://blog.csdn.net/billfeller/article/details/40960613</a><br><a href="http://zhanfang.github.io/2015/05/04/redis%E7%BB%9F%E8%AE%A1express%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0/" target="_blank" rel="external">http://zhanfang.github.io/2015/05/04/redis%E7%BB%9F%E8%AE%A1express%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;用Redis的动机&quot;&gt;&lt;a href=&quot;#用Redis的动机&quot; class=&quot;headerlink&quot; title=&quot;用Redis的动机&quot;&gt;&lt;/a&gt;用Redis的动机&lt;/h2&gt;&lt;p&gt;本来想为网站添加一个统计同时在线人数的功能：）并不是因为网站用户太多，需要改善性能&lt;br&gt;觉得这些数据没有必要放在关系型数据库里，所以就放在内存里好了&lt;br&gt;内存数据库这些年来越来越火SAP的HANA是一个，Redis开源免费，所以为什么不是它哪？&lt;/p&gt;
+&lt;h2 id=&quot;使用教程&quot;&gt;&lt;a href=&quot;#使用教程&quot; class=&quot;headerlink&quot; title=&quot;使用教程&quot;&gt;&lt;/a&gt;使用教程&lt;/h2&gt;&lt;p&gt;当然，首先是要安装Redis，可以装在本机也可以用远程服务器上的，都是有办法连接的&lt;br&gt;然后第二步是在node里面添加redis的模块调用模块提供的一些方法，在redis的数据库里面添加修改数据&lt;br&gt;这个你至少要对redis常用的一些数据类型数据结构有点了解吧，姿势补起来&lt;br&gt;第三步最后就是根据具体的需要来使用这些数据了&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>人类简史_读书笔记</title>
+    <link href="http://yoursite.com/2016/11/13/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2016/11/13/人类简史-读书笔记/</id>
+    <published>2016-11-13T06:24:35.000Z</published>
+    <updated>2016-11-19T10:47:16.263Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="人类简史"><a href="#人类简史" class="headerlink" title="人类简史"></a>人类简史</h2><p>今天是星期日，浮生偷得半日闲，于是开始读《人类简史》这本书<br>作者精通于历史，军事，生物，哲学，物理，宗教，经济等各类学科，实在是一个百科全书式的人物，最近有空还会继续阅读下去，不时在这篇博文中更新自己的读书感悟。</p>
+<p><img src="/images/human_history.jpg" alt="human history" title="人类简史"></p>
+<h3 id="认知革命"><a href="#认知革命" class="headerlink" title="认知革命"></a>认知革命</h3><p>终于搞清楚了尼安德特人、东亚的直立人和智人之间的关系，原来是分属于不同的人种。至于我们这些愚蠢的现代人类:)，和智人的DNA更接近。但是我们到底是不同人种之间混血繁衍的结果，还是智人淘汰了这些本地人种之后独立进化的结果，谁也不知道。要是证明了现代人类，白人、黑人、东亚人属于不同的人种混合的结果，种族之间DNA的差异可以追溯到更久远的年代，恐怕一场种族间的腥风血雨又在所难免了。</p>
+<a id="more"></a>
+<p>智人之所以可以征服世界，因为有自己独特的语言。当然鸟啊、你家的猫啊、狗啊也有自己的语言啊，但是智人的语言更为精细，可以传达更多更丰富的信息，也更有利于八卦新闻的传播（看来八卦是有DNA基础的 -_- ）。精细的语言为群体之间的合作奠定了基础。群体50人的规模是一个界限，超过50人的规模就需要通过八卦来实现群体的合作，这种自然八卦的规模是150人，超过这个规模之后就需要虚构一种群体的共识（共同的愿景、宗教理念）来实现群体之间的合作。群体合作的力量是无穷的，所以虽然单个智人比较弱小，但是一群智人结合在一起就可以杀死长毛象、剑齿虎了，好厉害！</p>
+<p>亚当和夏娃的一天，为什么我们对于高热量的食物丝毫没有抵抗力？因为在几万年前的某一天，有一个叫做夏娃的女人遇上了一棵张满了熟透了的果子的树，这时候她要是不立刻吃到吃不下为止，这些果子就可能被后来的大猩猩们吃完了，所以贪吃是有基因的，不要再自责了，遵从自己内心的选择吧 orz。所以对于许多心理学家和社会学家而言，为了研究现代人的一些心理动机和社会活动，不妨看看几万年的原始社会，或许在那个时候已经有了人类原始的冲动。</p>
+<h3 id="农业革命"><a href="#农业革命" class="headerlink" title="农业革命"></a>农业革命</h3><p>农业革命之后，农民耕作的劳动量可比原始采集社会狩猎、采集浆果的劳动量大多了，因此从个人的角度来看农业革命实在不是一个很明智的选择的。那么农业革命是如何发生的哪？一种理论认为，在采集社会里，A地小麦成熟之后，人类会在A地呆几周的时间直到A地的小麦都采集的差不多了，才会转移到新的采集地点。而小麦这种作物，由于其种子很小，因此人类在采集的过程中，很容易散落小麦的种子，这样的过程帮助了小麦的繁殖。结果就是来年，A地的小麦数量越來越多，人类在A地采集小麦的时间也越来越长，直到某一天人类发现A地采集的小麦数量已经足够帮助群体生活到来年，因此就渐渐在A地定居了下来，并逐渐开始培育种植小麦。<br>虽然说相对于原始的采集社会，农业社会人类需要的劳动量更大，对个人是不利的，但是对于群体而言，这种模式有利于整个群体规模的扩大。另言之，人类社会并不总是朝着全局最优的方向发展，社会的发展有着偶然性的影响。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;人类简史&quot;&gt;&lt;a href=&quot;#人类简史&quot; class=&quot;headerlink&quot; title=&quot;人类简史&quot;&gt;&lt;/a&gt;人类简史&lt;/h2&gt;&lt;p&gt;今天是星期日，浮生偷得半日闲，于是开始读《人类简史》这本书&lt;br&gt;作者精通于历史，军事，生物，哲学，物理，宗教，经济等各类学科，实在是一个百科全书式的人物，最近有空还会继续阅读下去，不时在这篇博文中更新自己的读书感悟。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/human_history.jpg&quot; alt=&quot;human history&quot; title=&quot;人类简史&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;认知革命&quot;&gt;&lt;a href=&quot;#认知革命&quot; class=&quot;headerlink&quot; title=&quot;认知革命&quot;&gt;&lt;/a&gt;认知革命&lt;/h3&gt;&lt;p&gt;终于搞清楚了尼安德特人、东亚的直立人和智人之间的关系，原来是分属于不同的人种。至于我们这些愚蠢的现代人类:)，和智人的DNA更接近。但是我们到底是不同人种之间混血繁衍的结果，还是智人淘汰了这些本地人种之后独立进化的结果，谁也不知道。要是证明了现代人类，白人、黑人、东亚人属于不同的人种混合的结果，种族之间DNA的差异可以追溯到更久远的年代，恐怕一场种族间的腥风血雨又在所难免了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Daily" scheme="http://yoursite.com/tags/Daily/"/>
+    
+      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo插件</title>
+    <link href="http://yoursite.com/2016/11/12/hexo%E6%8F%92%E4%BB%B6/"/>
+    <id>http://yoursite.com/2016/11/12/hexo插件/</id>
+    <published>2016-11-12T01:56:22.000Z</published>
+    <updated>2016-11-12T05:17:02.295Z</updated>
+    
+    <content type="html"><![CDATA[<p>HEXO具有十分强大的插件系统，<br>使您能轻松扩展功能而不用修改核心模块的源码<br>比如用插件来开启评论的功能等<br>可以参考官方网站<br><a href="https://hexo.io/zh-cn/docs/plugins.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/plugins.html</a></p>
+<p>但是hexo毕竟是静态网站，没有后台无法添加评论功能<br>只有使用duoshuo这类的辅助东西</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;HEXO具有十分强大的插件系统，&lt;br&gt;使您能轻松扩展功能而不用修改核心模块的源码&lt;br&gt;比如用插件来开启评论的功能等&lt;br&gt;可以参考官方网站&lt;br&gt;&lt;a href=&quot;https://hexo.io/zh-cn/docs/plugins.html&quot; target=&quot;_bla
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx</title>
+    <link href="http://yoursite.com/2016/11/10/nginx/"/>
+    <id>http://yoursite.com/2016/11/10/nginx/</id>
+    <published>2016-11-10T07:54:28.000Z</published>
+    <updated>2016-11-10T08:03:02.930Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx可以用作反向代理，<br>比如说我们在购买域名之后一般就默认访问了8080的端口，<br>但是可能我们的服务器就是监听在3000的端口，这个就可以通过nginx去配置</p>
+<p>另外当我们有两台服务器的时候，可以让所有命令发到nginx上，用nginx去分流</p>
+<p>总之，nginx的功能很强大，我们可以根据需要去配置<br>具体可以看nginx的官方网站：<br><a href="http://nginx.org/" target="_blank" rel="external">http://nginx.org/</a><br>里面有安装以及入门教程</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx可以用作反向代理，&lt;br&gt;比如说我们在购买域名之后一般就默认访问了8080的端口，&lt;br&gt;但是可能我们的服务器就是监听在3000的端口，这个就可以通过nginx去配置&lt;/p&gt;
+&lt;p&gt;另外当我们有两台服务器的时候，可以让所有命令发到nginx上，用nginx去分流&lt;
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JS中call与apply的区别</title>
+    <link href="http://yoursite.com/2016/11/09/JS%E4%B8%ADcall%E4%B8%8Eapply%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2016/11/09/JS中call与apply的区别/</id>
+    <published>2016-11-09T13:06:56.000Z</published>
+    <updated>2016-11-10T01:54:20.307Z</updated>
+    
+    <content type="html"><![CDATA[<p>用新的对象替代原有的对象<br>新的的对象不具备某种方法的情况下，<br>call新的对象，可以用新的对象去执行原有的对象的方法<br>详细信息可以参考以下一些博文的链接<br><a href="http://www.cnblogs.com/fighting_cp/archive/2010/09/20/1831844.html" target="_blank" rel="external">http://www.cnblogs.com/fighting_cp/archive/2010/09/20/1831844.html</a><br><a href="https://www.zhihu.com/question/20289071" target="_blank" rel="external">https://www.zhihu.com/question/20289071</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用新的对象替代原有的对象&lt;br&gt;新的的对象不具备某种方法的情况下，&lt;br&gt;call新的对象，可以用新的对象去执行原有的对象的方法&lt;br&gt;详细信息可以参考以下一些博文的链接&lt;br&gt;&lt;a href=&quot;http://www.cnblogs.com/fighting_cp/arch
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nodejs中Async的意义</title>
+    <link href="http://yoursite.com/2016/11/09/nodejs%E4%B8%ADAsync%E7%9A%84%E6%84%8F%E4%B9%89/"/>
+    <id>http://yoursite.com/2016/11/09/nodejs中Async的意义/</id>
+    <published>2016-11-09T11:57:28.000Z</published>
+    <updated>2016-11-09T12:02:42.281Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为Js是异步的，<br>所以想要保证func2在func1执行完毕之后再运行，<br>只能将func2放在func1的回调函数里面<br>这和C/C++等的区别就在这里体现了</p>
+<p>但是一旦这样的逻辑层次多了以后，回调函数之间存在嵌套，代码难以读懂<br>所以Async里面的一些函数模块就有了作用，<br>比如waterfall模块可以保证一系列函数的顺序执行，<br>并且一个前一个函数的输出可以作为下一个函数的输入<br>这些看起来在C/C++中容易实现的功能，因为JS的异步不得不用Async模块或者像刚才说的，一级一级的嵌套和回调</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为Js是异步的，&lt;br&gt;所以想要保证func2在func1执行完毕之后再运行，&lt;br&gt;只能将func2放在func1的回调函数里面&lt;br&gt;这和C/C++等的区别就在这里体现了&lt;/p&gt;
+&lt;p&gt;但是一旦这样的逻辑层次多了以后，回调函数之间存在嵌套，代码难以读懂&lt;br&gt;所以As
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>程序在关闭ssh下运行</title>
+    <link href="http://yoursite.com/2016/11/08/%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%85%B3%E9%97%ADssh%E4%B8%8B%E8%BF%90%E8%A1%8C/"/>
+    <id>http://yoursite.com/2016/11/08/程序在关闭ssh下运行/</id>
+    <published>2016-11-08T12:55:50.000Z</published>
+    <updated>2016-11-12T05:23:46.611Z</updated>
+    
+    <content type="html"><![CDATA[<p>参考以下链接<br><a href="http://wenku.baidu.com/link?url=df_aOas-Mc-wzcmMrumeJLbc8jPDJc1ATa60o9na07cT5ugOJ0cQ4fy7HCz4TBvSqvvYabivTJVmWpECBrZy3Nu5ecV4C2JoSGuHlrFCWiq" target="_blank" rel="external">http://wenku.baidu.com/link?url=df_aOas-Mc-wzcmMrumeJLbc8jPDJc1ATa60o9na07cT5ugOJ0cQ4fy7HCz4TBvSqvvYabivTJVmWpECBrZy3Nu5ecV4C2JoSGuHlrFCWiq</a><br>有两种方式<br>1.命令加nohup的方式太暴力了，不推荐<br>2.用screen的工具<br>ssh连接上服务器之后<br>screen 进入子页面<br>启动服务器<br>按下crtl+A+d返回主页面，可以exit退出ssh连接</p>
+<p>下一次登入之后<br>screen -ls 可以看到子界面的代号<br>screen -r 子界面代码进入上一次的页面，可以进行服务器的维护<br>如：screen -r 19366.pts-3.hd12 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;参考以下链接&lt;br&gt;&lt;a href=&quot;http://wenku.baidu.com/link?url=df_aOas-Mc-wzcmMrumeJLbc8jPDJc1ATa60o9na07cT5ugOJ0cQ4fy7HCz4TBvSqvvYabivTJVmWpECBrZy3N
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>async</title>
+    <link href="http://yoursite.com/2016/11/07/async/"/>
+    <id>http://yoursite.com/2016/11/07/async/</id>
+    <published>2016-11-07T13:54:52.000Z</published>
+    <updated>2016-11-12T05:23:59.887Z</updated>
+    
+    <content type="html"><![CDATA[<p>async is a open source library<br>支持前后端的js<br>官方网站链接<br><a href="http://caolan.github.io/async/index.html" target="_blank" rel="external">http://caolan.github.io/async/index.html</a></p>
+<p>可以看看async的源码是怎么实现这些函数的，对JS提高有帮助。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;async is a open source library&lt;br&gt;支持前后端的js&lt;br&gt;官方网站链接&lt;br&gt;&lt;a href=&quot;http://caolan.github.io/async/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>修改博客主题</title>
+    <link href="http://yoursite.com/2016/11/07/%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98/"/>
+    <id>http://yoursite.com/2016/11/07/修改博客主题/</id>
+    <published>2016-11-07T08:10:08.000Z</published>
+    <updated>2016-11-12T05:24:11.895Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们可以从github上下载自己喜欢的hexo的主题<br>每一个主题下面也都存在一个_config.xml文件我们可以对这一个主题进行配置<br>详细的配置过程可以参考以下链接的网址<br><a href="http://www.jianshu.com/p/db7e64d86067" target="_blank" rel="external">http://www.jianshu.com/p/db7e64d86067</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们可以从github上下载自己喜欢的hexo的主题&lt;br&gt;每一个主题下面也都存在一个_config.xml文件我们可以对这一个主题进行配置&lt;br&gt;详细的配置过程可以参考以下链接的网址&lt;br&gt;&lt;a href=&quot;http://www.jianshu.com/p/db7e64d
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Hexo与Git搭建个人博客</title>
+    <link href="http://yoursite.com/2016/11/02/%E7%94%A8Hexo%E4%B8%8EGit%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2016/11/02/用Hexo与Git搭建个人博客/</id>
+    <published>2016-11-02T05:50:24.000Z</published>
+    <updated>2016-11-13T01:57:59.754Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p>本实践教程讲述如何利用hexo与git进行个人博客的搭建</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>在这里我已经在ubuntu下面配置好了git以及nodejs<br>在ubuntu14.04下的hexo的安装参考：<br><a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="external">参考1</a><br><a href="https://www.npmjs.com/package/hexo" target="_blank" rel="external">参考2</a><br>主要需要在_config.xml 里面配置和github的仓库关联<br>git的设置主要是需要创建特定名字的仓库：我的github的账号+git+io</p>
+<h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>可以hexo new 文章名字 一篇文章<br>post:标题属性可以配置<br>正文用markdown的语法去书写正文</p>
+<h3 id="生成以及部署"><a href="#生成以及部署" class="headerlink" title="生成以及部署"></a>生成以及部署</h3><p>之后需要 hexo generate重新生成一下<br>然后hexo deploy部署到github<br>之后不需要启动hexo的本地服务器就可以在浏览器直接输入<br><a href="https://仓库名/" target="_blank" rel="external">https://仓库名/</a><br>来访问我的博客</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;教程&quot;&gt;&lt;a href=&quot;#教程&quot; class=&quot;headerlink&quot; title=&quot;教程&quot;&gt;&lt;/a&gt;教程&lt;/h2&gt;&lt;p&gt;本实践教程讲述如何利用hexo与git进行个人博客的搭建&lt;/p&gt;
+&lt;h3 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;head
+    
+    </summary>
+    
+    
+      <category term="Technique" scheme="http://yoursite.com/tags/Technique/"/>
+    
+  </entry>
+  
+</feed>
