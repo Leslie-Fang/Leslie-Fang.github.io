@@ -101,7 +101,7 @@ webpack： 浏览器不支持commonJS，需要用到webpack或者Browserify，�
 ReatcJS：Facebook出的前端框架，模块化设计的思想，ES5,ES6都有写法可以参考 orz
 babel： 转换ES6以及JSX的语法到ES5，commonJS
 webpack： 浏览器不支持commonJS，需要用到webpack或者Browserify，我选了前者，毕竟现在这个开源社区很火，">
-<meta property="og:updated_time" content="2017-03-15T08:02:13.000Z">
+<meta property="og:updated_time" content="2017-03-15T08:11:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端自动化-ReactJS踩坑之旅">
 <meta name="twitter:description" content="如何畅快的开发前端最近这两天在实现前端自动化的过程中踩了不少的坑，先写一篇文章压压惊。
@@ -353,18 +353,19 @@ webpack： 浏览器不支持commonJS，需要用到webpack或者Browserify，�
 <li>ReatcJS：Facebook出的前端框架，模块化设计的思想，ES5,ES6都有写法可以参考 orz</li>
 <li>babel： 转换ES6以及JSX的语法到ES5，commonJS</li>
 <li>webpack： 浏览器不支持commonJS，需要用到webpack或者Browserify，我选了前者，毕竟现在这个开源社区很火，坑还是多踩踩更健康</li>
-<li>gulp: 前端开发自动化的利器，大有超过grunt的趋势，具有丰富的插件<a id="more"></a>
-</li>
+<li>gulp: 前端开发自动化的利器，大有超过grunt的趋势，具有丰富的插件</li>
 </ul>
+<p>以上每一个工具根据使用的插件都可以实现多类功能，这里只是使用了一小部分。<br><a id="more"></a></p>
 <h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>废话不多说，首先上代码，git仓库，reactES6分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://github.com/Leslie-Fang/Express.git</div></pre></td></tr></table></figure></p>
 <p>先看gulpfile.js文件，用gulp都实现了哪些功能：</p>
 <ol>
 <li>服务器的启动</li>
 <li>调用babel转译JSX</li>
-<li>调用webpack实现浏览器端读取commonJS</li>
+<li>调用webpack打包文件和require的依赖，实现浏览器端读取commonJS</li>
 <li>代码的uglify，部署的时候缩小代码包的尺寸</li>
-<li>监视代码，文件改动之后，自动实现转译以及服务器的重启<br>然后就终于可以安心写react了，写完之后只要command+R刷新页面就可以看到效果了，省去了一堆代码中间转译以及服务器重启的过程<br>babel和webpack都可以单独配置使用，更可以集成到gulp里面。</li>
+<li>监视代码，文件改动之后，自动实现转译以及服务器的重启</li>
 </ol>
+<p>然后就终于可以安心写react了，写完之后只要command+R刷新页面就可以看到效果了，省去了一堆代码中间转译以及服务器重启的过程<br>babel和webpack都可以单独配置使用，更可以集成到gulp里面。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>爸爸要去游泳了，😪有空再写吧</p>
 
       
