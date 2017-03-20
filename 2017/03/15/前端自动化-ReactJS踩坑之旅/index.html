@@ -101,7 +101,7 @@ babel： 转换ES6以及JS">
 ReatcJS：Facebook出的前端框架，模块化设计的思想，ES5,ES6都有写法可以参考 orz
 Redux： react更多的是扮演着MVC中的view的角色，Model以及Controll可以用flux或者更进一步用Redux，戳这个链接 里面的图片描述的很清楚
 babel： 转换ES6以及JS">
-<meta property="og:updated_time" content="2017-03-20T09:01:42.000Z">
+<meta property="og:updated_time" content="2017-03-20T12:37:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端自动化-ReactJS踩坑之旅">
 <meta name="twitter:description" content="如何畅快的开发前端最近这两天在实现前端自动化的过程中踩了不少的坑，先写一篇文章压压惊。
@@ -368,6 +368,7 @@ babel： 转换ES6以及JS">
 </ol>
 <p>然后就终于可以安心写react了，写完之后只要command+R刷新页面就可以看到效果了，省去了一堆代码中间转译以及服务器重启的过程<br>babel和webpack都可以单独配置使用，更可以集成到gulp里面。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>还在思考怎么简略地描述清楚</p>
+<p>一些常见的坑：<br>react：component的名字要大写开头<br>redux： reducer下面每个case里面返回的对象每一次都需要新建，可以用object.assign(用在单个对象添加属性可以返回新的对象)，用filter也会新建对象(可以用在数组上面)</p>
 
       
     </div>
