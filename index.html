@@ -469,9 +469,23 @@
             <h2 id="macos"><a href="#macos" class="headerlink" title="macos"></a>macos</h2><p>用homebrew安装，</p>
 <p>运行 mongodb：两种方式<br>方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf<br>可以修改/data/db的路径</p>
 <p>方式2： 命令行下，在shell中进入安装目录，我的mac：<br>/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb<br>将这个目录配置到PATH环境变量里面<br>配置数据目录 默认路径为/data/db,运行 sudo mongod(需要sudo，因为/data/db在根目录),这样就打开了mongodb，可以等待连接了<br>或者在用户目录~下建立~/data/db,然后在启动mongod时：mongod -dapath ~/data/path<br><br></p>
-<p>管理mongodb：两种方式<br>1.命令行运行mongo<br>把上面的路径配置到PATH下面，运行mongo，进入mongo-shell管理界面<br>可以用show dbs显示所有数据库<br>use db_name使用某个数据库</p>
-<p>2.用用MongoChef图形化界面进行管理<br>运行mongo进入管理界面之后，</p>
-<h2 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h2><p>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念可以参考自己写的代码</p>
+<p>管理mongodb：两种方式</p>
+<ol>
+<li><p>命令行运行mongo<br>把上面的路径配置到PATH下面，运行mongo，进入mongo-shell管理界面<br>可以用show dbs显示所有数据库<br>use db_name使用某个数据库</p>
+</li>
+<li><p>用用MongoChef图形化界面进行管理<br>运行mongo进入管理界面之后，</p>
+</li>
+</ol>
+<h2 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h2><p>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念可以参考自己写的代码<br>一般会在一个独立的文件中新建一个schema以及model，然后将这个model export出来<br>在需要用到的地方require这个model</p>
+<ol>
+<li><p>保存数据<br>document=new model（data）<br>传入数据，创建一个新的document（一行数据）<br>document.save（function（）{</p>
+<p> }）<br>调用save保存到数据库中，在回调函数中进行处理</p>
+</li>
+<li><p>更新数据,三个参数<br>model.update(query，data，callback)<br>1.query是匹配查找你想要更新哪一行数据(哪个document)<br>2.data是你希望更新的数据1.set修改数据2.如果数据的数组，可以往里面push，pop一个element<br>3.callback，是更新结束之后的回调函数</p>
+</li>
+<li><p>查询<br>model.find(function(){})<br>在回调函数中进行查询到的数据的处理</p>
+</li>
+</ol>
 
           
         
