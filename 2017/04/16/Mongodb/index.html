@@ -97,7 +97,7 @@
 <meta property="og:description" content="macos用homebrew安装，
 运行 mongodb：两种方式方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf可以修改/data/db的路径
 方式2： 命令行下，在shell中进入安装目录，我的mac：/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb将">
-<meta property="og:updated_time" content="2017-04-22T02:41:35.000Z">
+<meta property="og:updated_time" content="2017-04-22T02:42:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mongodb">
 <meta name="twitter:description" content="macos用homebrew安装，
@@ -352,6 +352,7 @@
 <li><p>用用MongoChef图形化界面进行管理<br>运行mongo进入管理界面之后，</p>
 </li>
 </ol>
+<a id="more"></a>
 <h2 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h2><p>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念可以参考自己写的代码<br>一般会在一个独立的文件中新建一个schema以及model，然后将这个model export出来<br>在需要用到的地方require这个model</p>
 <ol>
 <li><p>保存数据<br>document=new model（data）<br>传入数据，创建一个新的document（一行数据）<br>document.save（function（）{</p>
