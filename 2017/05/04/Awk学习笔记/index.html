@@ -87,19 +87,37 @@
 
 
 
-<meta name="description" content="#开发过程新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP
-模板的配置在app的目录下面新建一个tempaltes的目录在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR,">
+<meta name="description" content="基本用法
+awk ‘{print $0}’ filename
+打印第n，m个字段
+awk ‘{print $n $m}’ filename
+添加上说明
+awk ‘{print “字段n” $n “字段m” $m}’ filename
+
+设置分隔符awk -F”:” ‘{print $0}’ filename">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Django">
-<meta property="og:url" content="http://yoursite.com/2017/04/15/Django/index.html">
+<meta property="og:title" content="Awk学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/05/04/Awk学习笔记/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="#开发过程新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP
-模板的配置在app的目录下面新建一个tempaltes的目录在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR,">
-<meta property="og:updated_time" content="2017-04-15T06:07:17.000Z">
+<meta property="og:description" content="基本用法
+awk ‘{print $0}’ filename
+打印第n，m个字段
+awk ‘{print $n $m}’ filename
+添加上说明
+awk ‘{print “字段n” $n “字段m” $m}’ filename
+
+设置分隔符awk -F”:” ‘{print $0}’ filename">
+<meta property="og:updated_time" content="2017-05-04T13:49:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django">
-<meta name="twitter:description" content="#开发过程新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP
-模板的配置在app的目录下面新建一个tempaltes的目录在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR,">
+<meta name="twitter:title" content="Awk学习笔记">
+<meta name="twitter:description" content="基本用法
+awk ‘{print $0}’ filename
+打印第n，m个字段
+awk ‘{print $n $m}’ filename
+添加上说明
+awk ‘{print “字段n” $n “字段m” $m}’ filename
+
+设置分隔符awk -F”:” ‘{print $0}’ filename">
 
 
 
@@ -127,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/15/Django/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/04/Awk学习笔记/"/>
 
 
 
 
 
-  <title> Django | 沉思语录 </title>
+  <title> Awk学习笔记 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/15/Django/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/Awk学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -273,7 +291,7 @@
             
             
               
-                Django
+                Awk学习笔记
               
             
           </h1>
@@ -288,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T14:01:54+08:00">
-                2017-04-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T21:30:51+08:00">
+                2017-05-04
               </time>
             
 
@@ -307,8 +325,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/15/Django/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/15/Django/" itemprop="commentCount"></span>
+                <a href="/2017/05/04/Awk学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/04/Awk学习笔记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -339,9 +357,15 @@
       
 
       
-        <p>#开发过程<br>新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP</p>
-<h2 id="模板的配置"><a href="#模板的配置" class="headerlink" title="模板的配置"></a>模板的配置</h2><p>在app的目录下面新建一个tempaltes的目录<br>在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html<br>然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR, app_name, ‘templates’),<br>这样在app下面的views里面就可以render这个html了，然后在url里面做配置</p>
-<h2 id="静态文件的配置"><a href="#静态文件的配置" class="headerlink" title="静态文件的配置"></a>静态文件的配置</h2><p>在app的目录下面新建一个static的目录<br>在base_dir/app_name/static/app_name/目录下面去建imgaes，css,js等目录<br>在下面摆放静态文件<br>在settings.py按照模板配置</p>
+        <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><ul>
+<li>awk ‘{print $0}’ filename</li>
+<li>打印第n，m个字段</li>
+<li>awk ‘{print $n $m}’ filename</li>
+<li>添加上说明</li>
+<li>awk ‘{print “字段n” $n “字段m” $m}’ filename</li>
+</ul>
+<h2 id="设置分隔符"><a href="#设置分隔符" class="headerlink" title="设置分隔符"></a>设置分隔符</h2><p>awk -F”:” ‘{print $0}’ filename<br><a id="more"></a></p>
+<h2 id="编程文件"><a href="#编程文件" class="headerlink" title="编程文件"></a>编程文件</h2><p>test.awk文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">BEGIN&#123;</div><div class="line">  FS=&quot;:&quot;</div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line">  print $0</div><div class="line">&#125;</div><div class="line">END&#123;</div><div class="line">  print &quot;over&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -378,8 +402,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/15/Python-CookBook/" rel="next" title="Python_CookBook">
-                <i class="fa fa-chevron-left"></i> Python_CookBook
+              <a href="/2017/04/26/sed学习笔记/" rel="next" title="sed学习笔记">
+                <i class="fa fa-chevron-left"></i> sed学习笔记
               </a>
             
           </div>
@@ -387,10 +411,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/16/Mongodb/" rel="prev" title="Mongodb">
-                Mongodb <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -416,8 +436,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/15/Django/"
-           data-title="Django" data-url="http://yoursite.com/2017/04/15/Django/">
+      <div class="ds-thread" data-thread-key="2017/05/04/Awk学习笔记/"
+           data-title="Awk学习笔记" data-url="http://yoursite.com/2017/05/04/Awk学习笔记/">
       </div>
     
   </div>
@@ -514,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模板的配置"><span class="nav-number">1.</span> <span class="nav-text">模板的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态文件的配置"><span class="nav-number">2.</span> <span class="nav-text">静态文件的配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置分隔符"><span class="nav-number">2.</span> <span class="nav-text">设置分隔符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程文件"><span class="nav-number">3.</span> <span class="nav-text">编程文件</span></a></li></ol></div>
             
 
           </div>
