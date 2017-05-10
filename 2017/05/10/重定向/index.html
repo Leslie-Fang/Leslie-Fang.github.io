@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术," />
 
 
 
@@ -87,16 +87,25 @@
 
 
 
-<meta name="description" content="记录心情与能力的成长">
+<meta name="description" content="介绍重定向是linux很常用的命令
+
+cmd &amp;gt; record.txt 将cmd的输出从命令行重定向到文件中，先将文件清除再写
+cmd &amp;gt;&amp;gt; record.txt  和&amp;gt;类似，但是是追加的模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重定向.md">
-<meta property="og:url" content="http://yoursite.com/2017/05/10/重定向-md/index.html">
+<meta property="og:title" content="重定向">
+<meta property="og:url" content="http://yoursite.com/2017/05/10/重定向/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="记录心情与能力的成长">
-<meta property="og:updated_time" content="2017-05-10T10:51:21.000Z">
+<meta property="og:description" content="介绍重定向是linux很常用的命令
+
+cmd &amp;gt; record.txt 将cmd的输出从命令行重定向到文件中，先将文件清除再写
+cmd &amp;gt;&amp;gt; record.txt  和&amp;gt;类似，但是是追加的模式">
+<meta property="og:updated_time" content="2017-05-10T10:53:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重定向.md">
-<meta name="twitter:description" content="记录心情与能力的成长">
+<meta name="twitter:title" content="重定向">
+<meta name="twitter:description" content="介绍重定向是linux很常用的命令
+
+cmd &amp;gt; record.txt 将cmd的输出从命令行重定向到文件中，先将文件清除再写
+cmd &amp;gt;&amp;gt; record.txt  和&amp;gt;类似，但是是追加的模式">
 
 
 
@@ -124,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/10/重定向-md/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/10/重定向/"/>
 
 
 
 
 
-  <title> 重定向.md | 沉思语录 </title>
+  <title> 重定向 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/重定向-md/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/重定向/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -270,7 +279,7 @@
             
             
               
-                重定向.md
+                重定向
               
             
           </h1>
@@ -304,8 +313,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/10/重定向-md/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/10/重定向-md/" itemprop="commentCount"></span>
+                <a href="/2017/05/10/重定向/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/10/重定向/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -336,7 +345,20 @@
       
 
       
-        
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>重定向是linux很常用的命令</p>
+<ul>
+<li>cmd &gt; record.txt 将cmd的输出从命令行重定向到文件中，先将文件清除再写</li>
+<li>cmd &gt;&gt; record.txt  和&gt;类似，但是是追加的模式</li>
+</ul>
+<a id="more"></a>
+<h2 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h2><p>文件描述符 是与打开的某个文件或者数据流相关联的整数。文件描述符0,1,2是系统预留的。</p>
+<ul>
+<li>0 - stdin(标准输入)</li>
+<li>1 - stdout(标准输出)</li>
+<li>2 - stderr(标准错误)</li>
+</ul>
+<figure class="highlight cmd"><figcaption><span>2> record.txt  只将错误信息重定向的文件中，**正常的信息输出在命令行**</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">也可以这样：</div><div class="line"><span class="built_in">cmd</span> <span class="number">2</span>&gt; out.txt <span class="number">1</span>&gt; temp.txt</div><div class="line">将 **标准错误和标准输出** 重定向到两个文件中。</div><div class="line">当然，还有更精简的方式输出到同一个文件中：</div><div class="line"><span class="built_in">cmd</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> out.txt</div><div class="line">进一步这条命令可以简写为</div><div class="line"><span class="built_in">cmd</span> &amp;&gt; out.txt</div><div class="line">或者</div><div class="line"><span class="built_in">cmd</span> &gt;&amp; out.txt</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -356,6 +378,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
       
 
       
@@ -400,8 +428,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/10/重定向-md/"
-           data-title="重定向.md" data-url="http://yoursite.com/2017/05/10/重定向-md/">
+      <div class="ds-thread" data-thread-key="2017/05/10/重定向/"
+           data-title="重定向" data-url="http://yoursite.com/2017/05/10/重定向/">
       </div>
     
   </div>
@@ -425,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -479,6 +516,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件描述符"><span class="nav-number">2.</span> <span class="nav-text">文件描述符</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
