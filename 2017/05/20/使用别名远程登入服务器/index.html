@@ -90,9 +90,7 @@
 <meta name="description" content="前言远程登入服务器进行维护的时候，SSH登入有两种模式ssh username@ip
 
 模式1：使用密码登入，输入username的配置密码
-模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器等，以后就可以免密码登入了
-
-使用别名登入">
+模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器上，以后就可以免密码登入了使用 模式2 ssh username@ip登入服务器时，经常会忘记ip地址，因此更好的方法是配置服务器的别名alias，以后使用ssh al">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用别名远程登入服务器">
 <meta property="og:url" content="http://yoursite.com/2017/05/20/使用别名远程登入服务器/index.html">
@@ -100,18 +98,14 @@
 <meta property="og:description" content="前言远程登入服务器进行维护的时候，SSH登入有两种模式ssh username@ip
 
 模式1：使用密码登入，输入username的配置密码
-模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器等，以后就可以免密码登入了
-
-使用别名登入">
-<meta property="og:updated_time" content="2017-05-20T13:02:42.000Z">
+模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器上，以后就可以免密码登入了使用 模式2 ssh username@ip登入服务器时，经常会忘记ip地址，因此更好的方法是配置服务器的别名alias，以后使用ssh al">
+<meta property="og:updated_time" content="2017-05-20T13:06:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用别名远程登入服务器">
 <meta name="twitter:description" content="前言远程登入服务器进行维护的时候，SSH登入有两种模式ssh username@ip
 
 模式1：使用密码登入，输入username的配置密码
-模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器等，以后就可以免密码登入了
-
-使用别名登入">
+模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器上，以后就可以免密码登入了使用 模式2 ssh username@ip登入服务器时，经常会忘记ip地址，因此更好的方法是配置服务器的别名alias，以后使用ssh al">
 
 
 
@@ -354,12 +348,12 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>远程登入服务器进行维护的时候，SSH登入有两种模式<br>ssh username@ip</p>
 <ul>
 <li>模式1：使用密码登入，输入username的配置密码</li>
-<li>模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器等，以后就可以免密码登入了</li>
+<li>模式2：使用密钥登入，在本地机器使用ssh-keygen生成私钥与公钥，将公钥放置到服务器上，以后就可以免密码登入了<br>使用 <strong>模式2</strong> ssh username@ip登入服务器时，经常会忘记ip地址，因此更好的方法是配置服务器的别名alias，以后使用ssh alias 就可以登入服务器了</li>
 </ul>
 <h2 id="使用别名登入"><a href="#使用别名登入" class="headerlink" title="使用别名登入"></a>使用别名登入</h2><a id="more"></a>
-<p>使用ssh username@ip登入时，ip地址经常会忘记<br>因此更好的方法是配置服务器的别名，以后ssh alias 就可以登入服务器了<br>打开本地机器的~/.ssh/config文件，添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Host server-alias           # server-alias为希望配置的服务器别名</div><div class="line">HostName server-ip  # 服务器地址</div><div class="line">Port 22</div><div class="line">User username           # 服务器端用户名</div><div class="line">PreferredAuthentications publickey</div><div class="line">IdentityFile ~/.ssh/id_rsa   # 私钥地址，默认为 ~/.ssh/id_rsa</div></pre></td></tr></table></figure></p>
+<p>打开本地机器的~/.ssh/config文件，添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Host server-alias           # server-alias为希望配置的服务器别名</div><div class="line">HostName server-ip  # 服务器地址</div><div class="line">Port 22</div><div class="line">User username           # 服务器端用户名</div><div class="line">PreferredAuthentications publickey</div><div class="line">IdentityFile ~/.ssh/id_rsa   # 私钥地址，默认为 ~/.ssh/id_rsa</div></pre></td></tr></table></figure></p>
 <p>配置之后就可以通过别名远程登入服务器了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh server-alias</div></pre></td></tr></table></figure></p>
-<p>通过自己的服务器的验证</p>
+<p>上述方法通过自己的服务器配置验证</p>
 
       
     </div>
