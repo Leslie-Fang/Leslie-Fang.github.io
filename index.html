@@ -337,7 +337,14 @@
       
         
           
-            <h2 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h2><p>diff 用于比较两个文件（也可以用于目录）的差别<br><figure class="highlight diff"><figcaption><span>file_1_1.txt file_1_2.txt```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">常规模式输出：</div><div class="line">* a为后一个文件比前一个文件多的行</div><div class="line">* d为后一个文件比前一个文件少的行</div><div class="line">* c为两个文件不一样的行</div><div class="line"></div><div class="line"></div><div class="line">```diff file_1_1.txt file_1_2.txt -y</div></pre></td></tr></table></figure></p>
+            <h2 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h2><p>diff 用于比较两个文件（也可以用于目录）的差别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt</div></pre></td></tr></table></figure></p>
+<p>常规模式输出：</p>
+<ul>
+<li>a为后一个文件比前一个文件多的行</li>
+<li>d为后一个文件比前一个文件少的行</li>
+<li>c为两个文件不一样的行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt -y</div></pre></td></tr></table></figure>
 <p>比较模式输出：按每一行对比两个文件</p>
 <h2 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h2><h3 id="输入查找"><a href="#输入查找" class="headerlink" title="输入查找"></a>输入查找</h3><p>在命令模式下输入 ？或者/<br>然后输入要查找的单词<br>按回车开始查找，按n查找下一个(上一个)单词<br>N与n的反方向进行搜索</p>
 <h3 id="根据光标位置的单词查找"><a href="#根据光标位置的单词查找" class="headerlink" title="根据光标位置的单词查找"></a>根据光标位置的单词查找</h3><p>在光标位置的单词按*或者#<br>按n查找下一个(上一个)单词，N与n的反方向进行搜索</p>
