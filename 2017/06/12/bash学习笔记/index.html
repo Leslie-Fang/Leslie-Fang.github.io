@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术," />
 
 
 
@@ -87,16 +87,43 @@
 
 
 
-<meta name="description" content="记录心情与能力的成长">
+<meta name="description" content="diffdiff 用于比较两个文件（也可以用于目录）的差别1diff file_1_1.txt file_1_2.txt
+常规模式输出：
+
+a为后一个文件比前一个文件多的行
+d为后一个文件比前一个文件少的行
+c为两个文件不一样的行
+
+1diff file_1_1.txt file_1_2.txt -y
+比较模式输出：按每一行对比两个文件
+vim查找字符串输入查找在命令模式下输入 ？或者/然后输入要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bash学习笔记">
 <meta property="og:url" content="http://yoursite.com/2017/06/12/bash学习笔记/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="记录心情与能力的成长">
-<meta property="og:updated_time" content="2017-06-12T10:55:33.000Z">
+<meta property="og:description" content="diffdiff 用于比较两个文件（也可以用于目录）的差别1diff file_1_1.txt file_1_2.txt
+常规模式输出：
+
+a为后一个文件比前一个文件多的行
+d为后一个文件比前一个文件少的行
+c为两个文件不一样的行
+
+1diff file_1_1.txt file_1_2.txt -y
+比较模式输出：按每一行对比两个文件
+vim查找字符串输入查找在命令模式下输入 ？或者/然后输入要">
+<meta property="og:updated_time" content="2017-06-12T11:00:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bash学习笔记">
-<meta name="twitter:description" content="记录心情与能力的成长">
+<meta name="twitter:description" content="diffdiff 用于比较两个文件（也可以用于目录）的差别1diff file_1_1.txt file_1_2.txt
+常规模式输出：
+
+a为后一个文件比前一个文件多的行
+d为后一个文件比前一个文件少的行
+c为两个文件不一样的行
+
+1diff file_1_1.txt file_1_2.txt -y
+比较模式输出：按每一行对比两个文件
+vim查找字符串输入查找在命令模式下输入 ？或者/然后输入要">
 
 
 
@@ -336,7 +363,28 @@
       
 
       
-        
+        <h2 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h2><p>diff 用于比较两个文件（也可以用于目录）的差别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt</div></pre></td></tr></table></figure></p>
+<p>常规模式输出：</p>
+<ul>
+<li>a为后一个文件比前一个文件多的行</li>
+<li>d为后一个文件比前一个文件少的行</li>
+<li>c为两个文件不一样的行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt -y</div></pre></td></tr></table></figure>
+<p>比较模式输出：按每一行对比两个文件</p>
+<h2 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h2><h3 id="输入查找"><a href="#输入查找" class="headerlink" title="输入查找"></a>输入查找</h3><p>在命令模式下输入 ？或者/<br>然后输入要查找的单词<br>按回车开始查找，按n查找下一个(上一个)单词<br>N与n的反方向进行搜索</p>
+<h3 id="根据光标位置的单词查找"><a href="#根据光标位置的单词查找" class="headerlink" title="根据光标位置的单词查找"></a>根据光标位置的单词查找</h3><p>在光标位置的单词按*或者#<br>按n查找下一个(上一个)单词，N与n的反方向进行搜索</p>
+<a id="more"></a>
+<h2 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h2><p>Mthod1: ./cycle.sh 200 chassis31_6 AC 2&gt;&amp;1|tee chassis31_6.log &amp;<br>在命令的最后加一个&amp;，表示希望这个命令在后台运行<br>Method2: 使用screen</p>
+<h2 id=""><a href="#" class="headerlink" title="$?"></a>$?</h2><p>$? 表示上一个进程或者函数运行之后的返回值<br>在写bash函数的时候，函数里面return返回值<br>在调用这个函数之后再调用一次 $? 表示读取一次返回值，<strong>注意$?只能用一次</strong></p>
+<h2 id="重定向-gt-dev-null-2-gt-amp-1"><a href="#重定向-gt-dev-null-2-gt-amp-1" class="headerlink" title="重定向&gt; /dev/null 2&gt;&amp;1"></a>重定向&gt; /dev/null 2&gt;&amp;1</h2><p>命令 &gt; /dev/null 2&gt;&amp;1<br>命令 1&gt; /dev/null 2&gt;&amp;1<br>两条都不会输出任何东西，表示将错误定向到标准输出，又将标准输出定向到null<br>这里的&amp;表示后面的1是文件描述符（标准输出），并不是文件名</p>
+<h2 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本``"></a>运行脚本``</h2><p> `command`<br>键盘最左上角的字符，也就是markdown里面的代码的符号<br>表示运行``之间的command</p>
+<h2 id="grep匹配行首"><a href="#grep匹配行首" class="headerlink" title="grep匹配行首"></a>grep匹配行首</h2><p><code>grep &quot;^${group}&quot; local.cfg | awk -F: &#39;{print $2}&#39;</code><br>^表示匹配行首</p>
+<h2 id="匹配正则表达式"><a href="#匹配正则表达式" class="headerlink" title="匹配正则表达式 =~"></a>匹配正则表达式 =~</h2><p>[[ $phrase =~ $keyword ]]<br>正则表达式</p>
+<h2 id="bash数组"><a href="#bash数组" class="headerlink" title="bash数组"></a>bash数组</h2><p>申明：declare -a arr<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. $&#123;arr[*]&#125;         # All of the items in the array</div><div class="line">2. $&#123;!arr[*]&#125;        # All of the indexes in the array</div><div class="line">3. $&#123;#arr[*]&#125;        # Number of items in the array</div><div class="line">4. $&#123;#arr[0]&#125;        # Length of item zero</div></pre></td></tr></table></figure></p>
+<p>构造数组<br>arr=(element1 element2 … element3)</p>
+<p>为数组添加新的元素<br>arr=(${arr[@]} elementNew)<br>for example: chassisarr=(${chassisarr[@]} $group)<br>意思是，取出原有数组中的所有元素加上新元素赋值回数组</p>
+
       
     </div>
 
@@ -356,6 +404,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
       
 
       
@@ -425,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -441,7 +504,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -479,6 +542,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#diff"><span class="nav-number">1.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim查找字符串"><span class="nav-number">2.</span> <span class="nav-text">vim查找字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入查找"><span class="nav-number">2.1.</span> <span class="nav-text">输入查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据光标位置的单词查找"><span class="nav-number">2.2.</span> <span class="nav-text">根据光标位置的单词查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台运行"><span class="nav-number">3.</span> <span class="nav-text">后台运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">4.</span> <span class="nav-text">$?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向-gt-dev-null-2-gt-amp-1"><span class="nav-number">5.</span> <span class="nav-text">重定向> /dev/null 2>&1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行脚本"><span class="nav-number">6.</span> <span class="nav-text">运行脚本``</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep匹配行首"><span class="nav-number">7.</span> <span class="nav-text">grep匹配行首</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配正则表达式"><span class="nav-number">8.</span> <span class="nav-text">匹配正则表达式 =~</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash数组"><span class="nav-number">9.</span> <span class="nav-text">bash数组</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
