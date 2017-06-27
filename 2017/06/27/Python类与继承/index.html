@@ -1,0 +1,743 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="类变量与实例变量看这个例子因为当用self.var去call一个变量的时候的顺序是实例的dict-&amp;gt;类的dict-&amp;gt;基类也就是如果再实例里面找到这个变量相同的名字，就用实例的变量，没有找到就去找类变量，再没有找到就会找基类的变量，最后还没有找到就会报错类变量还可以用 类名.变量名去调用实例变量只可以用self.变量名
+类的实例方法，静态方法与类方法参考这个链接
+
+实例方法形式：clas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python类与继承">
+<meta property="og:url" content="http://yoursite.com/2017/06/27/Python类与继承/index.html">
+<meta property="og:site_name" content="沉思语录">
+<meta property="og:description" content="类变量与实例变量看这个例子因为当用self.var去call一个变量的时候的顺序是实例的dict-&amp;gt;类的dict-&amp;gt;基类也就是如果再实例里面找到这个变量相同的名字，就用实例的变量，没有找到就去找类变量，再没有找到就会找基类的变量，最后还没有找到就会报错类变量还可以用 类名.变量名去调用实例变量只可以用self.变量名
+类的实例方法，静态方法与类方法参考这个链接
+
+实例方法形式：clas">
+<meta property="og:updated_time" content="2017-06-27T11:16:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python类与继承">
+<meta name="twitter:description" content="类变量与实例变量看这个例子因为当用self.var去call一个变量的时候的顺序是实例的dict-&amp;gt;类的dict-&amp;gt;基类也就是如果再实例里面找到这个变量相同的名字，就用实例的变量，没有找到就去找类变量，再没有找到就会找基类的变量，最后还没有找到就会报错类变量还可以用 类名.变量名去调用实例变量只可以用self.变量名
+类的实例方法，静态方法与类方法参考这个链接
+
+实例方法形式：clas">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/27/Python类与继承/"/>
+
+
+
+
+
+  <title> Python类与继承 | 沉思语录 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沉思语录</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">想对世界说真话，证明我们的存在</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/Python类与继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python类与继承
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T19:15:18+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/27/Python类与继承/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/27/Python类与继承/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="类变量与实例变量"><a href="#类变量与实例变量" class="headerlink" title="类变量与实例变量"></a>类变量与实例变量</h2><p>看这个<a href="!https://stackoverflow.com/questions/8701500/python-class-instance-variables-and-class-variables">例子</a><br>因为当用self.var去call一个变量的时候的顺序是<strong>实例的dict-&gt;类的dict-&gt;基类</strong><br>也就是如果再实例里面找到这个变量相同的名字，就用实例的变量，没有找到就去找类变量，再没有找到就会找基类的变量，最后还没有找到就会报错<br>类变量还可以用 类名.变量名去调用<br>实例变量只可以用self.变量名</p>
+<h2 id="类的实例方法，静态方法与类方法"><a href="#类的实例方法，静态方法与类方法" class="headerlink" title="类的实例方法，静态方法与类方法"></a>类的实例方法，静态方法与类方法</h2><p>参考这个<a href="!https://www.zhihu.com/question/20021164">链接</a></p>
+<ol>
+<li><p>实例方法<br>形式：<br>class A(object):<br>def function(self,var1):<br>最常见的方法包括了<strong>init</strong>等函数</p>
+</li>
+<li><p>类方法<br>用@classmethod修饰，需要传入一个非self参数，这个参数的名字常写作cls或者cls_obj(也可以是其它名字，不是self), <strong>可以被实例调用也可以被对象调用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">    @classmethod</div><div class="line">    def get_nomber_of_instance(cls):</div><div class="line">        return cls.num</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&quot;hello world&quot;)</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(Person.get_nomber_of_instance())</div><div class="line">    print(a.get_nomber_of_instance())</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样的好处是在类的内部，通过第一个参数cls把类传递出来</p>
+<a id="more"></a>
+<ol>
+<li>静态方法<br>用@staticmethod修饰，它的适用场景决定了它一般不需要传入参数(self也不需要传入)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#needPrintName = &quot;no&quot; #yes or no</div><div class="line">needPrintName = &quot;yes&quot;</div><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">    def printName(self):</div><div class="line">        if self.needPrintName():</div><div class="line">            print(self.name)</div><div class="line">        else:</div><div class="line">            print(&quot;Doesn&apos;t need to print name&quot;)</div><div class="line">    @classmethod</div><div class="line">    def get_nomber_of_instance(cls):</div><div class="line">        return cls.num</div><div class="line">    @staticmethod</div><div class="line">    def needPrintName():</div><div class="line">        return needPrintName==&quot;yes&quot;</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&quot;hello world&quot;)</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(Person.get_nomber_of_instance())</div><div class="line">    print(a.get_nomber_of_instance())</div><div class="line">    a.printName()</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样的好处是，有一些方法和类的功能相关，但是又不需要类或者对象本身去参与</p>
+<h2 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h2><p>最基础的类就是object<br>class child_class(base_class):<br>注意点：</p>
+<ol>
+<li>派生类不会自动调用基类的<strong>init</strong>方法，需要在派生类的<strong>init</strong>函数里面去调用，base_class.<strong>init</strong>(self)</li>
+<li>调用基类的方法的时候，需要加上基类的类名前缀，<strong>而且调用基类的函数记得带上self</strong></li>
+<li>总是先在本类中找方法，找不到再去基类里面找（派生类的方法会覆盖基类的方法）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">    def printName(self):</div><div class="line">        print(self.name)</div><div class="line">    @classmethod</div><div class="line">    def get_nomber_of_instance(cls):</div><div class="line">        return cls.num</div><div class="line">class Student(Person):</div><div class="line">    def __init__(self,name,score):</div><div class="line">        Person.__init__(self,name)</div><div class="line">        self.score=score</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&quot;hello world&quot;)</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(Person.get_nomber_of_instance())</div><div class="line">    print(a.get_nomber_of_instance())</div><div class="line">    a.printName()</div><div class="line">    b.printName()</div><div class="line">    c = Student(&quot;bob3&quot;,100)</div><div class="line">    c.printName()</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>如果基类继承了object类，还可以用super去调用基类的方法</strong><br>推荐这种写法super(chrild_class,self)._init__(arg)(这里的arg不写self)，因为原来直接call基类的init函数存在这样的一种例外的<a href="!http://www.jackyshen.com/2015/08/19/multi-inheritance-with-super-in-Python/">情况</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">    def printName(self):</div><div class="line">        print(self.name)</div><div class="line">    @classmethod</div><div class="line">    def get_nomber_of_instance(cls):</div><div class="line">        return cls.num</div><div class="line">class Student(Person):</div><div class="line">    def __init__(self,name,score):</div><div class="line">        super(self.__class__,self).__init__(name)</div><div class="line">        self.score=score</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&apos;all argv:&#123;&#125;&apos;.format(sys.argv))</div><div class="line">    print(len(sys.argv))</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(Person.get_nomber_of_instance())</div><div class="line">    print(a.get_nomber_of_instance())</div><div class="line">    a.printName()</div><div class="line">    b.printName()</div><div class="line">    c = Student(&quot;bob3&quot;,100)</div><div class="line">    c.printName()</div></pre></td></tr></table></figure></p>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ol>
+<li>获取对象的类 ins_obj.<strong>class</strong>.method(var)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def howperson(a):</div><div class="line">    return a.__class__.num</div><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&quot;hello world&quot;)</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(howperson(a))</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/12/bash学习笔记/" rel="next" title="bash学习笔记">
+                <i class="fa fa-chevron-left"></i> bash学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/06/27/Python类与继承/"
+           data-title="Python类与继承" data-url="http://yoursite.com/2017/06/27/Python类与继承/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/popeve.jpg"
+               alt="Leslie" />
+          <p class="site-author-name" itemprop="name">Leslie</p>
+           
+              <p class="site-description motion-element" itemprop="description">记录心情与能力的成长</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类变量与实例变量"><span class="nav-number">1.</span> <span class="nav-text">类变量与实例变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的实例方法，静态方法与类方法"><span class="nav-number">2.</span> <span class="nav-text">类的实例方法，静态方法与类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的继承"><span class="nav-number">3.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备注"><span class="nav-number">4.</span> <span class="nav-text">备注</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leslie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leslie-fang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
