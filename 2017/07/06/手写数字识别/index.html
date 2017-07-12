@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="前言这几日，作息回到了早睡早醒，每天就花些时间去读书、去摄影、去锻炼以及做那些在WaitingList里躺了很久的有趣的事。老板出差在美国，工作显得并不是那么忙碌，就在每天下班后抽出几个小时的时间去做了个手写数字识别的项目。主要涉及的技术包括了：机器视觉、深度学习（人工神经网络），当然相关的编程语言也是不可少的。
 深度学习就像hello world是每一个码农写的第一行代码，手写数字识别也是每一个">
-<meta property="og:updated_time" content="2017-07-06T13:12:15.000Z">
+<meta property="og:updated_time" content="2017-07-11T13:11:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="手写数字识别">
 <meta name="twitter:description" content="前言这几日，作息回到了早睡早醒，每天就花些时间去读书、去摄影、去锻炼以及做那些在WaitingList里躺了很久的有趣的事。老板出差在美国，工作显得并不是那么忙碌，就在每天下班后抽出几个小时的时间去做了个手写数字识别的项目。主要涉及的技术包括了：机器视觉、深度学习（人工神经网络），当然相关的编程语言也是不可少的。
@@ -357,6 +357,9 @@
 <li>最后再对这张图做一次膨胀和腐蚀（注意顺序和前面不一样哦，哈哈，想知道为什么请自行谷歌）</li>
 <li>最后将这张图形输入inference，模型就可以告诉你你到底写的是什么鸟语了</li>
 </ul>
+<h2 id="TensorBoard图形化展示"><a href="#TensorBoard图形化展示" class="headerlink" title="TensorBoard图形化展示"></a>TensorBoard图形化展示</h2><p>在模型的最后添加一行代码保存模型图到文件，这里保存到了当前.路径下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">file_writer = tf.summary.FileWriter(&apos;.&apos;, sess.graph)</div></pre></td></tr></table></figure></p>
+<p>之后只需要在对应的路径(这里为当前路径)下运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tensorboard --logdir .</div></pre></td></tr></table></figure></p>
+<p>之后就可以显示出图形化展示的URL地址。ex.<a href="http://192.168.1.6:6006" target="_blank" rel="external">http://192.168.1.6:6006</a><br>直接访问以上地址就可以读取训练模型相关的图形化的显示,详细的资料可以参考一下<a href="!http://www.jianshu.com/p/b5caf4d5ce3e">链接</a></p>
 <h2 id="下一步计划"><a href="#下一步计划" class="headerlink" title="下一步计划"></a>下一步计划</h2><ol>
 <li>搭建更好的训练模型</li>
 <li>改善预处理的算法</li>
@@ -531,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习"><span class="nav-number">2.</span> <span class="nav-text">深度学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形预处理"><span class="nav-number">3.</span> <span class="nav-text">图形预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步计划"><span class="nav-number">4.</span> <span class="nav-text">下一步计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习"><span class="nav-number">2.</span> <span class="nav-text">深度学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形预处理"><span class="nav-number">3.</span> <span class="nav-text">图形预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorBoard图形化展示"><span class="nav-number">4.</span> <span class="nav-text">TensorBoard图形化展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步计划"><span class="nav-number">5.</span> <span class="nav-text">下一步计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">6.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
