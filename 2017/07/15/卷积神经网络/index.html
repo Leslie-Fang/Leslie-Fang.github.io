@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术," />
+  <meta name="keywords" content="技术 深度学习," />
 
 
 
@@ -87,41 +87,34 @@
 
 
 
-<meta name="description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
+<meta name="description" content="介绍
+卷积核： 用来和图像做卷积运算的小矩阵
+stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度
+Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以
 
-实验源代码用的是anishathalye大神的仓库先看看最">
+步骤
+图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tensorflow学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/05/06/tensorflow学习笔记/index.html">
+<meta property="og:title" content="卷积神经网络（CNN）">
+<meta property="og:url" content="http://yoursite.com/2017/07/15/卷积神经网络/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
+<meta property="og:description" content="介绍
+卷积核： 用来和图像做卷积运算的小矩阵
+stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度
+Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以
 
-实验源代码用的是anishathalye大神的仓库先看看最">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_origin.jpeg">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_style.jpeg">
-<meta property="og:updated_time" content="2017-05-20T15:28:33.000Z">
+步骤
+图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rg">
+<meta property="og:updated_time" content="2017-07-15T11:40:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tensorflow学习笔记">
-<meta name="twitter:description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
+<meta name="twitter:title" content="卷积神经网络（CNN）">
+<meta name="twitter:description" content="介绍
+卷积核： 用来和图像做卷积运算的小矩阵
+stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度
+Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以
 
-实验源代码用的是anishathalye大神的仓库先看看最">
-<meta name="twitter:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg">
+步骤
+图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rg">
 
 
 
@@ -149,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/06/tensorflow学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/15/卷积神经网络/"/>
 
 
 
 
 
-  <title> tensorflow学习笔记 | 沉思语录 </title>
+  <title> 卷积神经网络（CNN） | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -274,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/06/tensorflow学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/15/卷积神经网络/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -295,7 +288,7 @@
             
             
               
-                tensorflow学习笔记
+                卷积神经网络（CNN）
               
             
           </h1>
@@ -310,8 +303,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-06T07:41:50+08:00">
-                2017-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-15T18:15:10+08:00">
+                2017-07-15
               </time>
             
 
@@ -329,8 +322,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/06/tensorflow学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/06/tensorflow学习笔记/" itemprop="commentCount"></span>
+                <a href="/2017/07/15/卷积神经网络/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/15/卷积神经网络/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -361,18 +354,42 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，<br><a href="http://example.net/" target="_blank" rel="external">官网</a>需要科学上网工具才能访问</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
-<li>为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv</li>
-<li>打开虚拟环境，用pip安装tensorflow的包</li>
-<li>和普通包一样使用tensorflow的包</li>
-<li>硬件有GPU别忘了使用CUDA</li>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>卷积核： 用来和图像做卷积运算的小矩阵</li>
+<li>stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度</li>
+<li>Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rgb/hsv 三个通道)，卷积和池化之后就可以得到不同的通道对应的新的图像</li>
+<li>池化（降采样，减少图像运算的像素点的个数），con-max-pooling 就是取一片区域当中的最大值，对每一个通道都进行池化操作<br>1，2步骤可以重复多次<br>最后将图像的每一个通道都flattern（展开成一维数组），每一个通道都作为一个输入量，输入到全连接的前馈神经网络中进行训练（一般在网络中会对不同通道的值进行融合）</li>
 </ol>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>源代码用的是<a href="https://github.com/anishathalye/neural-style" target="_blank" rel="external">anishathalye</a>大神的仓库<br>先看看最后训练出来的效果图<br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg" alt="tensorflow_result" title="合成图"></p>
-<p>原图是去年在上海迪士尼玩的时候随手拍的照片<br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_origin.jpeg" alt="tensorflow_origin" title="原图"></p>
-<p>想要训练的风格图片用的梵高的 <strong>《星夜》</strong><br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_style.jpeg" alt="tensorflow_style" title="星夜"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><a id="more"></a>
-<p>玩机器学习对计算机的硬件要求很高，这是GPU的强项<br>下面这个实验在一台cpu为i5-4200H，8G内存的台式机上跑的结果，整个训练过程时长了5个小时，运行过程中使用TOP命令查看，CPU一直处于100%以上的负荷，如果有GPU的话，理论上时间应该再20分钟左右<br><strong>结论</strong> 没有GPU硬件的支持是玩不了机器学习的</p>
+<h2 id="CNN用于手写数字识别"><a href="#CNN用于手写数字识别" class="headerlink" title="CNN用于手写数字识别"></a>CNN用于手写数字识别</h2><p>每一层的每一个卷积操作，定义stride为1，Padding补充为0；每一个池化操作，都使用2x2的矩阵块中取出最大值</p>
+<h3 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h3><ul>
+<li>第一个卷积层<br>定义了32个通道（对应了32个卷积核），每一个卷积核是5x5的矩阵块<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># First convolutional layer - maps one grayscale image to 32 feature maps.</div><div class="line">W_conv1 = weight_variable([5, 5, 1, 32])</div><div class="line">b_conv1 = bias_variable([32])</div><div class="line">h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中weight_variable([5, 5, 1, 32])<br>前两个参数对应了卷积核的大小，第三个参数是输入的通道数(原始为灰度图像1个通道)，第四个参数为输出的通道数<br>最后用卷积后的结果作为relu神经元的构造函数，<strong>神经元里面定义了对应的激活函数</strong></p>
+<ul>
+<li>第一个池化层<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">h_pool1 = max_pool_2x2(h_conv1)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>第一个卷积层输出为32个通道，每一个通道的图像是28x28<br>经过一个2x2的池化层之后，输出的每一个通道的图像是14x14</p>
+<a id="more"></a>
+<h3 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h3><ul>
+<li>第二个卷积层<br>定义了64个通道（对应了64个卷积核），每一个卷积核是5x5的矩阵块<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">W_conv2 = weight_variable([5, 5, 32, 64])</div><div class="line">b_conv2 = bias_variable([64])</div><div class="line"></div><div class="line">h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>输入为32个通道每个通道为14x14的图像<br>经过卷积运算，输出为64个通道每个通道14x14的图像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">h_pool2 = max_pool_2x2(h_conv2)</div></pre></td></tr></table></figure>
+<ul>
+<li>第二个池化层<br>输入为64个通道每个通道14x14的图像<br>输出为64个通道每个通道7x7的图像</li>
+</ul>
+<h3 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h3><p>经过前两层已经完成了卷积运算，特征提取和降维<br>第三层叫做全连接层fully connected layer 也叫做 Densely Connected Layer<br>第二层的输出为64通道，每个通道为7x7的图像<br>所以先将第二层的输出flattern<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])</div></pre></td></tr></table></figure></p>
+<p>第三层我们定了了1024个神经元<br>所以做乘法需要1024<em>（7</em>7*64）个权重的参数<br>以及1024个bias偏差量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">W_fc1 = weight_variable([7 * 7 * 64, 1024])</div><div class="line">b_fc1 = bias_variable([1024])</div><div class="line"></div><div class="line">h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)</div></pre></td></tr></table></figure></p>
+<p>最后构造成relu神经元</p>
+<h3 id="Dropout层"><a href="#Dropout层" class="headerlink" title="Dropout层"></a>Dropout层</h3><p>为了避免过拟合添加了Dropout层<br>dropout的概念：就是在训练时，对每一批次的训练数据，关闭部分神经元，这样每一批次的数据只训练了部分神经元的参数，最后把这些参数累加并乘以一个系数得到训练后模型的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">keep_prob = tf.placeholder(tf.float32)</div><div class="line">h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)</div></pre></td></tr></table></figure></p>
+<p>通过keep_prob参数来控制需要关闭的神经元的比例</p>
+<h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><p>经过第三层之后输出为1024shape的数据<br>我们希望得到的属于10个数据的证据，可以将证据转为为概率<br>所以这一层的输出为10维的向量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">W_fc2 = weight_variable([1024, 10])</div><div class="line">b_fc2 = bias_variable([10])</div><div class="line"></div><div class="line">y_conv = tf.matmul(h_fc1_drop, W_fc2) + b_fc2</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -396,7 +413,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技术/" rel="tag"># 技术</a>
+            <a href="/tags/技术-深度学习/" rel="tag"># 技术 深度学习</a>
           
         </div>
       
@@ -409,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/04/Awk学习笔记/" rel="next" title="Awk学习笔记">
-                <i class="fa fa-chevron-left"></i> Awk学习笔记
+              <a href="/2017/07/06/手写数字识别/" rel="next" title="手写数字识别">
+                <i class="fa fa-chevron-left"></i> 手写数字识别
               </a>
             
           </div>
@@ -418,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/10/重定向/" rel="prev" title="重定向">
-                重定向 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -447,8 +460,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/06/tensorflow学习笔记/"
-           data-title="tensorflow学习笔记" data-url="http://yoursite.com/2017/05/06/tensorflow学习笔记/">
+      <div class="ds-thread" data-thread-key="2017/07/15/卷积神经网络/"
+           data-title="卷积神经网络（CNN）" data-url="http://yoursite.com/2017/07/15/卷积神经网络/">
       </div>
     
   </div>
@@ -545,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN用于手写数字识别"><span class="nav-number">3.</span> <span class="nav-text">CNN用于手写数字识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一层"><span class="nav-number">3.1.</span> <span class="nav-text">第一层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二层"><span class="nav-number">3.2.</span> <span class="nav-text">第二层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三层"><span class="nav-number">3.3.</span> <span class="nav-text">第三层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropout层"><span class="nav-number">3.4.</span> <span class="nav-text">Dropout层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出层"><span class="nav-number">3.5.</span> <span class="nav-text">输出层</span></a></li></ol></li></ol></div>
             
 
           </div>
