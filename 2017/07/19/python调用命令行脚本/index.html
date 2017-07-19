@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。
 阻塞态调用使用os模块，主要涉及到popen和system两种方法。这两种方法的区">
-<meta property="og:updated_time" content="2017-07-19T12:03:04.000Z">
+<meta property="og:updated_time" content="2017-07-19T12:06:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python调用命令行脚本">
 <meta name="twitter:description" content="阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。
@@ -341,7 +341,7 @@
       
         <p>阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。<br>两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。<br>在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。</p>
 <h2 id="阻塞态调用"><a href="#阻塞态调用" class="headerlink" title="阻塞态调用"></a>阻塞态调用</h2><p>使用os模块，主要涉及到popen和system两种方法。<br>这两种方法的区别参考一下<a href="http://blog.csdn.net/windone0109/article/details/8895875" target="_blank" rel="external">链接</a><br>os.system(cmd) 返回的是程序运行的结果状态，比如程序运行成功，则返回0，有错误则返回其对应的错误代码<br>os.popen(cmd) 返回的是程序输出的结果，比如cmd=“ls”的时候，通过popen就可以得到ls的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd = &quot;echo hello wolrd&quot;</div><div class="line">ret = os.popen</div><div class="line">information = os.system</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd = &quot;echo hello wolrd&quot;</div><div class="line">ret = os.popen(cmd)</div><div class="line">information = os.system(cmd)</div></pre></td></tr></table></figure>
 <h2 id="非阻塞态调用"><a href="#非阻塞态调用" class="headerlink" title="非阻塞态调用"></a>非阻塞态调用</h2><p>非阻塞态调用主要用到了subprocess 这个<a href="https://docs.python.org/2/library/subprocess.html" target="_blank" rel="external">模块</a><br>简单的用法就用subprocess.call(cmd)就可以了<br>更高级复杂的用法可以使用subprocess.popen(cmd)<br>比如说有时候因为环境变量的配置我们需要在特点的目录下执行脚本，就可以使用subprocess.popen的cwd参数,要配置环境变量而不是继承原有的环境变量可以使用env参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">workingDirector = r&quot;C:/testcode&quot;</div><div class="line">cmd = r&quot;test.bat&quot;</div><div class="line">subprocess.popen(cmd,cwd=workingDirector)</div></pre></td></tr></table></figure></p>
 
       
