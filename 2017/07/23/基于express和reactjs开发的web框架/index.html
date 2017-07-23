@@ -99,7 +99,7 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 使用到的主要工具介绍
 Express：基于nodejs的后端框架
 Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色，Model以及Control类似的功能可以">
-<meta property="og:updated_time" content="2017-07-23T11:07:34.000Z">
+<meta property="og:updated_time" content="2017-07-23T11:13:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于express和reactjs开发的web框架">
 <meta name="twitter:description" content="前几个月基于express和reactjs写过几个简单的web应用，现在回过头来看很多代码都想不起来了。这周利用下班时间重新将这个框架梳理了一下，并写下这篇文章作为基于这两个框架开发web应用的BKM。
@@ -361,8 +361,19 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 <li>用户登入状态控制：用户的每一次访问根据cookie中的session id进行用户登录状态的控制，未登录用户无法看到定制的信息。<a id="more"></a></li>
 <li>业务逻辑：根据业务需求在main页面中进行业务逻辑的开发</li>
 </ul>
-<h2 id="Reactjs-Redux的前端框架介绍"><a href="#Reactjs-Redux的前端框架介绍" class="headerlink" title="Reactjs + Redux的前端框架介绍"></a>Reactjs + Redux的前端框架介绍</h2><p>框架的<a href="https://github.com/buckyroberts/React-Redux-Boilerplate" target="_blank" rel="external">介绍</a><br>这里介绍一下我在写这个框架的时候的一些BKM：<br>一般在javascript目录下面建立三个目录：一个react目录，是开发的前端代码；一个babel目录：是将react目录下代码经过babel转译之后得到的代码;一个webpack目录：是将babel目录下需要嵌入在html中的代码打包之后的代码。<br>其中只在react目录下开发我们的代码：<br>react的根目录下面：有一个store.js文件，这个是在redux中存储应用状态和数据的。除了store.js之外的文件都是component文件，就是html页面的显示元件，component文件可以通过container目录下面的各个container文件包含的模块化的组件拼凑出来，因此我们说reactjs很好的做到了前端组件的模块化和复用。<br>react目录下面的container目录包含了就是前端模块化的组件。<br>react目录下面的action目录下的代码功能类似于MVC模型中的control，就是一些前端的触发函数，在这些函数被执行之后可以dispatch一些action，reducer就在监听这些action，并获得action的返回数据<br>react目录下面的reducer目录下的代码，就在监听action目录下代码派发的action，一旦监听到对应的代码，就可以触发页面跳转或者返回状态数据到store当中，这些数据通过store和container绑定的，就会触发container中对应的数据的更新。</p>
-<h4 id="一些常见的问题"><a href="#一些常见的问题" class="headerlink" title="一些常见的问题"></a>一些常见的问题</h4><p>react：component的名字要大写开头<br>redux： reducer下面每个case里面返回的对象每一次都需要新建，可以用object.assign(用在单个对象添加属性可以返回新的对象)，用filter也会新建对象(可以用在数组上面)，<br>redux如何获取服务器端数据库的数据，在action里面写restful的请求给服务器端，需要配置多个action，一个action1发送请求，在action1获得请求的数据处理中dispatch一个数据完成的action</p>
+<h2 id="Reactjs-Redux的前端框架介绍"><a href="#Reactjs-Redux的前端框架介绍" class="headerlink" title="Reactjs + Redux的前端框架介绍"></a>Reactjs + Redux的前端框架介绍</h2><p>框架的<a href="https://github.com/buckyroberts/React-Redux-Boilerplate" target="_blank" rel="external">介绍</a><br>这里介绍一下我在写这个框架的时候的一些BKM：</p>
+<ul>
+<li><p>一般在javascript目录下面建立三个目录：一个react目录，是开发的前端代码；一个babel目录：是将react目录下代码经过babel转译之后得到的代码;一个webpack目录：是将babel目录下需要嵌入在html中的代码打包之后的代码。</p>
+</li>
+<li><p>其中只在react目录下开发我们的代码：react的根目录下面：有一个store.js文件，这个是在redux中存储应用状态和数据的。除了store.js之外的文件都是component文件，就是html页面的显示元件，component文件可以通过container目录下面的各个container文件包含的模块化的组件拼凑出来，因此我们说reactjs很好的做到了前端组件的模块化和复用。</p>
+</li>
+<li><p>react目录下面的container目录包含了就是前端模块化的组件。<br>react目录下面的action目录下的代码功能类似于MVC模型中的control，就是一些前端的触发函数，在这些函数被执行之后可以dispatch一些action，reducer就在监听这些action，并获得action的返回数据</p>
+</li>
+<li><p>react目录下面的reducer目录下的代码，就在监听action目录下代码派发的action，一旦监听到对应的代码，就可以触发页面跳转或者返回状态数据到store当中，这些数据通过store和container绑定的，就会触发container中对应的数据的更新。</p>
+</li>
+<li><p>一些常见的问题<br>react：component的名字要大写开头<br>redux： reducer下面每个case里面返回的对象每一次都需要新建，可以用object.assign(用在单个对象添加属性可以返回新的对象)，用filter也会新建对象(可以用在数组上面)，<br>redux如何获取服务器端数据库的数据，在action里面写restful的请求给服务器端，需要配置多个action，一个action1发送请求，在action1获得请求的数据处理中dispatch一个数据完成的action</p>
+</li>
+</ul>
 <h2 id="代码的链接"><a href="#代码的链接" class="headerlink" title="代码的链接"></a>代码的链接</h2><p>github托管的代码的链接<a href="https://github.com/Leslie-Fang/express_reactjs" target="_blank" rel="external">地址</a><br>其中相对于master分支，develop分支实现了用户数据在session中的储存，用户的登出功能。</p>
 <h2 id="下一步开发计划"><a href="#下一步开发计划" class="headerlink" title="下一步开发计划"></a>下一步开发计划</h2><ul>
 <li>用户登入部分改成https的请求</li>
@@ -535,7 +546,7 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用到的主要工具介绍"><span class="nav-number">1.</span> <span class="nav-text">使用到的主要工具介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架实现的基础功能"><span class="nav-number">2.</span> <span class="nav-text">框架实现的基础功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactjs-Redux的前端框架介绍"><span class="nav-number">3.</span> <span class="nav-text">Reactjs + Redux的前端框架介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一些常见的问题"><span class="nav-number">3.0.1.</span> <span class="nav-text">一些常见的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码的链接"><span class="nav-number">4.</span> <span class="nav-text">代码的链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步开发计划"><span class="nav-number">5.</span> <span class="nav-text">下一步开发计划</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用到的主要工具介绍"><span class="nav-number">1.</span> <span class="nav-text">使用到的主要工具介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架实现的基础功能"><span class="nav-number">2.</span> <span class="nav-text">框架实现的基础功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactjs-Redux的前端框架介绍"><span class="nav-number">3.</span> <span class="nav-text">Reactjs + Redux的前端框架介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码的链接"><span class="nav-number">4.</span> <span class="nav-text">代码的链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步开发计划"><span class="nav-number">5.</span> <span class="nav-text">下一步开发计划</span></a></li></ol></div>
             
 
           </div>
