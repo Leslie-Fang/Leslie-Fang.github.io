@@ -99,7 +99,7 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 使用到的主要工具介绍
 Express：基于nodejs的后端框架
 Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色，Model以及Control类似的功能可以">
-<meta property="og:updated_time" content="2017-08-04T11:33:57.000Z">
+<meta property="og:updated_time" content="2017-08-04T14:28:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于express和reactjs开发的web框架">
 <meta name="twitter:description" content="前几个月基于express和reactjs写过几个简单的web应用，现在回过头来看很多代码都想不起来了。这周利用下班时间重新将这个框架梳理了一下，并写下这篇文章作为基于这两个框架开发web应用的BKM。
@@ -374,7 +374,8 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 <li><p>一些常见的问题<br>react：component的名字要大写开头<br>redux： reducer下面每个case里面返回的对象每一次都需要新建，可以用object.assign(用在单个对象添加属性可以返回新的对象)，用filter也会新建对象(可以用在数组上面)，<br>redux如何获取服务器端数据库的数据，在action里面写restful的请求给服务器端，需要配置多个action，一个action1发送请求，在action1获得请求的数据处理中dispatch一个数据完成的action</p>
 </li>
 </ul>
-<h2 id="使用redux实现撤销undo和再做redo功能"><a href="#使用redux实现撤销undo和再做redo功能" class="headerlink" title="使用redux实现撤销undo和再做redo功能"></a>使用redux实现撤销undo和再做redo功能</h2><h2 id="代码的链接"><a href="#代码的链接" class="headerlink" title="代码的链接"></a>代码的链接</h2><p>github托管的代码的链接<a href="https://github.com/Leslie-Fang/express_reactjs" target="_blank" rel="external">地址</a><br>其中相对于master分支，develop分支实现了用户数据在session中的储存，用户的登出功能。</p>
+<h2 id="使用redux实现撤销undo和再做redo功能"><a href="#使用redux实现撤销undo和再做redo功能" class="headerlink" title="使用redux实现撤销undo和再做redo功能"></a>使用redux实现撤销undo和再做redo功能</h2><p>基本的思想，就是在原有的reducer的基础上，新建一个高阶的reducer（什么是高阶：就是指函数返回的值也是函数）</p>
+<h2 id="代码的链接"><a href="#代码的链接" class="headerlink" title="代码的链接"></a>代码的链接</h2><p>github托管的代码的链接<a href="https://github.com/Leslie-Fang/express_reactjs" target="_blank" rel="external">地址</a><br>其中相对于master分支，develop分支实现了用户数据在session中的储存，用户的登出功能。</p>
 <h2 id="下一步开发计划"><a href="#下一步开发计划" class="headerlink" title="下一步开发计划"></a>下一步开发计划</h2><ul>
 <li>用户登入部分改成https的请求</li>
 </ul>
