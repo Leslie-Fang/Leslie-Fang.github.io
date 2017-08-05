@@ -99,7 +99,7 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 使用到的主要工具介绍
 Express：基于nodejs的后端框架
 Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色，Model以及Control类似的功能可以">
-<meta property="og:updated_time" content="2017-08-05T12:39:31.000Z">
+<meta property="og:updated_time" content="2017-08-05T12:40:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于express和reactjs开发的web框架">
 <meta name="twitter:description" content="前几个月基于express和reactjs写过几个简单的web应用，现在回过头来看很多代码都想不起来了。这周利用下班时间重新将这个框架梳理了一下，并写下这篇文章作为基于这两个框架开发web应用的BKM。
@@ -379,8 +379,9 @@ Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色�
 <ol>
 <li>如果没有监测到undo或者redo的action，就会触发default的操作，在default操作中会先调用saveCurrentCommentState这个基本的reducer看看是否有正常的状态转移（也就是判断一下是不是状态转移的action触发的，还是和当前的reducer没有半毛钱关系的action触发的），如果是正常的状态转移，那么当前的state加入到past里面，更新当前的state。</li>
 <li>如果监测到undo的action，就会把当前的state放入到future中，从past里面取一个state出来放到当前的state里面</li>
-<li>如果监测到redo的action，就把当前的state放入到past里面，从future里面取状态回来。<br>主要的实现逻辑就是这些。当然在这部分代码里面还可以进一步添加，undo的时候是不是past里面存有过去的状态（即是不是完全popout的），redo的时候也需要看看future里面的状态是不是完全popout的。</li>
+<li>如果监测到redo的action，就把当前的state放入到past里面，从future里面取状态回来。</li>
 </ol>
+<p>主要的实现逻辑就是这些。当然在这部分代码里面还可以进一步添加，undo的时候是不是past里面存有过去的状态（即是不是完全popout的），redo的时候也需要看看future里面的状态是不是完全popout的。</p>
 <h2 id="代码的链接"><a href="#代码的链接" class="headerlink" title="代码的链接"></a>代码的链接</h2><p>github托管的代码的链接<a href="https://github.com/Leslie-Fang/express_reactjs" target="_blank" rel="external">地址</a><br>其中相对于master分支，develop分支实现了用户数据在session中的储存，用户的登出功能。</p>
 <h2 id="下一步开发计划"><a href="#下一步开发计划" class="headerlink" title="下一步开发计划"></a>下一步开发计划</h2><ul>
 <li>用户登入部分改成https的请求</li>
