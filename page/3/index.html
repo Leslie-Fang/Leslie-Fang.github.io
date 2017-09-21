@@ -250,6 +250,137 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/python调用命令行脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/19/python调用命令行脚本/" itemprop="url">
+                  python调用命令行脚本
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T19:45:49+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/19/python调用命令行脚本/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/19/python调用命令行脚本/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。<br>两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。<br>在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。</p>
+<h2 id="阻塞态调用"><a href="#阻塞态调用" class="headerlink" title="阻塞态调用"></a>阻塞态调用</h2><p>使用os模块，主要涉及到popen和system两种方法。<br>这两种方法的区别参考一下<a href="http://blog.csdn.net/windone0109/article/details/8895875" target="_blank" rel="external">链接</a><br>os.system(cmd) 返回的是程序运行的结果状态，比如程序运行成功，则返回0，有错误则返回其对应的错误代码<br>os.popen(cmd) 返回的是程序输出的结果，比如cmd=“ls”的时候，通过popen就可以得到ls的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd = &quot;echo hello wolrd&quot;</div><div class="line">ret = os.popen(cmd)</div><div class="line">information = os.system(cmd)</div></pre></td></tr></table></figure>
+<h2 id="非阻塞态调用"><a href="#非阻塞态调用" class="headerlink" title="非阻塞态调用"></a>非阻塞态调用</h2><p>非阻塞态调用主要用到了subprocess 这个<a href="https://docs.python.org/2/library/subprocess.html" target="_blank" rel="external">模块</a><br>简单的用法就用subprocess.call(cmd)就可以了<br>更高级复杂的用法可以使用subprocess.popen(cmd)<br>比如说有时候因为环境变量的配置我们需要在特点的目录下执行脚本，就可以使用subprocess.popen的cwd参数,要配置环境变量而不是继承原有的环境变量可以使用env参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">workingDirector = r&quot;C:/testcode&quot;</div><div class="line">cmd = r&quot;test.bat&quot;</div><div class="line">subprocess.popen(cmd,cwd=workingDirector)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/15/卷积神经网络/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -519,152 +650,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/Python类与继承/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/27/Python类与继承/" itemprop="url">
-                  Python类与继承
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T19:15:18+08:00">
-                2017-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/27/Python类与继承/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/27/Python类与继承/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="类变量与实例变量"><a href="#类变量与实例变量" class="headerlink" title="类变量与实例变量"></a>类变量与实例变量</h2><p>看这个<a href="!https://stackoverflow.com/questions/8701500/python-class-instance-variables-and-class-variables">例子</a><br>因为当用self.var去call一个变量的时候的顺序是<strong>实例的dict-&gt;类的dict-&gt;基类</strong><br>也就是如果再实例里面找到这个变量相同的名字，就用实例的变量，没有找到就去找类变量，再没有找到就会找基类的变量，最后还没有找到就会报错<br>类变量还可以用 类名.变量名去调用<br>实例变量只可以用self.变量名</p>
-<h2 id="类的实例方法，静态方法与类方法"><a href="#类的实例方法，静态方法与类方法" class="headerlink" title="类的实例方法，静态方法与类方法"></a>类的实例方法，静态方法与类方法</h2><p>参考这个<a href="!https://www.zhihu.com/question/20021164">链接</a></p>
-<ol>
-<li><p>实例方法<br>形式：<br>class A(object):<br>def function(self,var1):<br>最常见的方法包括了<strong>init</strong>等函数</p>
-</li>
-<li><p>类方法<br>用@classmethod修饰，需要传入一个非self参数，这个参数的名字常写作cls或者cls_obj(也可以是其它名字，不是self), <strong>可以被实例调用也可以被对象调用</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Person(object):</div><div class="line">    num = 0</div><div class="line">    def __init__(self,name):</div><div class="line">        self.name=name</div><div class="line">        Person.num +=1</div><div class="line">    @classmethod</div><div class="line">    def get_nomber_of_instance(cls):</div><div class="line">        return cls.num</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print(&quot;hello world&quot;)</div><div class="line">    a = Person(&quot;bob&quot;)</div><div class="line">    b = Person(&quot;bob2&quot;)</div><div class="line">    print(Person.get_nomber_of_instance())</div><div class="line">    print(a.get_nomber_of_instance())</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这样的好处是在类的内部，通过第一个参数cls把类传递出来</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/27/Python类与继承/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -709,7 +699,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

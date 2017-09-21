@@ -250,6 +250,188 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/21/docker/" itemprop="url">
+                  docker
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T19:20:39+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/21/docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/docker/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li>docker ps: 查看正在运行的container</li>
+<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy" target="_blank" rel="external">https://docs.docker.com/get-started/part2/#apppy</a></li>
+<li><p>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</p>
+</li>
+<li><p>docker image ls 查看有没有生成镜像</p>
+</li>
+<li><p>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</p>
+</li>
+<li><p>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</p>
+</li>
+<li><p>停止正在运行的container<br>docker stop container_id</p>
+</li>
+<li><p>删除container<br>docker rm container_id</p>
+</li>
+<li><p>删除image<br>docker rmi image_id（必须要保证这个image没有container在使用）</p>
+</li>
+</ul>
+<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
+<p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
+<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息</p>
+<p>##　创建services:<br>scale our application by running this container in a service<br>用service可以实现负载均衡<br>一个service其实就是定义了一个镜像如何跑（运行在哪个端口，跑多少个container）<br>用docker-compose.yml文件去定义:</p>
+<p>创建完compose文件之后</p>
+<ul>
+<li>docker swarm init（多张网卡的话：docker swarm init –advertise-addr 10.239.182.67）</li>
+<li><p>docker stack deploy -c docker-compose.yml appname(自己定义一个名字)</p>
+</li>
+<li><p>查看正在运行的service<br>docker service ls</p>
+</li>
+<li><p>查看每个容器进程的process id<br>docker service ps service_id</p>
+</li>
+<li><p>docker inspect container_name(通过docker container ls可以查看)</p>
+</li>
+<li>docker inspect –format{} container_name 来限制输出的内容</li>
+</ul>
+<h3 id="scale利用swarm进行伸缩"><a href="#scale利用swarm进行伸缩" class="headerlink" title="scale利用swarm进行伸缩"></a>scale利用swarm进行伸缩</h3><p>直接修改docker-compose.yml文件中的replicas的个数<br>然后重启docker： docker stack deploy -c docker-compose.yml appname<br>不需要停止原来的app，热更新</p>
+<ul>
+<li>停止stack<br>docker stack rm appname 删除了service，但是container还在<br>docker swarm leave –force 删除container</li>
+</ul>
+<h2 id="Swarms"><a href="#Swarms" class="headerlink" title="Swarms:"></a>Swarms:</h2><p>多台机器(实体机或者虚拟机)<br>有一台机器作为swarm manager,所有的命令都在swarm manager上运行<br>Swarm managers are the only machines in a swarm that can <strong>execute your commands</strong>, or authorize other machines to join the swarm as workers. Workers are just there to provide capacity and do not have the authority to tell any other machine what it can and cannot do.</p>
+<p>在swarm manager上运行docker swarm init（多张网卡的话：docker * swarm init –advertise-addr 10.239.182.67）使能swarm模式。在其它节点的机器上面运行docker swarm join使其它机器加入swarm作为workers<br>docker swarm init 会返回告诉你docker swarm join的命令里面的token怎么敲</p>
+<p>在其它机器上运行docker swarm join，让其它机器加入<br>如果没办法加入，首先确保关闭manager的防火墙：<br><a href="http://www.jianshu.com/p/3ab849248b52" target="_blank" rel="external">http://www.jianshu.com/p/3ab849248b52</a></p>
+<p>docker的各个端口的作用：<br><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7</a></p>
+<p>在公司电脑上是有可能是代理的问题：<br><a href="https://github.com/moby/moby/issues/34825" target="_blank" rel="external">https://github.com/moby/moby/issues/34825</a></p>
+<p>在/etc/systemd/system/docker.service.d/<br>[Service]<br>Environment=”http_proxy=<a href="http://child-prc.intel.com:913" target="_blank" rel="external">http://child-prc.intel.com:913</a>“ “NO_PROXY=localhost,127.0.0.1,10.239.182.67”<br>把manager的地址添加到no_proxy里面</p>
+<p>在manager上运行docker node ls查看机器个数</p>
+<p>##　stack:<br>A stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.</p>
+<p>在docker-compose.yml文件的services的tag下面再去定义一个service<br>多个service一起部署</p>
+<p>##　kubernetes<br>作用和docker swarm类似（解决容器编排问题），但是比swarm更强大</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>pod：容器的集合，一个pod可以包含一个或多个container。一个pod内运行相同业务的容器，一个pod只能运行在一台机器上</li>
+<li>replicateion controller(rc) 管理pod，保证任何时间有特定数量的pod在运行，多了删除pod，少了创建pod</li>
+<li>service：将pod提供的服务暴露到外网</li>
+<li>label： 用于区分 pod,rc,service的key/value pair</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/应届毕业生办理落户/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -525,155 +707,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/crontab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/10/crontab/" itemprop="url">
-                  crontab
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T10:58:08+08:00">
-                2017-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/10/crontab/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/10/crontab/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>crontab常用来周期性的执行命令。</p>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>service cron(crond) status //ubuntu 和centos有不同</p>
-<p>service cron(crond) start(restart,reload)  //如果没有启动，启动一下</p>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>查看crontab命令：<figure class="highlight plain"><figcaption><span>-l``` :系统级配置的任务好像无法通过crontab -l 来查看</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">编辑crontab命令:```crontab -e</div></pre></td></tr></table></figure></p>
-<p>移除crontab命令:<figure class="highlight plain"><figcaption><span>-r```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 修改配置文件</div><div class="line">系统级配置:在/etc/crontab 文件中编辑</div><div class="line"></div><div class="line">用户级配置:用特定用户登录，在命令行中配置命令，是配置和用户相关的```crontab -e</div></pre></td></tr></table></figure></p>
-<p>将命令写入文件中，然后直接crontab filename来读取文件中的所有命令</p>
-<h3 id="配置文件的写法："><a href="#配置文件的写法：" class="headerlink" title="配置文件的写法："></a>配置文件的写法：</h3><ul>
-<li>周期性定时执行</li>
-</ul>
-<p>分     小时    日       月       星期     命令</p>
-<p>0-59   0-23   1-31   1-12     0-6     command     (取值范围,0表示周日一般一行对应一个任务)</p>
-<p>日中有数字，表示的每个月到这一日都会执行<br>月中有数字，表示每年到这个月都会执行<br>星期中有数组，表示每周到这一天都会执行</p>
-<ul>
-<li>在特定时候执行</li>
-</ul>
-<p>@reboot command<br>such as：<br>@reboot root /bin/bash /test.sh</p>
-<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>查看/var/log/cron文件</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -718,7 +756,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

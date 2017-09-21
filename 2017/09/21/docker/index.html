@@ -87,28 +87,25 @@
 
 
 
-<meta name="description" content="玻尔兹曼机
-
-过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
-
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
+<meta name="description" content="常用命令
+docker ps: 查看正在运行的container
+通过dockerfile去定义image： https://docs.docker.com/get-started/part2/#apppy
+dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)important:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度学习知识点">
-<meta property="og:url" content="http://yoursite.com/2017/09/13/深度学习知识点/index.html">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://yoursite.com/2017/09/21/docker/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="玻尔兹曼机
-
-过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
-
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
-<meta property="og:updated_time" content="2017-09-20T15:01:33.000Z">
+<meta property="og:description" content="常用命令
+docker ps: 查看正在运行的container
+通过dockerfile去定义image： https://docs.docker.com/get-started/part2/#apppy
+dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)important:">
+<meta property="og:updated_time" content="2017-09-21T12:54:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深度学习知识点">
-<meta name="twitter:description" content="玻尔兹曼机
-
-过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
-
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
+<meta name="twitter:title" content="docker">
+<meta name="twitter:description" content="常用命令
+docker ps: 查看正在运行的container
+通过dockerfile去定义image： https://docs.docker.com/get-started/part2/#apppy
+dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)important:">
 
 
 
@@ -136,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/13/深度学习知识点/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/21/docker/"/>
 
 
 
 
 
-  <title> 深度学习知识点 | 沉思语录 </title>
+  <title> docker | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -261,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/深度学习知识点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -282,7 +279,7 @@
             
             
               
-                深度学习知识点
+                docker
               
             
           </h1>
@@ -297,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T22:05:39+08:00">
-                2017-09-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T19:20:39+08:00">
+                2017-09-21
               </time>
             
 
@@ -316,8 +313,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/13/深度学习知识点/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/13/深度学习知识点/" itemprop="commentCount"></span>
+                <a href="/2017/09/21/docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/docker/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,29 +345,60 @@
       
 
       
-        <ul>
-<li><p>玻尔兹曼机</p>
+        <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li>docker ps: 查看正在运行的container</li>
+<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy" target="_blank" rel="external">https://docs.docker.com/get-started/part2/#apppy</a></li>
+<li><p>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</p>
 </li>
-<li><p>过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）<br>训练数据太少，模型参数太多<br>解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）</p>
+<li><p>docker image ls 查看有没有生成镜像</p>
 </li>
-<li><p>交叉验证<br><a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81" target="_blank" rel="external">https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81</a><br>将数据集分成多个多个小的数据集，先用小数据集1训练，用小数据集2验证（评估正则化函数），直到最后一个小的数据集被用于验证</p>
+<li><p>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</p>
 </li>
-<li><p>极大似然估计<br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">http://www.jianshu.com/p/f1d3906e4a3e</a></p>
+<li><p>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</p>
+</li>
+<li><p>停止正在运行的container<br>docker stop container_id</p>
+</li>
+<li><p>删除container<br>docker rm container_id</p>
+</li>
+<li><p>删除image<br>docker rmi image_id（必须要保证这个image没有container在使用）</p>
 </li>
 </ul>
+<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
+<p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
+<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息</p>
+<p>##　创建services:<br>scale our application by running this container in a service<br>用service可以实现负载均衡<br>一个service其实就是定义了一个镜像如何跑（运行在哪个端口，跑多少个container）<br>用docker-compose.yml文件去定义:</p>
+<p>创建完compose文件之后</p>
 <ul>
-<li><p>激活函数<br>在神经网络中引入非线性的成分<br>sigmod：0，1之间<br>tanh：-1，1之间<br>softmax: 多分类，一般用在输出层的激活</p>
+<li>docker swarm init（多张网卡的话：docker swarm init –advertise-addr 10.239.182.67）</li>
+<li><p>docker stack deploy -c docker-compose.yml appname(自己定义一个名字)</p>
 </li>
-<li><p>epoch、 iteration和batchsize<br><a href="http://blog.csdn.net/sinat_30071459/article/details/50721565" target="_blank" rel="external">http://blog.csdn.net/sinat_30071459/article/details/50721565</a></p>
+<li><p>查看正在运行的service<br>docker service ls</p>
 </li>
-<li><p>交叉熵<br><a href="https://zhuanlan.zhihu.com/p/27223959" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27223959</a><br>在机器学习中，可以用交叉熵来定义loss function</p>
+<li><p>查看每个容器进程的process id<br>docker service ps service_id</p>
 </li>
-<li><p>BP神经网络<br>反向传播计算——BackPropagation<br>单个参数：<a href="http://www.cnblogs.com/charlotte77/p/5629865.html" target="_blank" rel="external">http://www.cnblogs.com/charlotte77/p/5629865.html</a><br>矩阵计算：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
+<li><p>docker inspect container_name(通过docker container ls可以查看)</p>
 </li>
-<li><p>卷积神经网络CNN<br>局部连接，参数共享，卷积，池化等概念<br>介绍：<a href="http://www.jeyzhang.com/cnn-learning-notes-1.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-1.html</a><br>模型训练：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
-</li>
-<li><p>局部对比归一化<br>Local contrast normalization<br><a href="http://blog.csdn.net/zouxy09/article/details/10007237" target="_blank" rel="external">http://blog.csdn.net/zouxy09/article/details/10007237</a></p>
-</li>
+<li>docker inspect –format{} container_name 来限制输出的内容</li>
+</ul>
+<h3 id="scale利用swarm进行伸缩"><a href="#scale利用swarm进行伸缩" class="headerlink" title="scale利用swarm进行伸缩"></a>scale利用swarm进行伸缩</h3><p>直接修改docker-compose.yml文件中的replicas的个数<br>然后重启docker： docker stack deploy -c docker-compose.yml appname<br>不需要停止原来的app，热更新</p>
+<ul>
+<li>停止stack<br>docker stack rm appname 删除了service，但是container还在<br>docker swarm leave –force 删除container</li>
+</ul>
+<h2 id="Swarms"><a href="#Swarms" class="headerlink" title="Swarms:"></a>Swarms:</h2><p>多台机器(实体机或者虚拟机)<br>有一台机器作为swarm manager,所有的命令都在swarm manager上运行<br>Swarm managers are the only machines in a swarm that can <strong>execute your commands</strong>, or authorize other machines to join the swarm as workers. Workers are just there to provide capacity and do not have the authority to tell any other machine what it can and cannot do.</p>
+<p>在swarm manager上运行docker swarm init（多张网卡的话：docker * swarm init –advertise-addr 10.239.182.67）使能swarm模式。在其它节点的机器上面运行docker swarm join使其它机器加入swarm作为workers<br>docker swarm init 会返回告诉你docker swarm join的命令里面的token怎么敲</p>
+<p>在其它机器上运行docker swarm join，让其它机器加入<br>如果没办法加入，首先确保关闭manager的防火墙：<br><a href="http://www.jianshu.com/p/3ab849248b52" target="_blank" rel="external">http://www.jianshu.com/p/3ab849248b52</a></p>
+<p>docker的各个端口的作用：<br><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7</a></p>
+<p>在公司电脑上是有可能是代理的问题：<br><a href="https://github.com/moby/moby/issues/34825" target="_blank" rel="external">https://github.com/moby/moby/issues/34825</a></p>
+<p>在/etc/systemd/system/docker.service.d/<br>[Service]<br>Environment=”http_proxy=<a href="http://child-prc.intel.com:913" target="_blank" rel="external">http://child-prc.intel.com:913</a>“ “NO_PROXY=localhost,127.0.0.1,10.239.182.67”<br>把manager的地址添加到no_proxy里面</p>
+<p>在manager上运行docker node ls查看机器个数</p>
+<p>##　stack:<br>A stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.</p>
+<p>在docker-compose.yml文件的services的tag下面再去定义一个service<br>多个service一起部署</p>
+<p>##　kubernetes<br>作用和docker swarm类似（解决容器编排问题），但是比swarm更强大</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>pod：容器的集合，一个pod可以包含一个或多个container。一个pod内运行相同业务的容器，一个pod只能运行在一台机器上</li>
+<li>replicateion controller(rc) 管理pod，保证任何时间有特定数量的pod在运行，多了删除pod，少了创建pod</li>
+<li>service：将pod提供的服务暴露到外网</li>
+<li>label： 用于区分 pod,rc,service的key/value pair</li>
 </ul>
 
       
@@ -408,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/10/crontab/" rel="next" title="crontab">
-                <i class="fa fa-chevron-left"></i> crontab
+              <a href="/2017/09/19/应届毕业生办理落户/" rel="next" title="应届毕业生办理落户">
+                <i class="fa fa-chevron-left"></i> 应届毕业生办理落户
               </a>
             
           </div>
@@ -417,10 +445,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/19/应届毕业生办理落户/" rel="prev" title="应届毕业生办理落户">
-                应届毕业生办理落户 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -446,8 +470,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/09/13/深度学习知识点/"
-           data-title="深度学习知识点" data-url="http://yoursite.com/2017/09/13/深度学习知识点/">
+      <div class="ds-thread" data-thread-key="2017/09/21/docker/"
+           data-title="docker" data-url="http://yoursite.com/2017/09/21/docker/">
       </div>
     
   </div>
@@ -471,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -525,6 +558,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">2.</span> <span class="nav-text">上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale利用swarm进行伸缩"><span class="nav-number">2.1.</span> <span class="nav-text">scale利用swarm进行伸缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swarms"><span class="nav-number">3.</span> <span class="nav-text">Swarms:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">4.</span> <span class="nav-text">基本概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
