@@ -336,10 +336,9 @@
 
       
         
-          
-            <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+          <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
 <li>docker ps: 查看正在运行的container</li>
-<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy" target="_blank" rel="external">https://docs.docker.com/get-started/part2/#apppy</a></li>
+<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy">https://docs.docker.com/get-started/part2/#apppy</a></li>
 <li><p>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</p>
 </li>
 <li><p>docker image ls 查看有没有生成镜像</p>
@@ -357,43 +356,14 @@
 </ul>
 <h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
 <p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
-<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息</p>
-<p>##　创建services:<br>scale our application by running this container in a service<br>用service可以实现负载均衡<br>一个service其实就是定义了一个镜像如何跑（运行在哪个端口，跑多少个container）<br>用docker-compose.yml文件去定义:</p>
-<p>创建完compose文件之后</p>
-<ul>
-<li>docker swarm init（多张网卡的话：docker swarm init –advertise-addr 10.239.182.67）</li>
-<li><p>docker stack deploy -c docker-compose.yml appname(自己定义一个名字)</p>
-</li>
-<li><p>查看正在运行的service<br>docker service ls</p>
-</li>
-<li><p>查看每个容器进程的process id<br>docker service ps service_id</p>
-</li>
-<li><p>docker inspect container_name(通过docker container ls可以查看)</p>
-</li>
-<li>docker inspect –format{} container_name 来限制输出的内容</li>
-</ul>
-<h3 id="scale利用swarm进行伸缩"><a href="#scale利用swarm进行伸缩" class="headerlink" title="scale利用swarm进行伸缩"></a>scale利用swarm进行伸缩</h3><p>直接修改docker-compose.yml文件中的replicas的个数<br>然后重启docker： docker stack deploy -c docker-compose.yml appname<br>不需要停止原来的app，热更新</p>
-<ul>
-<li>停止stack<br>docker stack rm appname 删除了service，但是container还在<br>docker swarm leave –force 删除container</li>
-</ul>
-<h2 id="Swarms"><a href="#Swarms" class="headerlink" title="Swarms:"></a>Swarms:</h2><p>多台机器(实体机或者虚拟机)<br>有一台机器作为swarm manager,所有的命令都在swarm manager上运行<br>Swarm managers are the only machines in a swarm that can <strong>execute your commands</strong>, or authorize other machines to join the swarm as workers. Workers are just there to provide capacity and do not have the authority to tell any other machine what it can and cannot do.</p>
-<p>在swarm manager上运行docker swarm init（多张网卡的话：docker * swarm init –advertise-addr 10.239.182.67）使能swarm模式。在其它节点的机器上面运行docker swarm join使其它机器加入swarm作为workers<br>docker swarm init 会返回告诉你docker swarm join的命令里面的token怎么敲</p>
-<p>在其它机器上运行docker swarm join，让其它机器加入<br>如果没办法加入，首先确保关闭manager的防火墙：<br><a href="http://www.jianshu.com/p/3ab849248b52" target="_blank" rel="external">http://www.jianshu.com/p/3ab849248b52</a></p>
-<p>docker的各个端口的作用：<br><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7</a></p>
-<p>在公司电脑上是有可能是代理的问题：<br><a href="https://github.com/moby/moby/issues/34825" target="_blank" rel="external">https://github.com/moby/moby/issues/34825</a></p>
-<p>在/etc/systemd/system/docker.service.d/<br>[Service]<br>Environment=”http_proxy=<a href="http://child-prc.intel.com:913" target="_blank" rel="external">http://child-prc.intel.com:913</a>“ “NO_PROXY=localhost,127.0.0.1,10.239.182.67”<br>把manager的地址添加到no_proxy里面</p>
-<p>在manager上运行docker node ls查看机器个数</p>
-<p>##　stack:<br>A stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.</p>
-<p>在docker-compose.yml文件的services的tag下面再去定义一个service<br>多个service一起部署</p>
-<p>##　kubernetes<br>作用和docker swarm类似（解决容器编排问题），但是比swarm更强大</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li>pod：容器的集合，一个pod可以包含一个或多个container。一个pod内运行相同业务的容器，一个pod只能运行在一台机器上</li>
-<li>replicateion controller(rc) 管理pod，保证任何时间有特定数量的pod在运行，多了删除pod，少了创建pod</li>
-<li>service：将pod提供的服务暴露到外网</li>
-<li>label： 用于区分 pod,rc,service的key/value pair</li>
-</ul>
-
-          
+<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/21/docker/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

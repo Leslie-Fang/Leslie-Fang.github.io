@@ -99,7 +99,7 @@ dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (fr
 docker ps: 查看正在运行的container
 通过dockerfile去定义image： https://docs.docker.com/get-started/part2/#apppy
 dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)important:">
-<meta property="og:updated_time" content="2017-09-21T12:54:01.000Z">
+<meta property="og:updated_time" content="2017-09-23T01:17:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker">
 <meta name="twitter:description" content="常用命令
@@ -365,7 +365,7 @@ dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (fr
 </ul>
 <h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
 <p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
-<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息</p>
+<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息<br><a id="more"></a></p>
 <p>##　创建services:<br>scale our application by running this container in a service<br>用service可以实现负载均衡<br>一个service其实就是定义了一个镜像如何跑（运行在哪个端口，跑多少个container）<br>用docker-compose.yml文件去定义:</p>
 <p>创建完compose文件之后</p>
 <ul>
@@ -391,15 +391,29 @@ dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (fr
 <p>在公司电脑上是有可能是代理的问题：<br><a href="https://github.com/moby/moby/issues/34825" target="_blank" rel="external">https://github.com/moby/moby/issues/34825</a></p>
 <p>在/etc/systemd/system/docker.service.d/<br>[Service]<br>Environment=”http_proxy=<a href="http://child-prc.intel.com:913" target="_blank" rel="external">http://child-prc.intel.com:913</a>“ “NO_PROXY=localhost,127.0.0.1,10.239.182.67”<br>把manager的地址添加到no_proxy里面</p>
 <p>在manager上运行docker node ls查看机器个数</p>
-<p>##　stack:<br>A stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.</p>
+<h2 id="stack"><a href="#stack" class="headerlink" title="stack:"></a>stack:</h2><p>A stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.</p>
 <p>在docker-compose.yml文件的services的tag下面再去定义一个service<br>多个service一起部署</p>
-<p>##　kubernetes<br>作用和docker swarm类似（解决容器编排问题），但是比swarm更强大</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<h2 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h2><p>作用和docker swarm类似（解决容器编排问题），但是比swarm更强大</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
 <li>pod：容器的集合，一个pod可以包含一个或多个container。一个pod内运行相同业务的容器，一个pod只能运行在一台机器上</li>
 <li>replicateion controller(rc) 管理pod，保证任何时间有特定数量的pod在运行，多了删除pod，少了创建pod</li>
 <li>service：将pod提供的服务暴露到外网</li>
-<li>label： 用于区分 pod,rc,service的key/value pair</li>
+<li><p>label： 用于区分 pod,rc,service的key/value pair</p>
+</li>
+<li><p>kubectl: 命令行,调用kubernetes的API</p>
+</li>
+<li>Kubernetes master: 运行在主节点上，收集三个进程的信息：: kube-apiserver, kube-controller-manager and kube-scheduler</li>
+<li><p>其它非主节点运行两个进程：kubelet(与主节点通信), kube-proxy(网络代理，反映了各个节点的kubernetes的网络状况)</p>
+</li>
+<li><p>Kubernetes Control Plane<br>k8s里面所有组件都叫做对象，Kubernetes Control Plane在任意时间都会监测这些对象，保证对象的数量和目标状态</p>
+</li>
+<li><p>etcd 是 CoreOS 团队发起的一个管理配置信息和服务发现（service discovery）的项目<br><a href="http://www.infoq.com/cn/articles/coreos-analyse-etcd" target="_blank" rel="external">http://www.infoq.com/cn/articles/coreos-analyse-etcd</a></p>
+</li>
 </ul>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><p>我们是在cluster上装：<br><a href="https://kubernetes.io/docs/getting-started-guides/centos/centos_manual_config/" target="_blank" rel="external">https://kubernetes.io/docs/getting-started-guides/centos/centos_manual_config/</a><br><strong>这个文档不能用了，有错</strong><br>问题1：当前k8s还不支持docker17版本<br>需要用docker1.12版本，<a href="https://stackoverflow.com/questions/44891775/kubernetes-installation-on-centos7" target="_blank" rel="external">https://stackoverflow.com/questions/44891775/kubernetes-installation-on-centos7</a></p>
+<p>所以需要首先卸载docker17版本，直接用k8s的安装手册，上面会安装合适版本的docker<br>老版本的docker的命令和新版本不太一样</p>
+<p>现在推荐用kubeadm去enable，过程和swarm有点像<br><a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/" target="_blank" rel="external">https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/</a><br><a href="http://tonybai.com/2016/12/30/install-kubernetes-on-ubuntu-with-kubeadm/" target="_blank" rel="external">http://tonybai.com/2016/12/30/install-kubernetes-on-ubuntu-with-kubeadm/</a></p>
+<p>##比较容器调度方案<br>docker swarm VS k8s<br><a href="http://dockone.io/article/1138" target="_blank" rel="external">http://dockone.io/article/1138</a><br><a href="http://www.jianshu.com/p/07daa3a16878" target="_blank" rel="external">http://www.jianshu.com/p/07daa3a16878</a></p>
 
       
     </div>
@@ -568,7 +582,7 @@ dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (fr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">2.</span> <span class="nav-text">上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale利用swarm进行伸缩"><span class="nav-number">2.1.</span> <span class="nav-text">scale利用swarm进行伸缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swarms"><span class="nav-number">3.</span> <span class="nav-text">Swarms:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">4.</span> <span class="nav-text">基本概念</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">2.</span> <span class="nav-text">上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale利用swarm进行伸缩"><span class="nav-number">2.1.</span> <span class="nav-text">scale利用swarm进行伸缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swarms"><span class="nav-number">3.</span> <span class="nav-text">Swarms:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stack"><span class="nav-number">4.</span> <span class="nav-text">stack:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes"><span class="nav-number">5.</span> <span class="nav-text">Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">5.1.</span> <span class="nav-text">基本概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">6.</span> <span class="nav-text">install</span></a></li></ol></div>
             
 
           </div>
