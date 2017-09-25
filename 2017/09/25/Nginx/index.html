@@ -87,37 +87,16 @@
 
 
 
-<meta name="description" content="基本用法
-awk ‘{print $0}’ filename
-打印第n，m个字段
-awk ‘{print $n $m}’ filename
-添加上说明
-awk ‘{print “字段n” $n “字段m” $m}’ filename
-
-设置分隔符awk -F”:” ‘{print $0}’ filename">
+<meta name="description" content="介绍一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等但是这些web服务器社和用在开发环境不适合用在生产环境。在生产环境的用法是nginx+uWSGI+web应用框架程序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Awk学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/05/04/Awk学习笔记/index.html">
+<meta property="og:title" content="Nginx">
+<meta property="og:url" content="http://yoursite.com/2017/09/25/Nginx/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="基本用法
-awk ‘{print $0}’ filename
-打印第n，m个字段
-awk ‘{print $n $m}’ filename
-添加上说明
-awk ‘{print “字段n” $n “字段m” $m}’ filename
-
-设置分隔符awk -F”:” ‘{print $0}’ filename">
-<meta property="og:updated_time" content="2017-05-04T13:49:01.000Z">
+<meta property="og:description" content="介绍一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等但是这些web服务器社和用在开发环境不适合用在生产环境。在生产环境的用法是nginx+uWSGI+web应用框架程序">
+<meta property="og:updated_time" content="2017-09-25T11:11:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Awk学习笔记">
-<meta name="twitter:description" content="基本用法
-awk ‘{print $0}’ filename
-打印第n，m个字段
-awk ‘{print $n $m}’ filename
-添加上说明
-awk ‘{print “字段n” $n “字段m” $m}’ filename
-
-设置分隔符awk -F”:” ‘{print $0}’ filename">
+<meta name="twitter:title" content="Nginx">
+<meta name="twitter:description" content="介绍一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等但是这些web服务器社和用在开发环境不适合用在生产环境。在生产环境的用法是nginx+uWSGI+web应用框架程序">
 
 
 
@@ -145,13 +124,13 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/04/Awk学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/25/Nginx/"/>
 
 
 
 
 
-  <title> Awk学习笔记 | 沉思语录 </title>
+  <title> Nginx | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +249,7 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/Awk学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/Nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -291,7 +270,7 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
             
             
               
-                Awk学习笔记
+                Nginx
               
             
           </h1>
@@ -306,8 +285,8 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T21:30:51+08:00">
-                2017-05-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T19:10:55+08:00">
+                2017-09-25
               </time>
             
 
@@ -325,8 +304,8 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/04/Awk学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/04/Awk学习笔记/" itemprop="commentCount"></span>
+                <a href="/2017/09/25/Nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/Nginx/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,15 +336,28 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
       
 
       
-        <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><ul>
-<li>awk ‘{print $0}’ filename</li>
-<li>打印第n，m个字段</li>
-<li>awk ‘{print $n $m}’ filename</li>
-<li>添加上说明</li>
-<li>awk ‘{print “字段n” $n “字段m” $m}’ filename</li>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等<br>但是这些web服务器社和用在开发环境不适合用在生产环境。<br>在生产环境的用法是nginx+uWSGI+web应用框架程序</p>
+<ul>
+<li>其中web应用程序的框架只提供服务</li>
+<li>uWSGI作为web程序和nginx服务器之间的桥梁</li>
+<li>ngnix作为服务器</li>
 </ul>
-<h2 id="设置分隔符"><a href="#设置分隔符" class="headerlink" title="设置分隔符"></a>设置分隔符</h2><p>awk -F”:” ‘{print $0}’ filename<br><a id="more"></a></p>
-<h2 id="编程文件"><a href="#编程文件" class="headerlink" title="编程文件"></a>编程文件</h2><p>test.awk文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">BEGIN&#123;</div><div class="line">  FS=&quot;:&quot;</div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line">  print $0</div><div class="line">&#125;</div><div class="line">END&#123;</div><div class="line">  print &quot;over&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><ol>
+<li><p>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/" target="_blank" rel="external">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html" target="_blank" rel="external">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html" target="_blank" rel="external">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></p>
+</li>
+<li><p>uWSGI<br>uWSGI的介绍：<a href="https://github.com/unbit/uwsgi" target="_blank" rel="external">https://github.com/unbit/uwsgi</a></p>
+<ul>
+<li><p>安装<br>pip install uwsgi<br>报错: no python.h file，<a href="https://github.com/MeetMe/newrelic-plugin-agent/issues/151" target="_blank" rel="external">https://github.com/MeetMe/newrelic-plugin-agent/issues/151</a><br>先装python-devel和<br>装 python-devel,<a href="https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5" target="_blank" rel="external">https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5</a><br>先找到适合的包，yum search python | grep -i devel<br>然后Yum install</p>
+</li>
+<li><p>配置<br>快速入门教程: <a href="http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html" target="_blank" rel="external">http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a><br>这个快速入门教程里面介绍了如何使用:1.uWSGI+web程序框架 2.ngnix+uWSGI+web程序框架（flask,djano等）</p>
+</li>
+</ul>
+</li>
+<li><p>ngnix<br>最好的nginx的教程：<br><a href="http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html" target="_blank" rel="external">http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html</a></p>
+</li>
+<li><p>三者集成的一些文章<br>生产环境不使用flask自带的WSGI服务器，独立配置<br><a href="http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</a><br>flask官方：<a href="http://flask.pocoo.org/docs/0.12/deploying/uwsgi/" target="_blank" rel="external">http://flask.pocoo.org/docs/0.12/deploying/uwsgi/</a><br>入门配置nginx: <a href="https://segmentfault.com/a/1190000002411626" target="_blank" rel="external">https://segmentfault.com/a/1190000002411626</a></p>
+</li>
+</ol>
 
       
     </div>
@@ -402,8 +394,8 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/26/sed学习笔记/" rel="next" title="sed学习笔记">
-                <i class="fa fa-chevron-left"></i> sed学习笔记
+              <a href="/2017/09/24/numpy/" rel="next" title="numpy">
+                <i class="fa fa-chevron-left"></i> numpy
               </a>
             
           </div>
@@ -411,10 +403,6 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/06/tensorflow学习笔记/" rel="prev" title="tensorflow学习笔记">
-                tensorflow学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -440,8 +428,8 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/04/Awk学习笔记/"
-           data-title="Awk学习笔记" data-url="http://yoursite.com/2017/05/04/Awk学习笔记/">
+      <div class="ds-thread" data-thread-key="2017/09/25/Nginx/"
+           data-title="Nginx" data-url="http://yoursite.com/2017/09/25/Nginx/">
       </div>
     
   </div>
@@ -538,7 +526,7 @@ awk ‘{print “字段n” $n “字段m” $m}’ filename
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置分隔符"><span class="nav-number">2.</span> <span class="nav-text">设置分隔符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程文件"><span class="nav-number">3.</span> <span class="nav-text">编程文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置"><span class="nav-number">2.</span> <span class="nav-text">安装配置</span></a></li></ol></div>
             
 
           </div>

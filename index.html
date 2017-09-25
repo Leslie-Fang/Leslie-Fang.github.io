@@ -250,6 +250,296 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/25/Nginx/" itemprop="url">
+                  Nginx
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T19:10:55+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/25/Nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/Nginx/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等<br>但是这些web服务器社和用在开发环境不适合用在生产环境。<br>在生产环境的用法是nginx+uWSGI+web应用框架程序</p>
+<ul>
+<li>其中web应用程序的框架只提供服务</li>
+<li>uWSGI作为web程序和nginx服务器之间的桥梁</li>
+<li>ngnix作为服务器</li>
+</ul>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><ol>
+<li><p>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/" target="_blank" rel="external">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html" target="_blank" rel="external">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html" target="_blank" rel="external">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></p>
+</li>
+<li><p>uWSGI<br>uWSGI的介绍：<a href="https://github.com/unbit/uwsgi" target="_blank" rel="external">https://github.com/unbit/uwsgi</a></p>
+<ul>
+<li><p>安装<br>pip install uwsgi<br>报错: no python.h file，<a href="https://github.com/MeetMe/newrelic-plugin-agent/issues/151" target="_blank" rel="external">https://github.com/MeetMe/newrelic-plugin-agent/issues/151</a><br>先装python-devel和<br>装 python-devel,<a href="https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5" target="_blank" rel="external">https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5</a><br>先找到适合的包，yum search python | grep -i devel<br>然后Yum install</p>
+</li>
+<li><p>配置<br>快速入门教程: <a href="http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html" target="_blank" rel="external">http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a><br>这个快速入门教程里面介绍了如何使用:1.uWSGI+web程序框架 2.ngnix+uWSGI+web程序框架（flask,djano等）</p>
+</li>
+</ul>
+</li>
+<li><p>ngnix<br>最好的nginx的教程：<br><a href="http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html" target="_blank" rel="external">http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html</a></p>
+</li>
+<li><p>三者集成的一些文章<br>生产环境不使用flask自带的WSGI服务器，独立配置<br><a href="http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</a><br>flask官方：<a href="http://flask.pocoo.org/docs/0.12/deploying/uwsgi/" target="_blank" rel="external">http://flask.pocoo.org/docs/0.12/deploying/uwsgi/</a><br>入门配置nginx: <a href="https://segmentfault.com/a/1190000002411626" target="_blank" rel="external">https://segmentfault.com/a/1190000002411626</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/numpy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/24/numpy/" itemprop="url">
+                  numpy
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T11:12:34+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/24/numpy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/24/numpy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>入门教程：<br><a href="https://zhuanlan.zhihu.com/p/24988491" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24988491</a><br>书籍：<br><a href="https://detail.tmall.com/item.htm?_u=om6p4lp35f6&amp;id=36838488413" target="_blank" rel="external">https://detail.tmall.com/item.htm?_u=om6p4lp35f6&amp;id=36838488413</a></p>
+<ol>
+<li>numpy.random.seed<br><a href="https://www.reddit.com/r/learnpython/comments/3nidns/how_to_use_numpyrandomseed/" target="_blank" rel="external">https://www.reddit.com/r/learnpython/comments/3nidns/how_to_use_numpyrandomseed/</a><br>用法：numpy.random.seed(num1)<br>生成随机数<br>下一次再生成随机数的时候再调用一次numpy.random.seed(num1)<br>依然生成同样的随机数<br>如果numpy.random.seed(num2)<br>再生成随机数就是不同的随机数</li>
+</ol>
+<ol>
+<li><p>Numpy.genfromtxt<br>从文件读取数据<br><a href="http://www.jianshu.com/p/82110f1dbb94" target="_blank" rel="external">http://www.jianshu.com/p/82110f1dbb94</a></p>
+</li>
+<li><p>array.tolist<br>作用:convert a NumPy array to a Python List<br><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.tolist.html" target="_blank" rel="external">https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.tolist.html</a><br>b = a.tolist()<br>重新创建<br>a = np.array(b)</p>
+</li>
+<li><p>广播法则<br>处理不同维度的矩阵之间的运算<br><a href="https://ptorch.com/news/38.html" target="_blank" rel="external">https://ptorch.com/news/38.html</a></p>
+</li>
+<li><p>从文件读取数据<br>np.genfromtxt(filename)<br><a href="http://www.jianshu.com/p/82110f1dbb94" target="_blank" rel="external">http://www.jianshu.com/p/82110f1dbb94</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -336,23 +626,26 @@
 
       
         
-          <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>docker daemon</li>
+<li>image</li>
+<li>container</li>
+<li>network</li>
+<li>label:<a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/">https://docs.docker.com/engine/userguide/labels-custom-metadata/</a></li>
+<li>storage driver:<a href="http://dockone.io/article/1765">http://dockone.io/article/1765</a></li>
+<li>volumes</li>
+</ul>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
 <li>docker ps: 查看正在运行的container</li>
 <li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy">https://docs.docker.com/get-started/part2/#apppy</a></li>
-<li><p>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</p>
-</li>
-<li><p>docker image ls 查看有没有生成镜像</p>
-</li>
-<li><p>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</p>
-</li>
-<li><p>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</p>
-</li>
-<li><p>停止正在运行的container<br>docker stop container_id</p>
-</li>
-<li><p>删除container<br>docker rm container_id</p>
-</li>
-<li><p>删除image<br>docker rmi image_id（必须要保证这个image没有container在使用）</p>
-</li>
+<li>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</li>
+<li>docker image ls 查看有没有生成镜像</li>
+<li>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</li>
+<li>attach a container<br>docker attach container_name<br>这样就会进入contaienr内部<br>要deattach这个container，ctrl-q</li>
+<li>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</li>
+<li>停止正在运行的container<br>docker stop container_id</li>
+<li>删除container<br>docker rm container_id</li>
+<li>删除image<br>docker rmi image_id（必须要保证这个image没有container在使用）</li>
 </ul>
 <h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
 <p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
@@ -364,290 +657,6 @@
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/应届毕业生办理落户/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/19/应届毕业生办理落户/" itemprop="url">
-                  应届毕业生办理落户
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T10:30:41+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/19/应届毕业生办理落户/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/19/应届毕业生办理落户/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>本文适用于非上海市户籍的交大应届毕业生办理上海市社区公共户。</p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p>本周作者终于顺利拿到了户籍证明，所以把最近几个月办理材料的流程和大家分享一下，希望可以帮助到还没有拿到户籍证明的应届生以及下一届准备落户的学弟学妹们。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/19/应届毕业生办理落户/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/深度学习知识点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/13/深度学习知识点/" itemprop="url">
-                  深度学习知识点
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T22:05:39+08:00">
-                2017-09-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/13/深度学习知识点/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/13/深度学习知识点/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>玻尔兹曼机</p>
-</li>
-<li><p>过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）<br>训练数据太少，模型参数太多<br>解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）</p>
-</li>
-<li><p>交叉验证<br><a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81" target="_blank" rel="external">https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81</a><br>将数据集分成多个多个小的数据集，先用小数据集1训练，用小数据集2验证（评估正则化函数），直到最后一个小的数据集被用于验证</p>
-</li>
-<li><p>极大似然估计<br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">http://www.jianshu.com/p/f1d3906e4a3e</a></p>
-</li>
-</ul>
-<ul>
-<li><p>激活函数<br>在神经网络中引入非线性的成分<br>sigmod：0，1之间<br>tanh：-1，1之间<br>softmax: 多分类，一般用在输出层的激活</p>
-</li>
-<li><p>epoch、 iteration和batchsize<br><a href="http://blog.csdn.net/sinat_30071459/article/details/50721565" target="_blank" rel="external">http://blog.csdn.net/sinat_30071459/article/details/50721565</a></p>
-</li>
-<li><p>交叉熵<br><a href="https://zhuanlan.zhihu.com/p/27223959" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27223959</a><br>在机器学习中，可以用交叉熵来定义loss function</p>
-</li>
-<li><p>BP神经网络<br>反向传播计算——BackPropagation<br>单个参数：<a href="http://www.cnblogs.com/charlotte77/p/5629865.html" target="_blank" rel="external">http://www.cnblogs.com/charlotte77/p/5629865.html</a><br>矩阵计算：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
-</li>
-<li><p>卷积神经网络CNN<br>局部连接，参数共享，卷积，池化等概念<br>介绍：<a href="http://www.jeyzhang.com/cnn-learning-notes-1.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-1.html</a><br>模型训练：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
-</li>
-<li><p>局部对比归一化<br>Local contrast normalization<br><a href="http://blog.csdn.net/zouxy09/article/details/10007237" target="_blank" rel="external">http://blog.csdn.net/zouxy09/article/details/10007237</a></p>
-</li>
-</ul>
-
-          
         
       
     </div>
@@ -726,7 +735,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -91,7 +91,9 @@
 
 过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
 
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
+L2正则项解决过拟合的问题https://www.zhihu.com/question/20924039
+
+交叉验证h">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习知识点">
 <meta property="og:url" content="http://yoursite.com/2017/09/13/深度学习知识点/index.html">
@@ -100,15 +102,19 @@
 
 过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
 
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
-<meta property="og:updated_time" content="2017-09-20T15:01:33.000Z">
+L2正则项解决过拟合的问题https://www.zhihu.com/question/20924039
+
+交叉验证h">
+<meta property="og:updated_time" content="2017-09-24T08:30:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习知识点">
 <meta name="twitter:description" content="玻尔兹曼机
 
 过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）训练数据太少，模型参数太多解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）
 
-交叉验证https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8">
+L2正则项解决过拟合的问题https://www.zhihu.com/question/20924039
+
+交叉验证h">
 
 
 
@@ -353,12 +359,12 @@
 </li>
 <li><p>过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）<br>训练数据太少，模型参数太多<br>解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）</p>
 </li>
+<li><p>L2正则项<br>解决过拟合的问题<br><a href="https://www.zhihu.com/question/20924039" target="_blank" rel="external">https://www.zhihu.com/question/20924039</a></p>
+</li>
 <li><p>交叉验证<br><a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81" target="_blank" rel="external">https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81</a><br>将数据集分成多个多个小的数据集，先用小数据集1训练，用小数据集2验证（评估正则化函数），直到最后一个小的数据集被用于验证</p>
 </li>
 <li><p>极大似然估计<br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">http://www.jianshu.com/p/f1d3906e4a3e</a></p>
 </li>
-</ul>
-<ul>
 <li><p>激活函数<br>在神经网络中引入非线性的成分<br>sigmod：0，1之间<br>tanh：-1，1之间<br>softmax: 多分类，一般用在输出层的激活</p>
 </li>
 <li><p>epoch、 iteration和batchsize<br><a href="http://blog.csdn.net/sinat_30071459/article/details/50721565" target="_blank" rel="external">http://blog.csdn.net/sinat_30071459/article/details/50721565</a></p>
@@ -371,6 +377,12 @@
 </li>
 <li><p>局部对比归一化<br>Local contrast normalization<br><a href="http://blog.csdn.net/zouxy09/article/details/10007237" target="_blank" rel="external">http://blog.csdn.net/zouxy09/article/details/10007237</a></p>
 </li>
+<li><p>batch normalization<br><a href="http://blog.csdn.net/hjimce/article/details/50866313" target="_blank" rel="external">http://blog.csdn.net/hjimce/article/details/50866313</a><br><a href="http://minibatch.net/2017/06/11/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87-Batch-Normalization/" target="_blank" rel="external">http://minibatch.net/2017/06/11/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87-Batch-Normalization/</a><br><a href="https://zhuanlan.zhihu.com/p/26682707" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26682707</a><br>反向计算梯度：<a href="http://mlnote.com/2016/12/20/Neural-Network-Batch-Normalization-and-Caffe-Code/" target="_blank" rel="external">http://mlnote.com/2016/12/20/Neural-Network-Batch-Normalization-and-Caffe-Code/</a></p>
+</li>
+</ul>
+<p>Good:<a href="https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html" target="_blank" rel="external">https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html</a></p>
+<ul>
+<li>白化<br><a href="http://blog.csdn.net/hjimce/article/details/50864602" target="_blank" rel="external">http://blog.csdn.net/hjimce/article/details/50864602</a><br><a href="http://blog.csdn.net/whiteinblue/article/details/36171233" target="_blank" rel="external">http://blog.csdn.net/whiteinblue/article/details/36171233</a></li>
 </ul>
 
       
@@ -418,8 +430,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/19/应届毕业生办理落户/" rel="prev" title="应届毕业生办理落户">
-                应届毕业生办理落户 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/21/docker/" rel="prev" title="docker">
+                docker <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -487,7 +499,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
