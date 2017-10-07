@@ -87,49 +87,43 @@
 
 
 
-<meta name="description" content="介绍MPI(Message Passing Interface)在高性能计算中具有广泛的应用。基本的应用范式可以分为两类:
+<meta name="description" content="介绍MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:
 
 单机多进程并行计算
-多机集群并行计算MPI的实现由以下几种库：
+多机集群并行计算
+
+MPI的实现由以下几种库：
+
 MPICH
 open-mpi
-intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中
-
-MPI安装可以通过两种方式安装：
-
-OS的软件库安装：
-ubuntu 的apt-g">
+intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MPI在高性能计算中的应用">
 <meta property="og:url" content="http://yoursite.com/2017/10/07/MPI在高性能计算中的应用/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="介绍MPI(Message Passing Interface)在高性能计算中具有广泛的应用。基本的应用范式可以分为两类:
+<meta property="og:description" content="介绍MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:
 
 单机多进程并行计算
-多机集群并行计算MPI的实现由以下几种库：
+多机集群并行计算
+
+MPI的实现由以下几种库：
+
 MPICH
 open-mpi
-intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中
-
-MPI安装可以通过两种方式安装：
-
-OS的软件库安装：
-ubuntu 的apt-g">
-<meta property="og:updated_time" content="2017-10-07T10:38:43.000Z">
+intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中">
+<meta property="og:updated_time" content="2017-10-07T10:54:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MPI在高性能计算中的应用">
-<meta name="twitter:description" content="介绍MPI(Message Passing Interface)在高性能计算中具有广泛的应用。基本的应用范式可以分为两类:
+<meta name="twitter:description" content="介绍MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:
 
 单机多进程并行计算
-多机集群并行计算MPI的实现由以下几种库：
+多机集群并行计算
+
+MPI的实现由以下几种库：
+
 MPICH
 open-mpi
-intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中
-
-MPI安装可以通过两种方式安装：
-
-OS的软件库安装：
-ubuntu 的apt-g">
+intel-mpi其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中">
 
 
 
@@ -369,10 +363,13 @@ ubuntu 的apt-g">
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MPI(Message Passing Interface)在高性能计算中具有广泛的应用。基本的应用范式可以分为两类:</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:</p>
 <ul>
 <li>单机多进程并行计算</li>
-<li>多机集群并行计算<br>MPI的实现由以下几种库：</li>
+<li>多机集群并行计算</li>
+</ul>
+<p>MPI的实现由以下几种库：</p>
+<ul>
 <li>MPICH</li>
 <li>open-mpi</li>
 <li>intel-mpi<br>其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中</li>
@@ -396,8 +393,25 @@ ubuntu 的apt-g">
 <h2 id="MPI-编程"><a href="#MPI-编程" class="headerlink" title="MPI 编程"></a>MPI 编程</h2><p>基本的流程可以分成3个步骤<br><a id="more"></a></p>
 <ol>
 <li>调用MPI的API，实现代码逻辑</li>
-<li>编译:</li>
+<li>编译:mpic++ -std=c++11 -o 可执行文件名字 源码</li>
+<li>运行mpiexec -n 进程数 ./可执行文件 输入参数（mpiexec基本与mpirun等价）</li>
 </ol>
+<h2 id="MPI的一般代码逻辑"><a href="#MPI的一般代码逻辑" class="headerlink" title="MPI的一般代码逻辑"></a>MPI的一般代码逻辑</h2><h3 id="开启MPI"><a href="#开启MPI" class="headerlink" title="开启MPI:"></a>开启MPI:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MPI_Init(NULL, NULL);</div><div class="line">MPI_Comm_size(MPI_COMM_WORLD, &amp;comm_size);//comm_size is the number of process</div><div class="line">MPI_Comm_rank(MPI_COMM_WORLD, &amp;comm_rank);//comm_rank is the process&apos;s number</div></pre></td></tr></table></figure>
+<p>其中comm_size就是调用命令时传入的进程数量<br>comm_rank是每个进程的标识分别从(0到comm_size-1)</p>
+<h3 id="逻辑块"><a href="#逻辑块" class="headerlink" title="逻辑块"></a>逻辑块</h3><ul>
+<li>一般的编程思路是将大量独立的计算分割成几个块，每个块分别放入到一个进程中进行并行计算，计算结束之后，在第一个进程(rank 0)中搜集各个进程的计算结果，归总判断，进行下一轮计算或者结束计算</li>
+<li>在编程过程中可以通过comm_rank来判断当前处在哪个进程中</li>
+<li>通过调用MPI_Barrier(comm)，其中comm为一个对象承担各个进程之间通信的任务，则会等待所有进程都执行到这一句代码，每个进程才会继续往下执行</li>
+<li>数据的搜集:在每一轮计算之后，搜集各个进程的计算结果到rank 0中<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if(my_rank != 0)&#123;</div><div class="line">    MPI_Send(&amp;has_change, 1, MPI_BYTE, 0, 0, comm);</div><div class="line">&#125;else&#123;</div><div class="line">    bool localhas_change = false;</div><div class="line">    for(int j=1;j&lt;p;j++)&#123;</div><div class="line">        MPI_Recv(&amp;localhas_change, 1, MPI_BYTE, j, 0, comm, &amp;state);</div><div class="line">        has_change = localhas_change | has_change;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>每个进程都把各自的数据发出来，进程0搜集到每个进程发出来的数据之后，对数据进行逻辑运算</p>
+<ul>
+<li>数据的广播:主要用于数据的同步，可以用在计算开始之前以及每一轮计算结束并搜集数据准备开始下一轮计算之前<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if(my_rank == 0)&#123;</div><div class="line">    for(int k = 1; k &lt; p; k++)&#123;</div><div class="line">        MPI_Send(&amp;has_change, 1, MPI_BYTE, k, 0, comm);</div><div class="line">    &#125;</div><div class="line">&#125;else&#123;</div><div class="line">    MPI_Recv(&amp;has_change, 1, MPI_BYTE, 0, 0, comm, &amp;state);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>进程0将归纳好的数据发出来，其它进程搜集到这些数据之后进行数据的同步</p>
+<h3 id="结束MPI"><a href="#结束MPI" class="headerlink" title="结束MPI"></a>结束MPI</h3><p>当计算结束之后，结束MPI<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MPI_Finalize();</div></pre></td></tr></table></figure></p>
 <h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>可以参考我的github仓库，这个仓库中的serial_bellman_ford.cpp以及mpi_bellman_ford.cpp分别通过串行以及mpi并行的方式实现了<a href="http://www.wutianqi.com/?p=1912" target="_blank" rel="external">Bellman-Ford算法</a>计算单源图的最短路径。</p>
 
       
@@ -567,7 +581,7 @@ ubuntu 的apt-g">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI安装"><span class="nav-number">2.</span> <span class="nav-text">MPI安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-编程"><span class="nav-number">3.</span> <span class="nav-text">MPI 编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">4.</span> <span class="nav-text">实例代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI安装"><span class="nav-number">2.</span> <span class="nav-text">MPI安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-编程"><span class="nav-number">3.</span> <span class="nav-text">MPI 编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI的一般代码逻辑"><span class="nav-number">4.</span> <span class="nav-text">MPI的一般代码逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开启MPI"><span class="nav-number">4.1.</span> <span class="nav-text">开启MPI:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑块"><span class="nav-number">4.2.</span> <span class="nav-text">逻辑块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束MPI"><span class="nav-number">4.3.</span> <span class="nav-text">结束MPI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">5.</span> <span class="nav-text">实例代码</span></a></li></ol></div>
             
 
           </div>
