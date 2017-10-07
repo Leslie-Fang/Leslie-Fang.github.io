@@ -504,8 +504,10 @@
 <li>ngnix作为服务器</li>
 </ul>
 <h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><ol>
-<li><p>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/" target="_blank" rel="external">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html" target="_blank" rel="external">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html" target="_blank" rel="external">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></p>
-</li>
+<li>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/" target="_blank" rel="external">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html" target="_blank" rel="external">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html" target="_blank" rel="external">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></li>
+</ol>
+<p>ubuntu:<a href="http://wiki.ubuntu.org.cn/Nginx" target="_blank" rel="external">http://wiki.ubuntu.org.cn/Nginx</a><br>也可以通过systemctl start(stop,reload,restart) nginx来控制ngnix<br>配置文件目录：/etc/nginx<br>log文件目录：/var/log/nginx</p>
+<ol>
 <li><p>uWSGI<br>uWSGI的介绍：<a href="https://github.com/unbit/uwsgi" target="_blank" rel="external">https://github.com/unbit/uwsgi</a></p>
 <ul>
 <li><p>安装<br>pip install uwsgi<br>报错: no python.h file，<a href="https://github.com/MeetMe/newrelic-plugin-agent/issues/151" target="_blank" rel="external">https://github.com/MeetMe/newrelic-plugin-agent/issues/151</a><br>先装python-devel和<br>装 python-devel,<a href="https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5" target="_blank" rel="external">https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5</a><br>先找到适合的包，yum search python | grep -i devel<br>然后Yum install</p>
@@ -518,7 +520,17 @@
 </li>
 <li><p>三者集成的一些文章<br>生产环境不使用flask自带的WSGI服务器，独立配置<br><a href="http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</a><br>flask官方：<a href="http://flask.pocoo.org/docs/0.12/deploying/uwsgi/" target="_blank" rel="external">http://flask.pocoo.org/docs/0.12/deploying/uwsgi/</a><br>入门配置nginx: <a href="https://segmentfault.com/a/1190000002411626" target="_blank" rel="external">https://segmentfault.com/a/1190000002411626</a></p>
 </li>
+<li><p>实例代码<br><a href="https://github.com/Leslie-Fang/D3Demo" target="_blank" rel="external">https://github.com/Leslie-Fang/D3Demo</a></p>
+</li>
 </ol>
+<ul>
+<li><p>仅仅使用uwsgi:<br>uwsgi –http :5000 –manage-script-name –mount /=main:app<br>uwsgi各个参数的<a href="http://uwsgi-docs.readthedocs.io/en/latest/Options.html" target="_blank" rel="external">含义</a><br><a href="http://flask.pocoo.org/docs/0.12/deploying/uwsgi/" target="_blank" rel="external">参考的配置</a><br>–http 指定端口<br>–mount 绑定上特定的APP，其中main.py是文件名字，app是文件名中的APP的名字(app = Flask(<strong>name</strong>))<br>–manage-script-name 经常和–mount一起使用</p>
+</li>
+<li><p>使用uwsgi+ngnix<br>uwsgi:<br>uwsgi –socket 127.0.0.1:5000 –wsgi-file main.py –callable app –processes 4 –threads 2 –stats 127.0.0.1:9191</p>
+</li>
+</ul>
+<p>–socket: 指定绑定的socket，在ngnix的配置中会使用到<br>–wsgi-file： 指定web应用的入口文件<br>–callable： 指定入口文件中的APP名字(app = Flask(<strong>name</strong>))<br>–stats: 将uWSGI状态作为一个JSON对象导出到一个socket(<a href="http://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/StatsServer.html),通过这个socket可以读取uwsgi的信息" target="_blank" rel="external">http://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/StatsServer.html),通过这个socket可以读取uwsgi的信息</a></p>
+<p>ngnix:<br>ubuntu的话/etc/ngnix/ngnix.conf文件<br>在http块中添加server块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">        listen 8070;</div><div class="line">        server_name 0.0.0.0;</div><div class="line">        location / &#123;</div><div class="line">                include uwsgi_params;</div><div class="line">                uwsgi_pass 127.0.0.1:5000;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
           
         
