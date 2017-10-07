@@ -339,15 +339,11 @@
           <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MPI(Message Passing Interface)在高性能计算中具有广泛的应用。基本的应用范式可以分为两类:</p>
 <ul>
 <li>单机多进程并行计算</li>
-<li>多机集群并行计算</li>
-</ul>
-<p>MPI的实现由以下几种库：</p>
-<ul>
+<li>多机集群并行计算<br>MPI的实现由以下几种库：</li>
 <li>MPICH</li>
 <li>open-mpi</li>
-<li>intel-mpi</li>
+<li>intel-mpi<br>其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中</li>
 </ul>
-<p>其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中</p>
 <h2 id="MPI安装"><a href="#MPI安装" class="headerlink" title="MPI安装"></a>MPI安装</h2><p>可以通过两种方式安装：</p>
 <ol>
 <li>OS的软件库安装：<ol>
@@ -360,6 +356,7 @@
 <li>configure 添加编译选项生成makefile文件</li>
 <li>make编译</li>
 <li>make install 安装</li>
+<li>如果有必要，将mpi/bin目录添加到环境变量</li>
 </ol>
 </li>
 </ol>
