@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/25/Nginx/index.html">
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等但是这些web服务器社和用在开发环境不适合用在生产环境。在生产环境的用法是nginx+uWSGI+web应用框架程序">
-<meta property="og:updated_time" content="2017-10-08T00:57:29.000Z">
+<meta property="og:updated_time" content="2017-10-08T07:24:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx">
 <meta name="twitter:description" content="介绍一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等但是这些web服务器社和用在开发环境不适合用在生产环境。在生产环境的用法是nginx+uWSGI+web应用框架程序">
@@ -345,7 +345,7 @@
 <h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><ol>
 <li>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/" target="_blank" rel="external">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html" target="_blank" rel="external">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html" target="_blank" rel="external">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></li>
 </ol>
-<p>ubuntu:<a href="http://wiki.ubuntu.org.cn/Nginx" target="_blank" rel="external">http://wiki.ubuntu.org.cn/Nginx</a><br>也可以通过systemctl start(stop,reload,restart) nginx来控制ngnix<br>配置文件目录：/etc/nginx<br>log文件目录：/var/log/nginx</p>
+<p>ubuntu:<a href="http://wiki.ubuntu.org.cn/Nginx" target="_blank" rel="external">http://wiki.ubuntu.org.cn/Nginx</a><br>通过apt-get install 安装<br>也可以通过systemctl start(stop,reload,restart) nginx来控制ngnix<br>配置文件目录：/etc/nginx<br>log文件目录：/var/log/nginx<br>自带的html目录: /usr/share/nginx/html</p>
 <ol>
 <li><p>uWSGI<br>uWSGI的介绍：<a href="https://github.com/unbit/uwsgi" target="_blank" rel="external">https://github.com/unbit/uwsgi</a></p>
 <ul>
@@ -380,6 +380,13 @@
 </li>
 </ol>
 <p>第1，3个方法可以结合使用，第二个方法比较独立(leetcode就是这么实现负载均衡的)</p>
+<h2 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h2><p><a href="http://www.nginx.cn/591.html" target="_blank" rel="external">基础配置文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">  server&#123;</div><div class="line">          listen 3389;</div><div class="line">          server_name 0.0.0.0;</div><div class="line">          error_page 404 /40x.html;</div><div class="line">          location / &#123;</div><div class="line">                  # root /usr/share/nginx/html;</div><div class="line">                  index testnginx.html;</div><div class="line">          &#125;</div><div class="line">          location /index &#123;</div><div class="line">                  root /usr/share/nginx/html;</div><div class="line">                  index testnginx2.html;</div><div class="line">          &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>root如果不配置，就会默认使用nginx安装过程中的html目录，也就是自带的html目录: /usr/share/nginx/html,这个例子中将root配置成上述的绝对路径也是可以的</li>
+<li>index配置：表示location后面没有带具体的资源的名字的时候(比如这个例子中第一个location的/，就符合条件，没有带上具体访问哪个资源)，则返回这个index配置的资源</li>
+<li>server_name:如果nginx中只配置一个server域的话，则nginx是不会去进行server_name的匹配的。</li>
+<li>第二个location，如果请求<a href="http://47.91.245.251:3389/index/，则会到/usr/share/nginx/html/index目录下面去查找，因为这个location也没有带上具体的资源，所以返回index对应的资源（这个请求和http://47.91.245.251:3389/index/testnginx2.html请求效果是一样的）" target="_blank" rel="external">http://47.91.245.251:3389/index/，则会到/usr/share/nginx/html/index目录下面去查找，因为这个location也没有带上具体的资源，所以返回index对应的资源（这个请求和http://47.91.245.251:3389/index/testnginx2.html请求效果是一样的）</a></li>
+</ul>
 
       
     </div>
@@ -552,7 +559,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置"><span class="nav-number">2.</span> <span class="nav-text">安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">3.</span> <span class="nav-text">实例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决实现负载均衡过程中的session问题"><span class="nav-number">4.</span> <span class="nav-text">解决实现负载均衡过程中的session问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置"><span class="nav-number">2.</span> <span class="nav-text">安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">3.</span> <span class="nav-text">实例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决实现负载均衡过程中的session问题"><span class="nav-number">4.</span> <span class="nav-text">解决实现负载均衡过程中的session问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-配置"><span class="nav-number">5.</span> <span class="nav-text">nginx 配置</span></a></li></ol></div>
             
 
           </div>
