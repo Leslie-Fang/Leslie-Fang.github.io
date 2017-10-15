@@ -336,7 +336,8 @@
 
       
         
-          <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>ubuntu下面:</p>
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>PostgreSQL相对于竞争者的主要优势为可编程性：对于使用数据库资料的实际应用，PostgreSQL让开发与使用变得更简单。<br>微信支付核心数据库也是基于 PostgreSQL<a href="https://www.qcloud.com/community/article/164816001481011854">链接</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>ubuntu下面:</p>
 <ul>
 <li>安装客户端<br>sudo apt-get install postgresql-client</li>
 <li>安装服务器<br>sudo apt-get install postgresql<br>安装完成后，PostgreSQL服务器会自动在5432端口开启，<br>所以如果在阿里云上部署，需要远程访问的话记得在阿里云管理界面上管理规则组中打开5432端口</li>
@@ -345,7 +346,7 @@
 <h4 id="创建数据库用户"><a href="#创建数据库用户" class="headerlink" title="创建数据库用户"></a>创建数据库用户</h4><p>创建数据库用户leslie，并指定其为超级用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres createuser --superuser leslie</div></pre></td></tr></table></figure></p>
 <p>如果原来是在root用户下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su - postgres</div><div class="line">createuser --superuser leslie_postgres3</div></pre></td></tr></table></figure></p>
 <h4 id="登录数据库控制台-设置账号密码"><a href="#登录数据库控制台-设置账号密码" class="headerlink" title="登录数据库控制台,设置账号密码"></a>登录数据库控制台,设置账号密码</h4><p>psql命令登录PostgreSQL控制台<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres psql  #login the PostgreSQL Console</div><div class="line">\password leslie_postgres3  # enter new password 123456</div><div class="line">\q  #leave the PostgreSQL Console</div></pre></td></tr></table></figure></p>
-<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres createdb -O leslie_postgres3 testdb2</div></pre></td></tr></table></figure>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres createdb -O leslie_postgres3 testdb2</div><div class="line">or</div><div class="line">su - postgres createdb -O leslie_postgres3 testdb2</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/10/15/postgresql学习笔记/#more" rel="contents">
