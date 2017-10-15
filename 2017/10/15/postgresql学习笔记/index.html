@@ -87,22 +87,31 @@
 
 
 
-<meta name="description" content="macos用homebrew安装，
-运行 mongodb：两种方式方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf可以修改/data/db的路径
-方式2： 命令行下，在shell中进入安装目录，我的mac：/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb将">
+<meta name="description" content="安装ubuntu下面:
+
+安装客户端sudo apt-get install postgresql-client
+安装服务器sudo apt-get install postgresql安装完成后，PostgreSQL服务器会自动在5432端口开启，所以如果在阿里云上部署，需要远程访问的话记得在阿里云管理界面上管理规则组中打开5432端口
+
+创建新用户和数据库安装postgresql之后默认生成一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mongodb">
-<meta property="og:url" content="http://yoursite.com/2017/04/16/Mongodb/index.html">
+<meta property="og:title" content="postgresql学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/postgresql学习笔记/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="macos用homebrew安装，
-运行 mongodb：两种方式方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf可以修改/data/db的路径
-方式2： 命令行下，在shell中进入安装目录，我的mac：/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb将">
-<meta property="og:updated_time" content="2017-04-22T02:42:53.000Z">
+<meta property="og:description" content="安装ubuntu下面:
+
+安装客户端sudo apt-get install postgresql-client
+安装服务器sudo apt-get install postgresql安装完成后，PostgreSQL服务器会自动在5432端口开启，所以如果在阿里云上部署，需要远程访问的话记得在阿里云管理界面上管理规则组中打开5432端口
+
+创建新用户和数据库安装postgresql之后默认生成一">
+<meta property="og:updated_time" content="2017-10-15T08:49:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mongodb">
-<meta name="twitter:description" content="macos用homebrew安装，
-运行 mongodb：两种方式方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf可以修改/data/db的路径
-方式2： 命令行下，在shell中进入安装目录，我的mac：/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb将">
+<meta name="twitter:title" content="postgresql学习笔记">
+<meta name="twitter:description" content="安装ubuntu下面:
+
+安装客户端sudo apt-get install postgresql-client
+安装服务器sudo apt-get install postgresql安装完成后，PostgreSQL服务器会自动在5432端口开启，所以如果在阿里云上部署，需要远程访问的话记得在阿里云管理界面上管理规则组中打开5432端口
+
+创建新用户和数据库安装postgresql之后默认生成一">
 
 
 
@@ -130,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/16/Mongodb/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/15/postgresql学习笔记/"/>
 
 
 
 
 
-  <title> Mongodb | 沉思语录 </title>
+  <title> postgresql学习笔记 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/16/Mongodb/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/postgresql学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -276,7 +285,7 @@
             
             
               
-                Mongodb
+                postgresql学习笔记
               
             
           </h1>
@@ -291,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-16T11:35:46+08:00">
-                2017-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T16:02:57+08:00">
+                2017-10-15
               </time>
             
 
@@ -310,8 +319,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/16/Mongodb/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/16/Mongodb/" itemprop="commentCount"></span>
+                <a href="/2017/10/15/postgresql学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/15/postgresql学习笔记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -342,28 +351,18 @@
       
 
       
-        <h2 id="macos"><a href="#macos" class="headerlink" title="macos"></a>macos</h2><p>用homebrew安装，</p>
-<p>运行 mongodb：两种方式<br>方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf<br>可以修改/data/db的路径</p>
-<p>方式2： 命令行下，在shell中进入安装目录，我的mac：<br>/Applications/MongoDB.app/Contents/Resources/Vendor/mongodb<br>将这个目录配置到PATH环境变量里面<br>配置数据目录 默认路径为/data/db,运行 sudo mongod(需要sudo，因为/data/db在根目录),这样就打开了mongodb，可以等待连接了<br>或者在用户目录~下建立~/data/db,然后在启动mongod时：mongod -dapath ~/data/path<br><br></p>
-<p>管理mongodb：两种方式</p>
-<ol>
-<li><p>命令行运行mongo<br>把上面的路径配置到PATH下面，运行mongo，进入mongo-shell管理界面<br>可以用show dbs显示所有数据库<br>use db_name使用某个数据库</p>
-</li>
-<li><p>用用MongoChef图形化界面进行管理<br>运行mongo进入管理界面之后，</p>
-</li>
-</ol>
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>ubuntu下面:</p>
+<ul>
+<li>安装客户端<br>sudo apt-get install postgresql-client</li>
+<li>安装服务器<br>sudo apt-get install postgresql<br>安装完成后，PostgreSQL服务器会自动在5432端口开启，<br>所以如果在阿里云上部署，需要远程访问的话记得在阿里云管理界面上管理规则组中打开5432端口</li>
+</ul>
+<h2 id="创建新用户和数据库"><a href="#创建新用户和数据库" class="headerlink" title="创建新用户和数据库"></a>创建新用户和数据库</h2><p>安装postgresql之后默认生成一个名为postgres的数据库和一个名为postgres的数据库用户，同时还生成了一个名为postgres的Linux系统用户，有两种<a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html" target="_blank" rel="external">方法</a><br>使用shell命令行的方法</p>
+<h4 id="创建数据库用户"><a href="#创建数据库用户" class="headerlink" title="创建数据库用户"></a>创建数据库用户</h4><p>创建数据库用户leslie，并指定其为超级用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres createuser --superuser leslie</div></pre></td></tr></table></figure></p>
+<p>如果原来是在root用户下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su - postgres</div><div class="line">createuser --superuser leslie_postgres2</div></pre></td></tr></table></figure></p>
+<h4 id="登录数据库控制台-设置账号密码"><a href="#登录数据库控制台-设置账号密码" class="headerlink" title="登录数据库控制台,设置账号密码"></a>登录数据库控制台,设置账号密码</h4><p>psql命令登录PostgreSQL控制台<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres psql  #login the PostgreSQL Console</div><div class="line">\password leslie_postgres2  # enter new password 123456</div><div class="line">\q  #leave the PostgreSQL Console</div></pre></td></tr></table></figure></p>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -u postgres createdb -O leslie_postgres2 testdb</div></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h2><p>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念可以参考自己写的代码<br>一般会在一个独立的文件中新建一个schema以及model，然后将这个model export出来<br>在需要用到的地方require这个model</p>
-<ol>
-<li><p>保存数据<br>document=new model（data）<br>传入数据，创建一个新的document（一行数据）<br>document.save（function（）{</p>
-<p> }）<br>调用save保存到数据库中，在回调函数中进行处理</p>
-</li>
-<li><p>更新数据,三个参数<br>model.update(query，data，callback)<br>1.query是匹配查找你想要更新哪一行数据(哪个document)<br>2.data是你希望更新的数据1.set修改数据2.如果数据的数组，可以往里面push，pop一个element<br>3.callback，是更新结束之后的回调函数</p>
-</li>
-<li><p>查询<br>model.find(function(){})<br>在回调函数中进行查询到的数据的处理</p>
-</li>
-</ol>
-
+<h2 id="登录数据库"><a href="#登录数据库" class="headerlink" title="登录数据库"></a>登录数据库</h2>
       
     </div>
 
@@ -399,8 +398,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/15/Django/" rel="next" title="Django">
-                <i class="fa fa-chevron-left"></i> Django
+              <a href="/2017/10/07/MPI在高性能计算中的应用/" rel="next" title="MPI在高性能计算中的应用">
+                <i class="fa fa-chevron-left"></i> MPI在高性能计算中的应用
               </a>
             
           </div>
@@ -408,10 +407,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/18/handlebars/" rel="prev" title="handlebars">
-                handlebars <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -437,8 +432,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/16/Mongodb/"
-           data-title="Mongodb" data-url="http://yoursite.com/2017/04/16/Mongodb/">
+      <div class="ds-thread" data-thread-key="2017/10/15/postgresql学习笔记/"
+           data-title="postgresql学习笔记" data-url="http://yoursite.com/2017/10/15/postgresql学习笔记/">
       </div>
     
   </div>
@@ -535,7 +530,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#macos"><span class="nav-number">1.</span> <span class="nav-text">macos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mongoose"><span class="nav-number">2.</span> <span class="nav-text">Mongoose</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建新用户和数据库"><span class="nav-number">2.</span> <span class="nav-text">创建新用户和数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据库用户"><span class="nav-number">2.0.1.</span> <span class="nav-text">创建数据库用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录数据库控制台-设置账号密码"><span class="nav-number">2.0.2.</span> <span class="nav-text">登录数据库控制台,设置账号密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据库"><span class="nav-number">2.0.3.</span> <span class="nav-text">创建数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录数据库"><span class="nav-number">3.</span> <span class="nav-text">登录数据库</span></a></li></ol></div>
             
 
           </div>
