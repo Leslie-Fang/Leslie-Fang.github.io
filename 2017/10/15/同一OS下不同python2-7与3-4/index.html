@@ -87,41 +87,25 @@
 
 
 
-<meta name="description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
-
-实验源代码用的是anishathalye大神的仓库先看看最">
+<meta name="description" content="介绍目前大部分程序都是基于python2.7开发的，但是python2只维护到2020年，未来是python3的，本文只要为了在一台机器上同时安装python2和python3，避免发生包冲突的问题。
+安装可以参考链接1macos上默认安装的就是python2.7直接1brew install python3
+安装完成之后python -V看到的还是python2.7.10
+安装完成之后pytho">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tensorflow学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/05/06/tensorflow学习笔记/index.html">
+<meta property="og:title" content="同一OS下不同python2.7与3.4">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/同一OS下不同python2-7与3-4/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
-
-实验源代码用的是anishathalye大神的仓库先看看最">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_origin.jpeg">
-<meta property="og:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_style.jpeg">
-<meta property="og:updated_time" content="2017-05-20T15:28:33.000Z">
+<meta property="og:description" content="介绍目前大部分程序都是基于python2.7开发的，但是python2只维护到2020年，未来是python3的，本文只要为了在一台机器上同时安装python2和python3，避免发生包冲突的问题。
+安装可以参考链接1macos上默认安装的就是python2.7直接1brew install python3
+安装完成之后python -V看到的还是python2.7.10
+安装完成之后pytho">
+<meta property="og:updated_time" content="2017-10-15T14:07:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tensorflow学习笔记">
-<meta name="twitter:description" content="前言Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，官网需要科学上网工具才能访问
-安装
-为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv
-打开虚拟环境，用pip安装tensorflow的包
-和普通包一样使用tensorflow的包
-硬件有GPU别忘了使用CUDA
-
-实验源代码用的是anishathalye大神的仓库先看看最">
-<meta name="twitter:image" content="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg">
+<meta name="twitter:title" content="同一OS下不同python2.7与3.4">
+<meta name="twitter:description" content="介绍目前大部分程序都是基于python2.7开发的，但是python2只维护到2020年，未来是python3的，本文只要为了在一台机器上同时安装python2和python3，避免发生包冲突的问题。
+安装可以参考链接1macos上默认安装的就是python2.7直接1brew install python3
+安装完成之后python -V看到的还是python2.7.10
+安装完成之后pytho">
 
 
 
@@ -149,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/06/tensorflow学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/15/同一OS下不同python2-7与3-4/"/>
 
 
 
 
 
-  <title> tensorflow学习笔记 | 沉思语录 </title>
+  <title> 同一OS下不同python2.7与3.4 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -274,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/06/tensorflow学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/同一OS下不同python2-7与3-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -295,7 +279,7 @@
             
             
               
-                tensorflow学习笔记
+                同一OS下不同python2.7与3.4
               
             
           </h1>
@@ -310,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-06T07:41:50+08:00">
-                2017-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T21:39:17+08:00">
+                2017-10-15
               </time>
             
 
@@ -329,8 +313,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/06/tensorflow学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/06/tensorflow学习笔记/" itemprop="commentCount"></span>
+                <a href="/2017/10/15/同一OS下不同python2-7与3-4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/15/同一OS下不同python2-7与3-4/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -361,18 +345,19 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tensorflow 是Google出的基于人工神经网络(ANN)的深度学习的框架，<br><a href="http://example.net/" target="_blank" rel="external">官网</a>需要科学上网工具才能访问</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
-<li>为了避免python环境的污染，可以先安装一个python的虚拟环境VirtualEnv</li>
-<li>打开虚拟环境，用pip安装tensorflow的包</li>
-<li>和普通包一样使用tensorflow的包</li>
-<li>硬件有GPU别忘了使用CUDA</li>
-</ol>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>源代码用的是<a href="https://github.com/anishathalye/neural-style" target="_blank" rel="external">anishathalye</a>大神的仓库<br>先看看最后训练出来的效果图<br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_result.jpeg" alt="tensorflow_result" title="合成图"></p>
-<p>原图是去年在上海迪士尼玩的时候随手拍的照片<br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_origin.jpeg" alt="tensorflow_origin" title="原图"></p>
-<p>想要训练的风格图片用的梵高的 <strong>《星夜》</strong><br><img src="http://omdthfazl.bkt.clouddn.com/tensorflow_style.jpeg" alt="tensorflow_style" title="星夜"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><a id="more"></a>
-<p>玩机器学习对计算机的硬件要求很高，这是GPU的强项<br>下面这个实验在一台cpu为i5-4200H，8G内存的台式机上跑的结果，整个训练过程时长了5个小时，运行过程中使用TOP命令查看，CPU一直处于100%以上的负荷，如果有GPU的话，理论上时间应该再20分钟左右<br><strong>结论</strong> 没有GPU硬件的支持是玩不了机器学习的</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>目前大部分程序都是基于python2.7开发的，但是python2只维护到2020年，未来是python3的，本文只要为了在一台机器上同时安装python2和python3，避免发生包冲突的问题。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>可以参考<a href="http://joebergantine.com/articles/installing-python-2-and-python-3-alongside-each-ot/" target="_blank" rel="external">链接1</a><br>macos上默认安装的就是python2.7<br>直接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python3</div></pre></td></tr></table></figure></p>
+<p>安装完成之后python -V<br>看到的还是python2.7.10</p>
+<p>安装完成之后python3 -V<br>看到python3的版本</p>
+<h2 id="强烈建议使用virtualenv"><a href="#强烈建议使用virtualenv" class="headerlink" title="强烈建议使用virtualenv"></a>强烈建议使用virtualenv</h2><p><a href="http://www.marinamele.com/2014/07/install-python3-on-mac-os-x-and-use-virtualenv-and-virtualenvwrapper.html" target="_blank" rel="external">链接</a></p>
+<ul>
+<li><p>创建python2的虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install virtualenv</div><div class="line">python -V</div><div class="line">virtualenv --no-site-packages venv3 --python=python2.7</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建python3的虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip3 install virtualenv</div><div class="line">python3 -V</div><div class="line">virtualenv --no-site-packages venv3 --python=python3.6</div></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
     </div>
@@ -409,8 +394,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/04/Awk学习笔记/" rel="next" title="Awk学习笔记">
-                <i class="fa fa-chevron-left"></i> Awk学习笔记
+              <a href="/2017/10/15/python-virtualenv/" rel="next" title="python_virtualenv">
+                <i class="fa fa-chevron-left"></i> python_virtualenv
               </a>
             
           </div>
@@ -418,10 +403,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/10/重定向/" rel="prev" title="重定向">
-                重定向 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -447,8 +428,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/06/tensorflow学习笔记/"
-           data-title="tensorflow学习笔记" data-url="http://yoursite.com/2017/05/06/tensorflow学习笔记/">
+      <div class="ds-thread" data-thread-key="2017/10/15/同一OS下不同python2-7与3-4/"
+           data-title="同一OS下不同python2.7与3.4" data-url="http://yoursite.com/2017/10/15/同一OS下不同python2-7与3-4/">
       </div>
     
   </div>
@@ -545,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强烈建议使用virtualenv"><span class="nav-number">3.</span> <span class="nav-text">强烈建议使用virtualenv</span></a></li></ol></div>
             
 
           </div>
