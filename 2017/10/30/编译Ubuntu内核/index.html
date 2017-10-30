@@ -87,49 +87,25 @@
 
 
 
-<meta name="description" content="学习使用sedThis blog is used to record the usage of sed.sed 不会对原始文件产生影响，一行行读取，一行行匹配处理
-正则表达式正则表达式,在sed里面要加两个slash
-
-^匹配开头  
-/^#/ 匹配#开头的行，注释行
-$匹配末尾
-/^$/ 匹配空行
-/./ 匹配一个字符
-/../ 匹配两个字符
-* 匹配前面0个或多个字符
-
-剔除指定行，打印剩余行">
+<meta name="description" content="#　介绍根据使用需要，有时候关闭一些内核选项，然而在OS没有提供对应工具的情况下，就需要重新编译linux的kernal
+查看内核版本1234# 查看内核版本uname -r# 查看OS版本lsb_release -a
+下载源码apt-get install linux-source下载内核默认下载到 /usr/src 目录
+#　解压缩包12tar xf linux-.*.tar.xz -C /u">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sed学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/04/26/sed学习笔记/index.html">
+<meta property="og:title" content="编译Ubuntu内核">
+<meta property="og:url" content="http://yoursite.com/2017/10/30/编译Ubuntu内核/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="学习使用sedThis blog is used to record the usage of sed.sed 不会对原始文件产生影响，一行行读取，一行行匹配处理
-正则表达式正则表达式,在sed里面要加两个slash
-
-^匹配开头  
-/^#/ 匹配#开头的行，注释行
-$匹配末尾
-/^$/ 匹配空行
-/./ 匹配一个字符
-/../ 匹配两个字符
-* 匹配前面0个或多个字符
-
-剔除指定行，打印剩余行">
-<meta property="og:updated_time" content="2017-04-26T09:56:13.000Z">
+<meta property="og:description" content="#　介绍根据使用需要，有时候关闭一些内核选项，然而在OS没有提供对应工具的情况下，就需要重新编译linux的kernal
+查看内核版本1234# 查看内核版本uname -r# 查看OS版本lsb_release -a
+下载源码apt-get install linux-source下载内核默认下载到 /usr/src 目录
+#　解压缩包12tar xf linux-.*.tar.xz -C /u">
+<meta property="og:updated_time" content="2017-10-30T11:36:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sed学习笔记">
-<meta name="twitter:description" content="学习使用sedThis blog is used to record the usage of sed.sed 不会对原始文件产生影响，一行行读取，一行行匹配处理
-正则表达式正则表达式,在sed里面要加两个slash
-
-^匹配开头  
-/^#/ 匹配#开头的行，注释行
-$匹配末尾
-/^$/ 匹配空行
-/./ 匹配一个字符
-/../ 匹配两个字符
-* 匹配前面0个或多个字符
-
-剔除指定行，打印剩余行">
+<meta name="twitter:title" content="编译Ubuntu内核">
+<meta name="twitter:description" content="#　介绍根据使用需要，有时候关闭一些内核选项，然而在OS没有提供对应工具的情况下，就需要重新编译linux的kernal
+查看内核版本1234# 查看内核版本uname -r# 查看OS版本lsb_release -a
+下载源码apt-get install linux-source下载内核默认下载到 /usr/src 目录
+#　解压缩包12tar xf linux-.*.tar.xz -C /u">
 
 
 
@@ -157,13 +133,13 @@ $匹配末尾
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/26/sed学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/30/编译Ubuntu内核/"/>
 
 
 
 
 
-  <title> sed学习笔记 | 沉思语录 </title>
+  <title> 编译Ubuntu内核 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +258,7 @@ $匹配末尾
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/sed学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/编译Ubuntu内核/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -303,7 +279,7 @@ $匹配末尾
             
             
               
-                sed学习笔记
+                编译Ubuntu内核
               
             
           </h1>
@@ -318,8 +294,8 @@ $匹配末尾
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T17:55:11+08:00">
-                2017-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T19:30:28+08:00">
+                2017-10-30
               </time>
             
 
@@ -337,8 +313,8 @@ $匹配末尾
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/26/sed学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/26/sed学习笔记/" itemprop="commentCount"></span>
+                <a href="/2017/10/30/编译Ubuntu内核/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/30/编译Ubuntu内核/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -369,37 +345,20 @@ $匹配末尾
       
 
       
-        <h1 id="学习使用sed"><a href="#学习使用sed" class="headerlink" title="学习使用sed"></a>学习使用sed</h1><p>This blog is used to record the usage of sed.<br>sed 不会对原始文件产生影响，一行行读取，一行行匹配处理</p>
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>正则表达式,在sed里面要加两个slash</p>
-<ul>
-<li>^匹配开头  </li>
-<li>/^#/ 匹配#开头的行，注释行</li>
-<li>$匹配末尾</li>
-<li>/^$/ 匹配空行</li>
-<li>/./ 匹配一个字符</li>
-<li>/../ 匹配两个字符</li>
-<li>* 匹配前面0个或多个字符</li>
-</ul>
-<h2 id="剔除指定行，打印剩余行"><a href="#剔除指定行，打印剩余行" class="headerlink" title="剔除指定行，打印剩余行"></a>剔除指定行，打印剩余行</h2><ul>
-<li>sed -e ‘1,5d’ filename   删除1到5行，打印剩余行</li>
-<li>sed -e ‘/^#/d’ filename  删除所有#开头的行，打印剩余行</li>
-<li>sed -e ‘/leslie/p’ filename 删除所有包含leslie的行，打印剩余行</li>
-</ul>
-<h2 id="打印指定的行"><a href="#打印指定的行" class="headerlink" title="打印指定的行"></a>打印指定的行</h2><ul>
-<li>sed -n -e ‘1,5p’ filename 打印1到5行</li>
-<li>sed -n -e ‘/^#/p’ filename 打印所有#开头的行</li>
-<li>sed -n -e ‘/leslie/p’ filename 打印所有包含leslie的行</li>
-<li>sed -n -e ‘regureexpression1,regureexpression2’ filename 从匹配第一个正则表达式的第一行开始到匹配第二正则表达式的第一行</li>
-<li>sed -e ‘=’ filename    打印行号</li>
-</ul>
+        <p>#　介绍<br>根据使用需要，有时候关闭一些内核选项，然而在OS没有提供对应工具的情况下，就需要重新<a href="http://www.cnblogs.com/xiaocen/p/3717993.html" target="_blank" rel="external">编译linux的kernal</a></p>
+<h1 id="查看内核版本"><a href="#查看内核版本" class="headerlink" title="查看内核版本"></a>查看内核版本</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 查看内核版本</div><div class="line">uname -r</div><div class="line"># 查看OS版本</div><div class="line">lsb_release -a</div></pre></td></tr></table></figure>
+<h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><p>apt-get install linux-source<br>下载内核<br>默认下载到 /usr/src 目录</p>
+<p>#　解压缩包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar xf linux-.*.tar.xz -C /usr/src/</div><div class="line">ln -sv linux-.* linux # 有需要的话需要创建一个链接</div></pre></td></tr></table></figure></p>
+<p>#　配置内核选项并编译<br>配置内核的方法的编译选项的方法有好多种，下面的每一种make就对应了一种方法，只需要从里面选一种就可以了，最常见的就是make menuconfig, 但是需要安装cc和ncurses-devel这两个包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">make config：遍历选择所要编译的内核特性</div><div class="line">make allyesconfig：配置所有可编译的内核特性</div><div class="line">make allnoconfig：并不是所有的都不编译，而是能选的都回答为NO、只有必须的都选择为yes。</div><div class="line">make menuconfig：这种就是打开一个文件窗口选择菜单，这个命令需要打开的窗口大于80字符的宽度，打开后就可以在里面选择要编译的项了</div><div class="line">下面两个是可以用鼠标点选择的、比较方便哦：</div><div class="line">make kconfig(KDE桌面环境下，并且安装了qt开发环境)</div><div class="line">make gconfig(Gnome桌面环境，并且安装gtk开发环境)</div><div class="line">menuconfig：使用这个命令的话、如果是新安装的系统就要安装gcc和ncurses-devel这两个包才可以打开、然后再里面选择就可以了、通这个方法也是用得比较多的：</div></pre></td></tr></table></figure></p>
+<p><strong>另外一种常见的方法是基于当前OS的编译配置选项去修改，复制当前系统上的/boot/config-版本-平台编译选项文件，将这个文件复制到/usr/src/linux/.config覆盖./config这个文件</strong></p>
+<p>用screen开一个子窗口，在子窗口中编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make -j144 all &amp;&gt; make_record.txt</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h2 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h2><p>sed -e ‘s/word1/word2/g’ filename<br>s表示替换，用word2替换word1<br>g表示全局替换，没有g则只会对第一个出现word1的位置替换为word2</p>
-<h2 id="组合多条命令"><a href="#组合多条命令" class="headerlink" title="组合多条命令"></a>组合多条命令</h2><p>使用；分割多条命令</p>
-<ul>
-<li>sed -n -e ‘1,5=;1,5p’ filename<br>或者</li>
-<li>sed -n -e ‘1,5=’ -e ‘1,5p’ filename</li>
-</ul>
-<h2 id="读取文本中的命令"><a href="#读取文本中的命令" class="headerlink" title="读取文本中的命令"></a>读取文本中的命令</h2><p>新建一个 (command).sed后缀名的文件<br>在里面写入命令<br>sed -n -f command.sed filename</p>
+<p><strong>这一步不确定是否需要,目前感觉不一定需要</strong><br>make 之后 在 make install之前还<a href="https://bbs.archlinux.org/viewtopic.php?id=79851" target="_blank" rel="external">需要</a><br>make bzImage一下，不然会报错<br><em>*</em> Missing file: arch/x86/boot/bzImage</p>
+<h1 id="编译后的安装"><a href="#编译后的安装" class="headerlink" title="编译后的安装"></a>编译后的安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">make modules_install #这一步是需要的</div><div class="line">   这步完了之后你可以查看一下/lib/modules/目录下就会生成一个以版本号命名的一个文件模块了</div><div class="line">make install</div><div class="line">      安装完之后会在/boot/目录下生成一个内核文件vmlinuz-3.13.2、还有几个跟你当前编译的版本一样的文件、可以ls去看一下：</div><div class="line">ls /boot/</div></pre></td></tr></table></figure>
+<p>编译好了一个新内核了之后可以到<a href="http://www.nenew.net/ubuntu-grub-cfg.html" target="_blank" rel="external">grub.conf配置文件</a>时看一下：</p>
+<h1 id="vim-boot-grub-grub-conf"><a href="#vim-boot-grub-grub-conf" class="headerlink" title="vim /boot/grub/grub.conf"></a>vim /boot/grub/grub.conf</h1><p><a href="http://www.jinbuguo.com/linux/grub.cfg.html" target="_blank" rel="external">参考文档2</a></p>
+<p>重启系统，在重启界面上可以看到各个可以启动的内核的信息，选择我们刚刚编译好的这个内核<br>如果在第一层没有看到内核的选项，进入到advance的里面一级选项，里面会看到编译好的内核的启动选项</p>
+<h1 id="删除不需要的kernal"><a href="#删除不需要的kernal" class="headerlink" title="删除不需要的kernal"></a>删除不需要的kernal</h1><p>直接在/boot下面把对应的文件删除，一个kernal应该有三个文件<br>然后在/boot/grub/grub.cfg文件里面把对应的启动项给删除了<br>修改grub.cfg是只读属性<br>chmod 644 grub.cfg<br>改完保存之后<br>chmod 444 grub.cfg 重新改成只读的属性<br>启动之后看到旧的选项被删除了</p>
 
       
     </div>
@@ -436,8 +395,8 @@ $匹配末尾
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/18/handlebars/" rel="next" title="handlebars">
-                <i class="fa fa-chevron-left"></i> handlebars
+              <a href="/2017/10/21/受限玻尔兹曼机/" rel="next" title="受限玻尔兹曼机">
+                <i class="fa fa-chevron-left"></i> 受限玻尔兹曼机
               </a>
             
           </div>
@@ -445,10 +404,6 @@ $匹配末尾
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/04/Awk学习笔记/" rel="prev" title="Awk学习笔记">
-                Awk学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -474,8 +429,8 @@ $匹配末尾
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/26/sed学习笔记/"
-           data-title="sed学习笔记" data-url="http://yoursite.com/2017/04/26/sed学习笔记/">
+      <div class="ds-thread" data-thread-key="2017/10/30/编译Ubuntu内核/"
+           data-title="编译Ubuntu内核" data-url="http://yoursite.com/2017/10/30/编译Ubuntu内核/">
       </div>
     
   </div>
@@ -572,7 +527,7 @@ $匹配末尾
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习使用sed"><span class="nav-number">1.</span> <span class="nav-text">学习使用sed</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式"><span class="nav-number">1.1.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剔除指定行，打印剩余行"><span class="nav-number">1.2.</span> <span class="nav-text">剔除指定行，打印剩余行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印指定的行"><span class="nav-number">1.3.</span> <span class="nav-text">打印指定的行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换"><span class="nav-number">1.4.</span> <span class="nav-text">替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合多条命令"><span class="nav-number">1.5.</span> <span class="nav-text">组合多条命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取文本中的命令"><span class="nav-number">1.6.</span> <span class="nav-text">读取文本中的命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#查看内核版本"><span class="nav-number">1.</span> <span class="nav-text">查看内核版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载源码"><span class="nav-number">2.</span> <span class="nav-text">下载源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译后的安装"><span class="nav-number">3.</span> <span class="nav-text">编译后的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-boot-grub-grub-conf"><span class="nav-number">4.</span> <span class="nav-text">vim /boot/grub/grub.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除不需要的kernal"><span class="nav-number">5.</span> <span class="nav-text">删除不需要的kernal</span></a></li></ol></div>
             
 
           </div>
