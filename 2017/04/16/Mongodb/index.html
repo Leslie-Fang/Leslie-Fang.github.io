@@ -99,7 +99,7 @@ Macos用homebrew安装，
 Macos用homebrew安装，
 运行 mongodb：两种方式方式1：打开mongodb的图形化界面，默认连接的数据目录的配置文件在/usr/local/etc/mongod.conf可以修改/data/db的路径
 方式">
-<meta property="og:updated_time" content="2017-10-29T03:12:46.000Z">
+<meta property="og:updated_time" content="2017-11-05T07:52:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mongodb">
 <meta name="twitter:description" content="基本术语collection 对应了 tabledocument 对应了 rowfield 对应了 columndatabase，index，primary key都是一致的
@@ -358,7 +358,9 @@ Macos用homebrew安装，
 </li>
 </ol>
 <a id="more"></a>
-<h2 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h2><p>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念可以参考自己写的代码<br>一般会在一个独立的文件中新建一个schema以及model，然后将这个model export出来<br>在需要用到的地方require这个model</p>
+<h2 id="Nodejs接口"><a href="#Nodejs接口" class="headerlink" title="Nodejs接口"></a>Nodejs接口</h2><p>Nodejs下面有两种模块的接口支持对MongoDB的访问，mongodb的<a href="https://docs.mongodb.com/getting-started/node/client/" target="_blank" rel="external">官网使用的是mongodb</a>, 但是在实际生产环境使用Mongoose更多一点</p>
+<h3 id="mongodb"><a href="#mongodb" class="headerlink" title="mongodb"></a>mongodb</h3><p>mongodb的使用和在mongo的命令行从操作数据库比较类似<br>用GraphQL和mongondb写过一些操作的例子，具体的语法可以参考<a href="https://docs.mongodb.com/getting-started/node/client/" target="_blank" rel="external">官网的教程</a>，或者<a href="https://github.com/Leslie-Fang/express_GraphQL" target="_blank" rel="external">github代码链接</a></p>
+<h3 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h3><p><a href="http://mongoosejs.com/" target="_blank" rel="external">官网</a><br><a href="http://www.cnblogs.com/zhongweiv/p/mongoose.html" target="_blank" rel="external">中文教程</a><br>在nodejs下面可以用Mongoose模块进行mongodb管理<br>schema，model，的概念，先定义一个schema对应了数据表(collection)的结构，然后用schema来创建一个一个model，使用model来具体操作数据(document),代码的组织可以参考这个<a href="http://www.cnblogs.com/zhongweiv/p/mongoose.html" target="_blank" rel="external">中文教程</a><br>一般会在一个独立的文件中新建一个schema以及model，然后将这个model export出来<br>在需要用到的地方require这个model</p>
 <ol>
 <li><p>保存数据<br>document=new model（data）<br>传入数据，创建一个新的document（一行数据）<br>document.save（function（）{</p>
 <p> }）<br>调用save保存到数据库中，在回调函数中进行处理</p>
@@ -541,7 +543,7 @@ Macos用homebrew安装，
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Macos"><span class="nav-number">2.</span> <span class="nav-text">Macos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mongoose"><span class="nav-number">3.</span> <span class="nav-text">Mongoose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pymongo"><span class="nav-number">4.</span> <span class="nav-text">Pymongo</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Macos"><span class="nav-number">2.</span> <span class="nav-text">Macos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nodejs接口"><span class="nav-number">3.</span> <span class="nav-text">Nodejs接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mongodb"><span class="nav-number">3.1.</span> <span class="nav-text">mongodb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mongoose"><span class="nav-number">3.2.</span> <span class="nav-text">Mongoose</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pymongo"><span class="nav-number">4.</span> <span class="nav-text">Pymongo</span></a></li></ol></div>
             
 
           </div>
