@@ -87,22 +87,22 @@
 
 
 
-<meta name="description" content="IntroductionCaffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化
+<meta name="description" content="介绍Caffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化，并发布了intelcaffe版本，调用MKL以及MKLDNN库，从而编译后使用最新的指令集加速运算。
 基本概念
-Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number N x channel K x height H x">
+Blob就是caffe封装的数据，默认的输入图像的格式是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="caffe">
 <meta property="og:url" content="http://yoursite.com/2017/11/11/caffe/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="IntroductionCaffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化
+<meta property="og:description" content="介绍Caffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化，并发布了intelcaffe版本，调用MKL以及MKLDNN库，从而编译后使用最新的指令集加速运算。
 基本概念
-Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number N x channel K x height H x">
-<meta property="og:updated_time" content="2017-11-11T12:03:31.000Z">
+Blob就是caffe封装的数据，默认的输入图像的格式是">
+<meta property="og:updated_time" content="2017-11-11T12:27:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe">
-<meta name="twitter:description" content="IntroductionCaffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化
+<meta name="twitter:description" content="介绍Caffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的框架，github地址,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了优化，并发布了intelcaffe版本，调用MKL以及MKLDNN库，从而编译后使用最新的指令集加速运算。
 基本概念
-Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number N x channel K x height H x">
+Blob就是caffe封装的数据，默认的输入图像的格式是">
 
 
 
@@ -342,7 +342,7 @@ Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number 
       
 
       
-        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Caffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的<a href="http://caffe.berkeleyvision.org/" target="_blank" rel="external">框架</a>，github<a href="https://github.com/BVLC/caffe" target="_blank" rel="external">地址</a>,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了<a href="https://github.com/intel/caffe" target="_blank" rel="external">优化</a></p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Caffe 是Berkeley Vision and Learning Center(BVLC)开发的一个深度学习的<a href="http://caffe.berkeleyvision.org/" target="_blank" rel="external">框架</a>，github<a href="https://github.com/BVLC/caffe" target="_blank" rel="external">地址</a>,最初是用于图像处理，也可以用于自然语言处理。英特尔根据自己的CPU对caffe做了<a href="https://github.com/intel/caffe" target="_blank" rel="external">优化</a>，并发布了intelcaffe版本，调用MKL以及MKLDNN库，从而编译后使用最新的指令集加速运算。</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li><a href="http://caffe.berkeleyvision.org/tutorial/net_layer_blob.html" target="_blank" rel="external">Blob</a>就是caffe封装的数据，默认的输入图像的格式是(NCHW):number N x channel K x height H x width W</li>
 <li>solver: 定义一个solver文件,里面指定使用哪个net，步长多少</li>
@@ -356,7 +356,9 @@ Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number 
 </ul>
 <h2 id="手写数字识别-Mnist"><a href="#手写数字识别-Mnist" class="headerlink" title="手写数字识别(Mnist)"></a>手写数字识别(Mnist)</h2><h3 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h3><h4 id="下载数据"><a href="#下载数据" class="headerlink" title="下载数据"></a>下载数据</h4><p>运行这个脚本<br>$CAFFE_ROOT/data/mnist/get_mnist.sh<br>下载数据集到当前目录下面$CAFFE_ROOT/data/mnist/</p>
 <h4 id="转换数据格式"><a href="#转换数据格式" class="headerlink" title="转换数据格式"></a>转换数据格式</h4><p>运行这个脚本去转换数据格式<br>$CAFFE_ROOT/examples/mnist/create_mnist.sh<br>会在$CAFFE_ROOT/examples/mnist/目录下面生成两个.lmdb后缀的文件，里面就是训练集和测试集<br><a id="more"></a></p>
-<h4 id="LeNet模型"><a href="#LeNet模型" class="headerlink" title="LeNet模型"></a>LeNet模型</h4><p>$CAFFE_ROOT/examples/mnist/lenet_train_test.prototxt</p>
+<h4 id="LeNet模型"><a href="#LeNet模型" class="headerlink" title="LeNet模型"></a>LeNet模型</h4><p>要使用caffe，最重要的就是定义模型，也就是编写对应的.prototxt文件<br>$CAFFE_ROOT/examples/mnist/lenet_train_test.prototxt</p>
+<h4 id="LeNet的求解器solver"><a href="#LeNet的求解器solver" class="headerlink" title="LeNet的求解器solver"></a>LeNet的求解器solver</h4><p>solver定义了求解的参数<br>$CAFFE_ROOT/examples/mnist/lenet_solver.prototxt</p>
+<h4 id="运行的环境变量设置与脚本"><a href="#运行的环境变量设置与脚本" class="headerlink" title="运行的环境变量设置与脚本"></a>运行的环境变量设置与脚本</h4><p>./examples/mnist/train_lenet.sh<br>在solver中有指定训练多少itertaion之后保存一次模型参数<br>可以用于后面进一步的训练或者inference</p>
 
       
     </div>
@@ -525,7 +527,7 @@ Blob就是caffe封装的数据，默认的输入图像的格式是(NCHW):number 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写数字识别-Mnist"><span class="nav-number">4.</span> <span class="nav-text">手写数字识别(Mnist)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备数据"><span class="nav-number">4.1.</span> <span class="nav-text">准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载数据"><span class="nav-number">4.1.1.</span> <span class="nav-text">下载数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转换数据格式"><span class="nav-number">4.1.2.</span> <span class="nav-text">转换数据格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LeNet模型"><span class="nav-number">4.1.3.</span> <span class="nav-text">LeNet模型</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写数字识别-Mnist"><span class="nav-number">4.</span> <span class="nav-text">手写数字识别(Mnist)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备数据"><span class="nav-number">4.1.</span> <span class="nav-text">准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载数据"><span class="nav-number">4.1.1.</span> <span class="nav-text">下载数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转换数据格式"><span class="nav-number">4.1.2.</span> <span class="nav-text">转换数据格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LeNet模型"><span class="nav-number">4.1.3.</span> <span class="nav-text">LeNet模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LeNet的求解器solver"><span class="nav-number">4.1.4.</span> <span class="nav-text">LeNet的求解器solver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行的环境变量设置与脚本"><span class="nav-number">4.1.5.</span> <span class="nav-text">运行的环境变量设置与脚本</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
