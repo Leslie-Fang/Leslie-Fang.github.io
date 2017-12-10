@@ -250,6 +250,149 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/15/卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/15/卷积神经网络/" itemprop="url">
+                  卷积神经网络（CNN）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-15T18:15:10+08:00">
+                2017-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/15/卷积神经网络/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/15/卷积神经网络/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>卷积核： 用来和图像做卷积运算的小矩阵</li>
+<li>stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度</li>
+<li>Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rgb/hsv 三个通道)，卷积和池化之后就可以得到不同的通道对应的新的图像</li>
+<li>池化（降采样，减少图像运算的像素点的个数），con-max-pooling 就是取一片区域当中的最大值，对每一个通道都进行池化操作<br>1，2步骤可以重复多次<br>最后将图像的每一个通道都flattern（展开成一维数组），每一个通道都作为一个输入量，输入到全连接的前馈神经网络中进行训练（一般在网络中会对不同通道的值进行融合）</li>
+</ol>
+<h2 id="CNN用于手写数字识别"><a href="#CNN用于手写数字识别" class="headerlink" title="CNN用于手写数字识别"></a>CNN用于手写数字识别</h2><p>整个项目的框架如下图所示：<br><img src="http://omdthfazl.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-15%20%E4%B8%8B%E5%8D%889.02.57.png" alt="项目框架"><br>通过摄像头捕获手写数字，输入到计算机中，运行手写数字算法，将识别结果通过无线设备发送到智能硬件<br>算法的框图入如下图所示<br><img src="http://omdthfazl.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-15%20%E4%B8%8B%E5%8D%889.00.21.png" alt="算法框图"><br>整个神经网络共包含了5层（除去第一层输入层）<br>其中包含了二层卷积层、一层全连接层、一层dropout层以及一层的输出层<br>在每一层的卷积层中，每一个卷积操作，定义stride为1，Padding补充为0；每一个池化操作，都使用2x2的矩阵块中取出最大值</p>
+<h3 id="第一层神经网络"><a href="#第一层神经网络" class="headerlink" title="第一层神经网络"></a>第一层神经网络</h3><h4 id="第一个卷积层"><a href="#第一个卷积层" class="headerlink" title="第一个卷积层"></a>第一个卷积层</h4><p>定义了32个通道（对应了32个卷积核），每一个卷积核是5x5的矩阵块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># First convolutional layer - maps one grayscale image to 32 feature maps.</div><div class="line">W_conv1 = weight_variable([5, 5, 1, 32])</div><div class="line">b_conv1 = bias_variable([32])</div><div class="line">h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)</div></pre></td></tr></table></figure></p>
+<p>其中weight_variable([5, 5, 1, 32])<br>前两个参数对应了卷积核的大小，第三个参数是输入的通道数(原始为灰度图像1个通道)，第四个参数为输出的通道数<br>最后用卷积后的结果作为relu神经元的构造函数，<strong>神经元里面定义了对应的激活函数</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/15/卷积神经网络/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/手写数字识别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -517,148 +660,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/12/bash学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/12/bash学习笔记/" itemprop="url">
-                  bash学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T18:55:33+08:00">
-                2017-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/12/bash学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/12/bash学习笔记/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h2><p>diff 用于比较两个文件（也可以用于目录）的差别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt</div></pre></td></tr></table></figure></p>
-<p>常规模式输出：</p>
-<ul>
-<li>a为后一个文件比前一个文件多的行</li>
-<li>d为后一个文件比前一个文件少的行</li>
-<li>c为两个文件不一样的行</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff file_1_1.txt file_1_2.txt -y</div></pre></td></tr></table></figure>
-<p>比较模式输出：按每一行对比两个文件</p>
-<h2 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h2><h3 id="输入查找"><a href="#输入查找" class="headerlink" title="输入查找"></a>输入查找</h3><p>在命令模式下输入 ？或者/<br>然后输入要查找的单词<br>按回车开始查找，按n查找下一个(上一个)单词<br>N与n的反方向进行搜索</p>
-<h3 id="根据光标位置的单词查找"><a href="#根据光标位置的单词查找" class="headerlink" title="根据光标位置的单词查找"></a>根据光标位置的单词查找</h3><p>在光标位置的单词按*或者#<br>按n查找下一个(上一个)单词，N与n的反方向进行搜索</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/12/bash学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -708,7 +709,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -721,7 +722,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
