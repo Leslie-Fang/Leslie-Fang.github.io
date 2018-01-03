@@ -250,6 +250,152 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/15/Django/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/15/Django/" itemprop="url">
+                  Django
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T14:01:54+08:00">
+                2017-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/15/Django/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/15/Django/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="开发过程"><a href="#开发过程" class="headerlink" title="开发过程"></a>开发过程</h1><p>新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP</p>
+<h2 id="模板的配置"><a href="#模板的配置" class="headerlink" title="模板的配置"></a>模板的配置</h2><p>在app的目录下面新建一个tempaltes的目录<br>在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html<br>然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR, app_name, ‘templates’),<br>这样在app下面的views里面就可以render这个html了，然后在url里面做配置</p>
+<h2 id="静态文件的配置"><a href="#静态文件的配置" class="headerlink" title="静态文件的配置"></a>静态文件的配置</h2><p>在app的目录下面新建一个static的目录<br>在base_dir/app_name/static/app_name/目录下面去建imgaes，css,js等目录<br>在下面摆放静态文件<br>在settings.py按照模板配置</p>
+<h2 id="集成ajax"><a href="#集成ajax" class="headerlink" title="集成ajax"></a>集成ajax</h2><p>主要是要注意：在用ajax提交表单的时候，需要在header中包含进csrf-token</p>
+<h2 id="集成reactjs"><a href="#集成reactjs" class="headerlink" title="集成reactjs"></a>集成reactjs</h2><p>Django默认使用的templates比较适合用在静态页面(页面不太变化的场景下面)，所有的html中的数据都通过context传进去。<br>Reactjs则比较适合用在动态页面中，一般会在项目的根目录下建立一个目录(front)专门用于储存reactjs的代码，同时将reactjs的code经过webpack之后的代码放入另一个目录中(webpack)。在Django的setting中static文件需要包含从这个webpack目录中去找。<br>在Django的html文件中：1.需要包含reactjs渲染的主块 2.另外reactjs的代码express中是通过script包含进去的，在django中则是使用django webpack load去包含进去。</p>
+<p>同时在webpack中可以配置生成的文件用hash之后的名字命名。这样在生产环境中可以避免浏览器缓存的问题，就是浏览器缓存了上一版本的js文件，用hash之后的文件名就会重新加载。webpack会生成一个json文件，里面包含了webpack前后的文件名的对应关系，这样在html中引入webpack之后的hash名的js文件的时候，就不需要没有刺激都修改引入的文件名了。<br>比如：通过webpack-bundle-tracker会写入webpack-stats.json文件中</p>
+<ol>
+<li>python manage.py runserver 来启动django</li>
+<li>敲gulp 来生成babel和webpack的文件</li>
+<li>webpack配置webpack-bundle-tracker来生成webpack-stats.json文件</li>
+</ol>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>部署到阿里云上，创建好数据库之后，启动，会报错说数据表不存在，python manager.py makemigrations 也会报同样的错<br>有两种可能的解决方法：</p>
+<ol>
+<li>数据迁移<br>把开发环境中的数据都迁移到云端，mysql比较方便，用冷迁移就可以了<br>备份数据: mysqldump -u root -p databaseName &gt; data.sql<br>恢复: mysqldump -u root -p  databaseName &lt; data.sql</li>
+</ol>
+<p>当然mysql也支持数据的热备份，只需要在mysql中配置就可以了，本质上就是在A服务器上对数据库操作的sql语句会备份在一个log文件中，B服务器会监听这个log文件，实时更新到本地，并执行对应的sql语句</p>
+<ol>
+<li>将各个APP下面的migration文件夹中的00x开头的记录django数据model变化的文件删除，然后重新migrate一下</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/15/Python-CookBook/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -502,147 +648,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/05/博客主题修改/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/05/博客主题修改/" itemprop="url">
-                  搭建个人博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T22:43:26+08:00">
-                2017-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/05/博客主题修改/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/05/博客主题修改/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="如何利用git搭建个人博客"><a href="#如何利用git搭建个人博客" class="headerlink" title="如何利用git搭建个人博客"></a>如何利用git搭建个人博客</h1><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>github+nodejs+hexo<br>首先安装nvm，然后安装node<br>然后安装hexo</p>
-<pre><code>npm install -g hexo-cli</code></pre>
-
-<p>下面是一些hexo常用的命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo clean #清除public文件夹下原有的构建</div><div class="line">hexo generate #重新构建</div><div class="line">hexo deploy #部署到git上</div><div class="line">hexo server #可以先不部署，在本地运行看看效果，再部署到git上面</div></pre></td></tr></table></figure></p>
-<h2 id="定制自己的博客主题"><a href="#定制自己的博客主题" class="headerlink" title="定制自己的博客主题"></a>定制自己的博客主题</h2><p>可以从git上下载自己的喜欢的主题：<br>git的仓库地址可以自行在git上搜索<br>在配置文件_config.xml中进行配置<br>具体的配置过程可以参考一下<a href="http://www.jianshu.com/p/db7e64d86067">简书的文章</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/05/博客主题修改/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -687,7 +697,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -742,7 +752,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
