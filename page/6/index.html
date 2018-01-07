@@ -250,6 +250,163 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/深度学习知识点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/13/深度学习知识点/" itemprop="url">
+                  深度学习知识点
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T22:05:39+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/13/深度学习知识点/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/13/深度学习知识点/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>玻尔兹曼机</p>
+</li>
+<li><p>过拟合：偏差很小，但方差很大（所以欠拟合叫做高偏差，过拟合叫做高方差）<br>训练数据太少，模型参数太多<br>解决方法：1. 剔除不必要的模型参数 2. 使用正则化（regularizaion），保留模型参数，但是减小模型参数的数量级（对某些参数，在loss函数中添加惩罚项）</p>
+</li>
+<li><p>L2正则项<br>解决过拟合的问题<br><a href="https://www.zhihu.com/question/20924039" target="_blank" rel="external">https://www.zhihu.com/question/20924039</a></p>
+</li>
+<li><p>交叉验证<br><a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81" target="_blank" rel="external">https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81</a><br>将数据集分成多个多个小的数据集，先用小数据集1训练，用小数据集2验证（评估正则化函数），直到最后一个小的数据集被用于验证</p>
+</li>
+<li><p>极大似然估计<br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">http://www.jianshu.com/p/f1d3906e4a3e</a></p>
+</li>
+<li><p>激活函数<br>在神经网络中引入非线性的成分<br>sigmod：0，1之间<br>tanh：-1，1之间<br>softmax: 多分类，一般用在输出层的激活</p>
+</li>
+<li><p>epoch、 iteration和batchsize<br><a href="http://blog.csdn.net/sinat_30071459/article/details/50721565" target="_blank" rel="external">http://blog.csdn.net/sinat_30071459/article/details/50721565</a></p>
+</li>
+<li><p>交叉熵<br><a href="https://zhuanlan.zhihu.com/p/27223959" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27223959</a><br>在机器学习中，可以用交叉熵来定义loss function</p>
+</li>
+<li><p>BP神经网络<br>反向传播计算——BackPropagation<br>单个参数：<a href="http://www.cnblogs.com/charlotte77/p/5629865.html" target="_blank" rel="external">http://www.cnblogs.com/charlotte77/p/5629865.html</a><br>矩阵计算：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
+</li>
+<li><p>卷积神经网络CNN<br>局部连接，参数共享，卷积，池化等概念<br>介绍：<a href="http://www.jeyzhang.com/cnn-learning-notes-1.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-1.html</a><br>模型训练：<a href="http://www.jeyzhang.com/cnn-learning-notes-2.html" target="_blank" rel="external">http://www.jeyzhang.com/cnn-learning-notes-2.html</a></p>
+</li>
+<li><p>局部对比归一化<br>Local contrast normalization<br><a href="http://blog.csdn.net/zouxy09/article/details/10007237" target="_blank" rel="external">http://blog.csdn.net/zouxy09/article/details/10007237</a></p>
+</li>
+<li><p>batch normalization<br><a href="http://blog.csdn.net/hjimce/article/details/50866313" target="_blank" rel="external">http://blog.csdn.net/hjimce/article/details/50866313</a><br><a href="http://minibatch.net/2017/06/11/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87-Batch-Normalization/" target="_blank" rel="external">http://minibatch.net/2017/06/11/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87-Batch-Normalization/</a><br><a href="https://zhuanlan.zhihu.com/p/26682707" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26682707</a><br>反向计算梯度：<a href="http://mlnote.com/2016/12/20/Neural-Network-Batch-Normalization-and-Caffe-Code/" target="_blank" rel="external">http://mlnote.com/2016/12/20/Neural-Network-Batch-Normalization-and-Caffe-Code/</a></p>
+</li>
+</ul>
+<p>Good:<a href="https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html" target="_blank" rel="external">https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html</a></p>
+<ul>
+<li>白化<br><a href="http://blog.csdn.net/hjimce/article/details/50864602" target="_blank" rel="external">http://blog.csdn.net/hjimce/article/details/50864602</a><br><a href="http://blog.csdn.net/whiteinblue/article/details/36171233" target="_blank" rel="external">http://blog.csdn.net/whiteinblue/article/details/36171233</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/crontab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -523,151 +680,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/基于express和reactjs开发的web框架/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/23/基于express和reactjs开发的web框架/" itemprop="url">
-                  基于express和reactjs开发的web框架
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T18:23:22+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/23/基于express和reactjs开发的web框架/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/23/基于express和reactjs开发的web框架/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前几个月基于express和reactjs写过几个简单的web应用，现在回过头来看很多代码都想不起来了。这周利用下班时间重新将这个框架梳理了一下，并写下这篇文章作为基于这两个框架开发web应用的BKM。</p>
-<h2 id="使用到的主要工具介绍"><a href="#使用到的主要工具介绍" class="headerlink" title="使用到的主要工具介绍"></a>使用到的主要工具介绍</h2><ul>
-<li>Express：基于nodejs的后端框架</li>
-<li>Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色，Model以及Control类似的功能可以用flux或者更进一步用Redux来实现，<a href="https://github.com/buckyroberts/React-Redux-Boilerplate">链接</a> 里面的图片将redux和reactjs之间的关系描述的很清楚</li>
-<li>Babel：转换ES6以及JSX的语法到ES5，commonJS</li>
-<li>Webpack: 浏览器不支持commonJS，因此需要通过webpack打包之后，才可以将js嵌入到html当中，当然经过webpack之后在生产环境中最好再用gulp经过一次uglify，可以减小js文件的大小</li>
-<li>Gulp：前端开发自动化的利器，在开发过程中可以监听文件的变化重启服务器</li>
-<li>数据库：目前使用MySQL存储用户信息，使用Redis存储session的hotdata。下一步可以把mongodb的接口移植过来。</li>
-</ul>
-<h2 id="框架实现的基础功能"><a href="#框架实现的基础功能" class="headerlink" title="框架实现的基础功能"></a>框架实现的基础功能</h2><p>这是个基础框架，不涉及任何的业务逻辑。在这个框架的基础上可以根据实际需求，开发主页面和相关的业务逻辑。</p>
-<ul>
-<li>注册和登入功能：使用bcrypt模块对密码进行加密，用户名和密码存储在MySQL里面进行用户信息的验证。验证通过、用户登入之后在cookie中设置session id对应的session数据，并将session的用户热点数据储存在Redis里面。</li>
-<li>登出功能：通过销毁和重新建立session，来实现用户的登出功能。redis的session数据可以再redis里面设置数据自动销毁的超时时间。当然cookie中的session id也可以通过设置cookie的超时销毁时间来实现。</li>
-<li>用户登入状态控制：用户的每一次访问根据cookie中的session id进行用户登录状态的控制，未登录用户无法看到定制的信息。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/23/基于express和reactjs开发的web框架/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -717,7 +729,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -730,7 +742,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
