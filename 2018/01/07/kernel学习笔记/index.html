@@ -101,7 +101,7 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
 linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.com/watch?v=ALzySqflHJwyoutube:Basics of the Linux Boot Process
 
 内存管理http://gity">
-<meta property="og:updated_time" content="2018-01-08T12:33:12.792Z">
+<meta property="og:updated_time" content="2018-01-11T12:20:48.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kernel学习笔记">
 <meta name="twitter:description" content="用户态与内核态http://jakielong.iteye.com/blog/771663
@@ -355,6 +355,14 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
 </li>
 <li><p>内存管理<br><a href="http://gityuan.com/2015/10/30/kernel-memory/" target="_blank" rel="external">http://gityuan.com/2015/10/30/kernel-memory/</a><br>youtube的教程：Virtual Memory，包括TLB的使用</p>
 </li>
+<li><p>Hyper-threading 技术<br>Intel的CPU可以再BIOS仲打开hyper-threading<br>比如说2socket，每个socket有28个物理的core，打开hyper-threading之后可以有56个逻辑core，一共是112个逻辑core<br>可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numactl --hardware</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>查看<br>socket 0上的逻辑core的编号是0-27,56-83<br>socket 1上的逻辑core的编号是28-55,84-111<br>可以通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">taskset -c 0,56(逻辑core的编号) process</div></pre></td></tr></table></figure></p>
+<p>将特定的process运行在这些逻辑core上面</p>
+<ul>
+<li>进程与线程<br>进程通过调用fork这个kernel的api实现<br>线程通过调用Pthreads这个kernel的api实现<br>通过top可以看到进程的pid<br>通过top -p 进程pid可以看到这个进程包含的线程</li>
 </ul>
 
       
