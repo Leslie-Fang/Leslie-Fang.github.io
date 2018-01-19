@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="教程," />
+  <meta name="keywords" content="技术," />
 
 
 
@@ -87,28 +87,19 @@
 
 
 
-<meta name="description" content="用户态与内核态http://jakielong.iteye.com/blog/771663
-
-linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.com/watch?v=ALzySqflHJwyoutube:Basics of the Linux Boot Process
-
-内存管理http://gity">
+<meta name="description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页
+编译安装mkldnn1231. Cd mkldnn &amp;amp;&amp;amp; mkdir build &amp;amp;&amp;amp; cd build2. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kernel学习笔记">
-<meta property="og:url" content="http://yoursite.com/2018/01/07/kernel学习笔记/index.html">
+<meta property="og:title" content="MKLDNN">
+<meta property="og:url" content="http://yoursite.com/2018/01/19/MKLDNN/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="用户态与内核态http://jakielong.iteye.com/blog/771663
-
-linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.com/watch?v=ALzySqflHJwyoutube:Basics of the Linux Boot Process
-
-内存管理http://gity">
-<meta property="og:updated_time" content="2018-01-11T12:20:48.204Z">
+<meta property="og:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页
+编译安装mkldnn1231. Cd mkldnn &amp;amp;&amp;amp; mkdir build &amp;amp;&amp;amp; cd build2. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../m">
+<meta property="og:updated_time" content="2018-01-19T09:05:24.255Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kernel学习笔记">
-<meta name="twitter:description" content="用户态与内核态http://jakielong.iteye.com/blog/771663
-
-linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.com/watch?v=ALzySqflHJwyoutube:Basics of the Linux Boot Process
-
-内存管理http://gity">
+<meta name="twitter:title" content="MKLDNN">
+<meta name="twitter:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页
+编译安装mkldnn1231. Cd mkldnn &amp;amp;&amp;amp; mkdir build &amp;amp;&amp;amp; cd build2. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../m">
 
 
 
@@ -136,13 +127,13 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/07/kernel学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/19/MKLDNN/"/>
 
 
 
 
 
-  <title> kernel学习笔记 | 沉思语录 </title>
+  <title> MKLDNN | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -261,7 +252,7 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/07/kernel学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKLDNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -282,7 +273,7 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
             
             
               
-                kernel学习笔记
+                MKLDNN
               
             
           </h1>
@@ -297,8 +288,8 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T11:49:26+08:00">
-                2018-01-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T17:02:02+08:00">
+                2018-01-19
               </time>
             
 
@@ -316,8 +307,8 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/07/kernel学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/07/kernel学习笔记/" itemprop="commentCount"></span>
+                <a href="/2018/01/19/MKLDNN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/19/MKLDNN/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,22 +339,12 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
       
 
       
-        <ul>
-<li><p>用户态与内核态<br><a href="http://jakielong.iteye.com/blog/771663" target="_blank" rel="external">http://jakielong.iteye.com/blog/771663</a></p>
-</li>
-<li><p>linux启动过程<br><a href="https://www.youtube.com/watch?v=yeMA7AJFtb8" target="_blank" rel="external">https://www.youtube.com/watch?v=yeMA7AJFtb8</a><br><a href="https://www.youtube.com/watch?v=ALzySqflHJw" target="_blank" rel="external">https://www.youtube.com/watch?v=ALzySqflHJw</a><br>youtube:Basics of the Linux Boot Process</p>
-</li>
-<li><p>内存管理<br><a href="http://gityuan.com/2015/10/30/kernel-memory/" target="_blank" rel="external">http://gityuan.com/2015/10/30/kernel-memory/</a><br>youtube的教程：Virtual Memory，包括TLB的使用</p>
-</li>
-<li><p>Hyper-threading 技术<br>Intel的CPU可以再BIOS仲打开hyper-threading<br>比如说2socket，每个socket有28个物理的core，打开hyper-threading之后可以有56个逻辑core，一共是112个逻辑core<br>可以通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numactl --hardware</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>查看<br>socket 0上的逻辑core的编号是0-27,56-83<br>socket 1上的逻辑core的编号是28-55,84-111<br>可以通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">taskset -c 0,56(逻辑core的编号) process</div></pre></td></tr></table></figure></p>
-<p>将特定的process运行在这些逻辑core上面</p>
-<ul>
-<li>进程与线程<br>进程通过调用fork这个kernel的api实现<br>线程通过调用Pthreads这个kernel的api实现<br>通过top可以看到进程的pid<br>通过top -p 进程pid可以看到这个进程包含的线程</li>
-</ul>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.<br><a href="!https://github.com/01org">Intel 开源软件中心</a><br><a href="!https://github.com/01org/mkl-dnn">MKLDNN Github 主页</a></p>
+<h2 id="编译安装mkldnn"><a href="#编译安装mkldnn" class="headerlink" title="编译安装mkldnn"></a>编译安装mkldnn</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. Cd mkldnn &amp;&amp; mkdir build &amp;&amp; cd build</div><div class="line">2. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../mkldnn_install/</div><div class="line">3. CC=icc CXX=icpc make -j 66 &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>make install之后：<br>如果第二步没有指定目录，会安装在/usr/local目录下面<br>Shared libraries (/usr/local/lib):<br>头文件：<br>Header files (/usr/local/include):<br>文档:<br>Documentation (/usr/local/share/doc/mkldnn):</p>
+<h2 id="编译链接代码："><a href="#编译链接代码：" class="headerlink" title="编译链接代码："></a>编译链接代码：</h2><p><a href="!https://software.intel.com/en-us/articles/intel-mkl-dnn-part-1-library-overview-and-installation">入门文档</a><br>这个文档内容有点问题：<br>具体编译的命令看github的readme：<a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">https://github.com/01org/mkl-dnn</a><br>首先配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">source psxe(应该只需要mkl模块)</div><div class="line">export MKLDNNROOT=/home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install</div><div class="line"></div><div class="line">G++ 编译</div><div class="line">g++ -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin/simple_net_cpp</div><div class="line"></div><div class="line">用icc编译的话：</div><div class="line">icpc -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin_icc/simple_net_cpp</div></pre></td></tr></table></figure></p>
+<p>编译完的运行：<br>报错找不到mkldnn的动态链接库<br>添加动态链接库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=LD_LIBRARY_PATH://home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install/lib</div><div class="line"></div><div class="line">报错找不到mkl_rt：</div><div class="line">source 一下mkl或者psxe</div><div class="line"></div><div class="line">然后运行：</div><div class="line">./bin_icc/simple_net_cpp</div><div class="line">运行成功，不会报错</div></pre></td></tr></table></figure></p>
+<h2 id="Simple-Net-Code-API-代码的解释"><a href="#Simple-Net-Code-API-代码的解释" class="headerlink" title="Simple_Net Code API 代码的解释"></a>Simple_Net Code API 代码的解释</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough" target="_blank" rel="external">https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough</a></p>
 
       
     </div>
@@ -387,7 +368,7 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
       
         <div class="post-tags">
           
-            <a href="/tags/教程/" rel="tag"># 教程</a>
+            <a href="/tags/技术/" rel="tag"># 技术</a>
           
         </div>
       
@@ -400,8 +381,8 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/10/forMango/" rel="next" title="Mango's Journey of Python">
-                <i class="fa fa-chevron-left"></i> Mango's Journey of Python
+              <a href="/2018/01/17/区块链/" rel="next" title="区块链">
+                <i class="fa fa-chevron-left"></i> 区块链
               </a>
             
           </div>
@@ -409,10 +390,6 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/17/区块链/" rel="prev" title="区块链">
-                区块链 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -438,8 +415,8 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2018/01/07/kernel学习笔记/"
-           data-title="kernel学习笔记" data-url="http://yoursite.com/2018/01/07/kernel学习笔记/">
+      <div class="ds-thread" data-thread-key="2018/01/19/MKLDNN/"
+           data-title="MKLDNN" data-url="http://yoursite.com/2018/01/19/MKLDNN/">
       </div>
     
   </div>
@@ -463,8 +440,17 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -517,6 +503,22 @@ linux启动过程https://www.youtube.com/watch?v=yeMA7AJFtb8https://www.youtube.
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译安装mkldnn"><span class="nav-number">1.1.</span> <span class="nav-text">编译安装mkldnn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译链接代码："><span class="nav-number">1.2.</span> <span class="nav-text">编译链接代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Net-Code-API-代码的解释"><span class="nav-number">1.3.</span> <span class="nav-text">Simple_Net Code API 代码的解释</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
