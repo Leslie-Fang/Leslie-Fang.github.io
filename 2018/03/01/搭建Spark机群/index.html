@@ -1,0 +1,797 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="介绍搭建一个spark机群进行数据分析结构：主节点+2个工作节点首先保证3个节点之间可以ssh免密码登录
+依赖安装
+主节点：
+java
+mvn：有必要配置代理,.m2/settings.xml
+spark：用做命令行测试，开发java程序，用mvn下载依赖包
+
+
+工作节点：
+java
+spark： 启动salve并连接主节点正确安装各个依赖包之后，需要正确配置环境变量。
+
+
+
+测试是否正确安装主节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建Spark机群">
+<meta property="og:url" content="http://yoursite.com/2018/03/01/搭建Spark机群/index.html">
+<meta property="og:site_name" content="沉思语录">
+<meta property="og:description" content="介绍搭建一个spark机群进行数据分析结构：主节点+2个工作节点首先保证3个节点之间可以ssh免密码登录
+依赖安装
+主节点：
+java
+mvn：有必要配置代理,.m2/settings.xml
+spark：用做命令行测试，开发java程序，用mvn下载依赖包
+
+
+工作节点：
+java
+spark： 启动salve并连接主节点正确安装各个依赖包之后，需要正确配置环境变量。
+
+
+
+测试是否正确安装主节">
+<meta property="og:updated_time" content="2018-03-01T11:00:15.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建Spark机群">
+<meta name="twitter:description" content="介绍搭建一个spark机群进行数据分析结构：主节点+2个工作节点首先保证3个节点之间可以ssh免密码登录
+依赖安装
+主节点：
+java
+mvn：有必要配置代理,.m2/settings.xml
+spark：用做命令行测试，开发java程序，用mvn下载依赖包
+
+
+工作节点：
+java
+spark： 启动salve并连接主节点正确安装各个依赖包之后，需要正确配置环境变量。
+
+
+
+测试是否正确安装主节">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/01/搭建Spark机群/"/>
+
+
+
+
+
+  <title> 搭建Spark机群 | 沉思语录 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沉思语录</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">取次花丛懒回顾，半缘修道半缘君</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/搭建Spark机群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                搭建Spark机群
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T18:59:38+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/01/搭建Spark机群/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/01/搭建Spark机群/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>搭建一个spark机群进行数据分析<br>结构：主节点+2个工作节点<br>首先保证3个节点之间可以ssh免密码登录</p>
+<h2 id="依赖安装"><a href="#依赖安装" class="headerlink" title="依赖安装"></a>依赖安装</h2><ul>
+<li>主节点：<ul>
+<li>java</li>
+<li>mvn：有必要配置代理,.m2/settings.xml</li>
+<li>spark：用做命令行测试，开发java程序，用mvn下载依赖包</li>
+</ul>
+</li>
+<li>工作节点：<ul>
+<li>java</li>
+<li>spark： 启动salve并连接主节点<br>正确安装各个依赖包之后，需要正确配置环境变量。</li>
+</ul>
+</li>
+</ul>
+<h2 id="测试是否正确安装"><a href="#测试是否正确安装" class="headerlink" title="测试是否正确安装"></a>测试是否正确安装</h2><h3 id="主节点"><a href="#主节点" class="headerlink" title="主节点"></a>主节点</h3><ul>
+<li>测试spark命令行，<a href="http://spark.apache.org/docs/2.2.1/quick-start.html" target="_blank" rel="external">参考文档</a></li>
+<li>测试spark用mvn构建，<a href="https://github.com/Leslie-Fang/basicSpark" target="_blank" rel="external">参考代码</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mvn package</div><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master local[4] target/simple-project-1.0.jar</div><div class="line">--class 指定jar包入口的class类</div><div class="line">--master local[4] 运行在本地的4线程</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h3><p>将主节点构建的jar包拷贝到工作节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master local[4] target/simple-project-1.0.jar</div><div class="line"># --class 指定jar包入口的class类</div><div class="line"># --master local[4] 运行在本地的4线程</div></pre></td></tr></table></figure></p>
+<h2 id="构建机群"><a href="#构建机群" class="headerlink" title="构建机群"></a>构建机群</h2><h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li><a href="http://spark.apache.org/docs/2.2.1/cluster-overview.html#cluster-manager-types" target="_blank" rel="external">工作原理</a></li>
+<li><a href="http://spark.apache.org/docs/2.2.1/submitting-applications.html" target="_blank" rel="external">运行命令行</a></li>
+<li><a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html" target="_blank" rel="external">standalone 主工具</a><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3></li>
+</ul>
+<ol>
+<li>首先配置cluster managers，参考<a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html" target="_blank" rel="external">standalone 主工具</a><br>1.1 sbin/start-master.sh<br>通过查看log可以看到master的url<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># start command</div><div class="line">cd $spark_home/sbin</div><div class="line">./start-master.sh</div><div class="line"># read log</div><div class="line">vim $spark_home/logs/spark-root-org.apache.spark.deploy.master.*.log</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>从log里面得到启动的master的url： spark://headnode:7077<br>这个变量要set到代码的SparkContext的master的变量里面<br>1.2 编写 conf/slaves file<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim $spark_home/conf/slaves</div><div class="line">#content</div><div class="line">knm009</div><div class="line">knm010</div></pre></td></tr></table></figure></p>
+<p>1.3 在headnode上运行sbin/start-slaves.sh 运行所有slaves<br>在worknode的节点上查看slaves的所有的log以及java进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd $spark_home/sbin</div><div class="line">./start-slaves.sh</div></pre></td></tr></table></figure></p>
+<ol>
+<li>用<a href="http://spark.apache.org/docs/2.2.1/submitting-applications.html" target="_blank" rel="external">运行命令行</a>启动应用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># code:</div><div class="line">https://github.com/Leslie-Fang/basicSpark</div><div class="line">cluster branch</div><div class="line"># build</div><div class="line">mvn package</div><div class="line"># how to run:</div><div class="line"># 跑在worknodes上面</div><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master spark://headnode:7077 target/simple-project-1.0.jar</div><div class="line">#　跑在本地</div><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master local[4] target/simple-project-1.0.jar</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><p>问题：worknode的log里看到无法连接Failed to connect to master headnode:7077<br><a href="http://blog.csdn.net/ybdesire/article/details/70666544" target="_blank" rel="external">http://blog.csdn.net/ybdesire/article/details/70666544</a><br>需要关闭headnode的防火墙<br>关闭之后将headnode上worknode上的spark进程都关闭<br>关闭之后，重启headnode上的spark-master以及spark-client</p>
+<h2 id="搭建-BigDL"><a href="#搭建-BigDL" class="headerlink" title="搭建 BigDL"></a>搭建 BigDL</h2><p>BigDL是基于spark的进行DL的框架<br><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/" target="_blank" rel="external">参考文档</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/intel-analytics/BigDL.git</div><div class="line">cd $BigDL_Home</div><div class="line"># build</div><div class="line">bash make-dist.sh -P spark_2.x</div><div class="line">#生成一个dist的folder</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/run/" target="_blank" rel="external">入门</a></p>
+<ol>
+<li><p>setup spark的cluster</p>
+</li>
+<li><p>下载数据集合</p>
+</li>
+<li><p>运行spark，指定bigDL的jar包<br>构建BigDL的jar包，和spark的multi-node一样的方式运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master spark://headnode:7077 --executor-cores 1 --total-executor-cores 2 --class com.intel.analytics.bigdl.models.vgg.Train dist/lib/bigdl-0.3.0-SNAPSHOT-jar-with-dependencies.jar -f /home/lf/bigdl/data/cifar-10-batches-bin -b 2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="坑-1"><a href="#坑-1" class="headerlink" title="坑"></a>坑</h3><p>java虚拟机的堆空间溢出<br>java.lang.OutOfMemoryError: Java heap space</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/27/Jenkins/" rel="next" title="Jenkins">
+                <i class="fa fa-chevron-left"></i> Jenkins
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/03/01/搭建Spark机群/"
+           data-title="搭建Spark机群" data-url="http://yoursite.com/2018/03/01/搭建Spark机群/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/popeve.jpg"
+               alt="Leslie" />
+          <p class="site-author-name" itemprop="name">Leslie</p>
+           
+              <p class="site-description motion-element" itemprop="description">记录心情与能力的成长</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖安装"><span class="nav-number">2.</span> <span class="nav-text">依赖安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试是否正确安装"><span class="nav-number">3.</span> <span class="nav-text">测试是否正确安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主节点"><span class="nav-number">3.1.</span> <span class="nav-text">主节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作节点"><span class="nav-number">3.2.</span> <span class="nav-text">工作节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建机群"><span class="nav-number">4.</span> <span class="nav-text">构建机群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">4.1.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤"><span class="nav-number">4.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑"><span class="nav-number">4.3.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建-BigDL"><span class="nav-number">5.</span> <span class="nav-text">搭建 BigDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">5.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">5.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑-1"><span class="nav-number">5.3.</span> <span class="nav-text">坑</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leslie</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leslie-fang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
