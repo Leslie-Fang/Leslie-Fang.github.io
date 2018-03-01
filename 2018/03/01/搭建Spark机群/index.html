@@ -121,7 +121,7 @@ spark： 启动salve并连接主节点正确安装各个依赖包之后，需要
 
 
 测试是否正确安装主节">
-<meta property="og:updated_time" content="2018-03-01T11:00:15.258Z">
+<meta property="og:updated_time" content="2018-03-01T11:01:02.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建Spark机群">
 <meta name="twitter:description" content="介绍搭建一个spark机群进行数据分析结构：主节点+2个工作节点首先保证3个节点之间可以ssh免密码登录
@@ -401,7 +401,8 @@ spark： 启动salve并连接主节点正确安装各个依赖包之后，需要
 <h2 id="构建机群"><a href="#构建机群" class="headerlink" title="构建机群"></a>构建机群</h2><h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
 <li><a href="http://spark.apache.org/docs/2.2.1/cluster-overview.html#cluster-manager-types" target="_blank" rel="external">工作原理</a></li>
 <li><a href="http://spark.apache.org/docs/2.2.1/submitting-applications.html" target="_blank" rel="external">运行命令行</a></li>
-<li><a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html" target="_blank" rel="external">standalone 主工具</a><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3></li>
+<li><a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html" target="_blank" rel="external">standalone 主工具</a><a id="more"></a>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3></li>
 </ul>
 <ol>
 <li>首先配置cluster managers，参考<a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html" target="_blank" rel="external">standalone 主工具</a><br>1.1 sbin/start-master.sh<br>通过查看log可以看到master的url<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># start command</div><div class="line">cd $spark_home/sbin</div><div class="line">./start-master.sh</div><div class="line"># read log</div><div class="line">vim $spark_home/logs/spark-root-org.apache.spark.deploy.master.*.log</div></pre></td></tr></table></figure>
