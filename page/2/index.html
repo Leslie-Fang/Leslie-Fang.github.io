@@ -250,6 +250,161 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/搭建Spark机群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/03/01/搭建Spark机群/" itemprop="url">
+                  搭建Spark机群
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T18:59:38+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/01/搭建Spark机群/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/01/搭建Spark机群/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>搭建一个spark机群进行数据分析<br>结构：主节点+2个工作节点<br>首先保证3个节点之间可以ssh免密码登录</p>
+<h2 id="依赖安装"><a href="#依赖安装" class="headerlink" title="依赖安装"></a>依赖安装</h2><ul>
+<li>主节点：<ul>
+<li>java</li>
+<li>mvn：有必要配置代理,.m2/settings.xml</li>
+<li>spark：用做命令行测试，开发java程序，用mvn下载依赖包</li>
+</ul>
+</li>
+<li>工作节点：<ul>
+<li>java</li>
+<li>spark： 启动salve并连接主节点<br>正确安装各个依赖包之后，需要正确配置环境变量。</li>
+</ul>
+</li>
+</ul>
+<h2 id="测试是否正确安装"><a href="#测试是否正确安装" class="headerlink" title="测试是否正确安装"></a>测试是否正确安装</h2><h3 id="主节点"><a href="#主节点" class="headerlink" title="主节点"></a>主节点</h3><ul>
+<li>测试spark命令行，<a href="http://spark.apache.org/docs/2.2.1/quick-start.html">参考文档</a></li>
+<li>测试spark用mvn构建，<a href="https://github.com/Leslie-Fang/basicSpark">参考代码</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mvn package</div><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master local[4] target/simple-project-1.0.jar</div><div class="line">--class 指定jar包入口的class类</div><div class="line">--master local[4] 运行在本地的4线程</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h3><p>将主节点构建的jar包拷贝到工作节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spark-submit --class &quot;org.intel.dcg.leslie.SimpleApp&quot; --master local[4] target/simple-project-1.0.jar</div><div class="line"># --class 指定jar包入口的class类</div><div class="line"># --master local[4] 运行在本地的4线程</div></pre></td></tr></table></figure></p>
+<h2 id="构建机群"><a href="#构建机群" class="headerlink" title="构建机群"></a>构建机群</h2><h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li><a href="http://spark.apache.org/docs/2.2.1/cluster-overview.html#cluster-manager-types">工作原理</a></li>
+<li><a href="http://spark.apache.org/docs/2.2.1/submitting-applications.html">运行命令行</a></li>
+<li><a href="http://spark.apache.org/docs/2.2.1/spark-standalone.html">standalone 主工具</a>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/01/搭建Spark机群/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/27/Jenkins/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -503,151 +658,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/30/Spark/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/30/Spark/" itemprop="url">
-                  Spark
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T18:55:11+08:00">
-                2018-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/30/Spark/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/30/Spark/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><ul>
-<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Download</a> &amp; uncompressed jdk</li>
-<li><p>set the environment variables of java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/automation/java/jdk1.8.0_161</div><div class="line">export CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.</div><div class="line">export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</div><div class="line">export SBT_HOME=/home/automation/spark/sbt/sbt</div><div class="line">export SPARK_HOME=/home/automation/spark/spark-2.2.1-bin-hadoop2.7</div><div class="line">export PATH=$PATH:$SBT_HOME/bin:$SPARK_HOME/bin</div></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz">Download</a> &amp; uncompressed spark</p>
-</li>
-<li>set the environment variables of spark</li>
-<li>install sbt： used to build scala</li>
-</ul>
-<h2 id="Doc"><a href="#Doc" class="headerlink" title="Doc"></a>Doc</h2><p><a href="https://spark.apache.org/docs/latest/quick-start.html">官方入门文档</a></p>
-<ul>
-<li>打开命令行交互<br>dataset的构造函数中传入输入文件，调用dataset的[API处理文档]（<a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset）">https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset）</a></li>
-<li>编写可运行的文件
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/30/Spark/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -697,7 +707,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
