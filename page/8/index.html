@@ -250,6 +250,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/MPI在高性能计算中的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/10/07/MPI在高性能计算中的应用/" itemprop="url">
+                  MPI在高性能计算中的应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-07T18:19:41+08:00">
+                2017-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/07/MPI在高性能计算中的应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/07/MPI在高性能计算中的应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:</p>
+<ul>
+<li>单机多进程并行计算</li>
+<li>多机集群并行计算</li>
+</ul>
+<p>MPI的实现由以下几种库：</p>
+<ul>
+<li>MPICH</li>
+<li>open-mpi</li>
+<li>intel-mpi</li>
+</ul>
+<p>其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当中</p>
+<h2 id="MPI安装"><a href="#MPI安装" class="headerlink" title="MPI安装"></a>MPI安装</h2><p>可以通过两种方式安装：</p>
+<ol>
+<li>OS的软件库安装：<ol>
+<li>ubuntu 的apt-get install</li>
+<li>MAC-OS的brew install</li>
+<li>redhat的yum install</li>
+</ol>
+</li>
+<li>通过源码包<br>比如下载mpich的<a href="https://www.mpich.org/">源码包</a>,安装过程就是一般的老三套:<ol>
+<li>configure 添加编译选项生成makefile文件</li>
+<li>make编译</li>
+<li>make install 安装</li>
+<li>如果有必要，将mpi/bin目录添加到环境变量</li>
+</ol>
+</li>
+</ol>
+<h2 id="MPI-编程"><a href="#MPI-编程" class="headerlink" title="MPI 编程"></a>MPI 编程</h2><p>基本的流程可以分成3个步骤<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/07/MPI在高性能计算中的应用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/Nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -543,161 +703,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/21/docker/" itemprop="url">
-                  docker
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T19:20:39+08:00">
-                2017-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/21/docker/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/docker/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li>docker daemon</li>
-<li>image</li>
-<li>container</li>
-<li>network</li>
-<li>label:<a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/">https://docs.docker.com/engine/userguide/labels-custom-metadata/</a></li>
-<li>storage driver:<a href="http://dockone.io/article/1765">http://dockone.io/article/1765</a></li>
-<li>volumes</li>
-</ul>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
-<li>docker ps: 查看正在运行的container</li>
-<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy">https://docs.docker.com/get-started/part2/#apppy</a></li>
-<li>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</li>
-<li>docker image ls 查看有没有生成镜像</li>
-<li>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</li>
-<li>attach a container<br>docker attach container_name<br>这样就会进入contaienr内部<br>要deattach这个container，ctrl-q</li>
-<li>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</li>
-<li>停止正在运行的container<br>docker stop container_id</li>
-<li>删除container<br>docker rm container_id</li>
-<li>删除image<br>docker rmi image_id（必须要保证这个image没有container在使用）</li>
-</ul>
-<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
-<p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
-<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/21/docker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -747,7 +752,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
