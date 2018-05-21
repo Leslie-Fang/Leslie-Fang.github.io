@@ -250,6 +250,141 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/手写数字识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/06/手写数字识别/" itemprop="url">
+                  手写数字识别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T19:57:05+08:00">
+                2017-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/06/手写数字识别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/06/手写数字识别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这几日，作息回到了早睡早醒，每天就花些时间去读书、去摄影、去锻炼以及做那些在WaitingList里躺了很久的有趣的事。<br>老板出差在美国，工作显得并不是那么忙碌，就在每天下班后抽出几个小时的时间去做了个手写数字识别的项目。主要涉及的技术包括了：机器视觉、深度学习（人工神经网络），当然相关的编程语言也是不可少的。</p>
+<h2 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h2><p>就像hello world是每一个码农写的第一行代码，手写数字识别也是每一个想进入人工智能领域的人必上的第一课。<br>深度学习的框架很多，比如我司的caffe，但是由于最近实在对C++无感，所以本文采用了<a href="https://www.tensorflow.org/">tensorflow</a>，这个google大法开源的python框架。如果官网访问有难度，请自觉科学上网。<br>训练的数据集来自<a href="yann.lecun.com/exdb/mnist">Yann LeCun’s website</a><br>训练模型我采用了最简单的softmax，因为急于先将整个流程走通，这个模型最后的测试集合的识别率只有92%。很槽糕，对不对，但是没关系以后还可以慢慢优化，:)希望可以说到做到。<br>训练过程用了梯度下降法去优化模型参数，大约300圈，识别率就打到了90%左右，后面的迭代基本就是不断的出现过拟合和修正过拟合问题。在训练结束之后可以保存训练模型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">saver = tf.train.Saver()</div><div class="line">save_path = &quot;./model/model.ckpt&quot;</div><div class="line">saver.save(sess, save_path)</div></pre></td></tr></table></figure></p>
+<p>以后在inference阶段，就可以直接提出这个模型和训练好的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">saver = tf.train.Saver([W, b])</div><div class="line">sess = tf.Session()</div><div class="line">saver.restore(sess, &quot;./model/model.ckpt&quot;)</div></pre></td></tr></table></figure></p>
+<p>有没有觉得这个过程很简单，哈哈，那是因为我对这个算法也是一知半解，也失去了少年时推导出数学公式时的欣喜。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/06/手写数字识别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/Python类与继承/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -524,150 +659,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/powerman/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/10/powerman/" itemprop="url">
-                  powerman
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-10T15:56:35+08:00">
-                2017-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/10/powerman/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/10/powerman/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>powerman是一个开源的工具，被谷歌用于cluster的机群管理<br>通过SNMP协议可以管理PDU电源<br>通过ipmi协议可以管理机器的reboot以及开关机</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>源码下载<a href="https://github.com/chaos/powerman">地址</a><br>安装流程参考源码中的INSTALL文件</p>
-<ol>
-<li><p>configure自动生成makefile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure</div></pre></td></tr></table></figure>
-</li>
-<li><p>编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make</div><div class="line">make check //check the make result</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/10/powerman/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -717,7 +708,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
