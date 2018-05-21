@@ -99,7 +99,7 @@
 编译程序在编译的时候手动加上-g选项1g++ -g file.cpp -o file
 启动GDB环境进入GDB调试环境1gdb file #file为编译后的可执行文件
 查看源">
-<meta property="og:updated_time" content="2018-04-03T11:34:39.452Z">
+<meta property="og:updated_time" content="2018-05-21T11:49:42.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GDB">
 <meta name="twitter:description" content="介绍GDB可以用在linux shell下debug程序GDB简明教程：https://zhuanlan.zhihu.com/p/21987947https://www.jianshu.com/p/08de5cef2de9
@@ -351,9 +351,10 @@
 <h2 id="查看源码"><a href="#查看源码" class="headerlink" title="查看源码"></a>查看源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">list #查看后10行</div><div class="line">list - #查看前10行</div><div class="line">help list #查看帮助，看到可以列出指定文件指定的行，或者函数</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="添加断点"><a href="#添加断点" class="headerlink" title="添加断点"></a>添加断点</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">help break #查看帮助文档</div><div class="line">b function_name</div><div class="line">b row_num</div><div class="line">b file_name:row_num</div><div class="line">b row_num if condition</div><div class="line"></div><div class="line">info break #查看断点</div><div class="line">i b #查看断点，会返回断点的Num</div><div class="line"></div><div class="line">disable 1 #禁用断点，Num 为info查看到的断点号</div><div class="line"></div><div class="line">d 1 #删除断点，Num 为info查看到的断点号</div></pre></td></tr></table></figure>
-<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">run #运行程序</div><div class="line">n #单步执行</div><div class="line">until NUM #离开循环，执行到指定的行</div><div class="line">step #跳入函数</div><div class="line">finish #离开函数</div><div class="line">quit #离开gdb环境</div></pre></td></tr></table></figure>
-<h2 id="打印变量"><a href="#打印变量" class="headerlink" title="打印变量"></a>打印变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print var #打印变量</div><div class="line">watch var #监控变量</div><div class="line">info watch #查看监控的变量</div><div class="line">whatis var #查看变量类型</div></pre></td></tr></table></figure>
+<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">run #运行程序</div><div class="line">n #单步执行</div><div class="line">until NUM #离开循环，执行到指定的行</div><div class="line">step #跳入函数</div><div class="line">finish #离开函数</div><div class="line">quit #离开gdb环境</div><div class="line">c #continue跑到下一个断点</div></pre></td></tr></table></figure>
+<h2 id="打印变量"><a href="#打印变量" class="headerlink" title="打印变量"></a>打印变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print var #打印变量</div><div class="line">watch var #监控变量</div><div class="line">info watch #查看监控的变量</div><div class="line">whatis var #查看变量类型</div><div class="line">x 虚拟地址 #查看特定虚拟地址上的值，默认一个值是4Bytes</div></pre></td></tr></table></figure>
 <h2 id="打开图形化界面"><a href="#打开图形化界面" class="headerlink" title="打开图形化界面"></a>打开图形化界面</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wi #通过图形化界面查看debug过程更形象</div></pre></td></tr></table></figure>
+<h2 id="查看调用栈"><a href="#查看调用栈" class="headerlink" title="查看调用栈"></a>查看调用栈</h2><p>```<br>bt</p>
 
       
     </div>
@@ -478,7 +479,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -526,7 +527,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译程序"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动GDB环境"><span class="nav-number">3.</span> <span class="nav-text">启动GDB环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看源码"><span class="nav-number">4.</span> <span class="nav-text">查看源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加断点"><span class="nav-number">5.</span> <span class="nav-text">添加断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行程序"><span class="nav-number">6.</span> <span class="nav-text">运行程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量"><span class="nav-number">7.</span> <span class="nav-text">打印变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开图形化界面"><span class="nav-number">8.</span> <span class="nav-text">打开图形化界面</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译程序"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动GDB环境"><span class="nav-number">3.</span> <span class="nav-text">启动GDB环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看源码"><span class="nav-number">4.</span> <span class="nav-text">查看源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加断点"><span class="nav-number">5.</span> <span class="nav-text">添加断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行程序"><span class="nav-number">6.</span> <span class="nav-text">运行程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量"><span class="nav-number">7.</span> <span class="nav-text">打印变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开图形化界面"><span class="nav-number">8.</span> <span class="nav-text">打开图形化界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看调用栈"><span class="nav-number">9.</span> <span class="nav-text">查看调用栈</span></a></li></ol></div>
             
 
           </div>
