@@ -87,43 +87,28 @@
 
 
 
-<meta name="description" content="安装
-创建非root用户adduser elasticpasswd elastic
-
+<meta name="description" content="安装创建非root用户adduser elasticpasswd elastic
 使用新用户下载curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
-
 启动：./bin/elasticsearch
-
-
 打开另一个终端进行测试：
-curl ‘http://localh">
+curl ‘http://localhost:9">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elastic">
 <meta property="og:url" content="http://yoursite.com/2018/07/31/elastic/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="安装
-创建非root用户adduser elasticpasswd elastic
-
+<meta property="og:description" content="安装创建非root用户adduser elasticpasswd elastic
 使用新用户下载curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
-
 启动：./bin/elasticsearch
-
-
 打开另一个终端进行测试：
-curl ‘http://localh">
-<meta property="og:updated_time" content="2018-07-31T13:29:36.405Z">
+curl ‘http://localhost:9">
+<meta property="og:updated_time" content="2018-08-05T12:27:27.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elastic">
-<meta name="twitter:description" content="安装
-创建非root用户adduser elasticpasswd elastic
-
+<meta name="twitter:description" content="安装创建非root用户adduser elasticpasswd elastic
 使用新用户下载curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
-
 启动：./bin/elasticsearch
-
-
 打开另一个终端进行测试：
-curl ‘http://localh">
+curl ‘http://localhost:9">
 
 
 
@@ -363,14 +348,9 @@ curl ‘http://localh">
       
 
       
-        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
-<li><p>创建非root用户<br>adduser elastic<br>passwd elastic</p>
-</li>
-<li><p>使用新用户下载<br>curl -L -O <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz" target="_blank" rel="external">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz</a></p>
-</li>
-<li><p>启动：<br>./bin/elasticsearch</p>
-</li>
-</ul>
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="创建非root用户"><a href="#创建非root用户" class="headerlink" title="创建非root用户"></a>创建非root用户</h2><p>adduser elastic<br>passwd elastic</p>
+<h2 id="使用新用户下载"><a href="#使用新用户下载" class="headerlink" title="使用新用户下载"></a>使用新用户下载</h2><p>curl -L -O <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz" target="_blank" rel="external">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz</a></p>
+<h2 id="启动："><a href="#启动：" class="headerlink" title="启动："></a>启动：</h2><p>./bin/elasticsearch</p>
 <p>打开另一个终端进行测试：</p>
 <p>curl ‘<a href="http://localhost:9200/?pretty" target="_blank" rel="external">http://localhost:9200/?pretty</a>‘<br>你能看到以下返回信息：<br>{<br>   “status”: 200,<br>   “name”: “Shrunken Bones”,<br>   “version”: {<br>      “number”: “1.4.0”,<br>      “lucene_version”: “4.10”<br>   },<br>   “tagline”: “You Know, for Search”<br>}</p>
 <p>报错：<br>[root@localhost ~]# curl -XGET ‘<a href="http://localhost:9200/?pretty" target="_blank" rel="external">http://localhost:9200/?pretty</a>‘</p>
@@ -379,19 +359,55 @@ curl ‘http://localh">
 <body><h1>Redirect</h1></body>
 
 <p>关闭防火墙和代理<br>unset $http_proxy<br>unset $https_proxy</p>
-<ul>
-<li>修改绑定ip<br>尝试修改配置文件 elasticsearch.yml<br>中network.host(注意配置文件格式不是以#开头的要空一格， ：后要空一格) 为network.host: 0.0.0.0</li>
-</ul>
-<a id="more"></a>
-<ul>
-<li>安装kibana sense<br>下载解压kibana5.6.10<br>Sense was renamed to Console and is built into Kibana 5.<br><a href="https://github.com/elastic/sense/blob/master/README.md" target="_blank" rel="external">https://github.com/elastic/sense/blob/master/README.md</a></li>
-</ul>
+<h2 id="修改绑定ip"><a href="#修改绑定ip" class="headerlink" title="修改绑定ip"></a>修改绑定ip</h2><p>尝试修改配置文件 elasticsearch.yml<br>中network.host(注意配置文件格式不是以#开头的要空一格， ：后要空一格) 为network.host: 0.0.0.0</p>
+<h2 id="安装kibana-sense"><a href="#安装kibana-sense" class="headerlink" title="安装kibana sense"></a>安装kibana sense</h2><p>下载解压kibana5.6.10<br>Sense was renamed to Console and is built into Kibana 5.<br><a href="https://github.com/elastic/sense/blob/master/README.md" target="_blank" rel="external">https://github.com/elastic/sense/blob/master/README.md</a></p>
 <p>直接启动./bin/kibana<br>会连接上默认配置的elastic</p>
-<h1 id="restful-API"><a href="#restful-API" class="headerlink" title="restful API"></a>restful API</h1><p>命令格式：<br><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html</a></p>
-<p>curl -XGET ‘localhost:9200/_count?pretty’ -d ‘<br>{<br>    “query”: {<br>        “match_all”: {}<br>    }<br>}’<br>curl -XPUT ‘localhost:9200/intel/employee/3’ -d ‘{<br>    “first_name” :  “Douglas”,<br>    “last_name” :   “Fir”,<br>    “age” :         35,<br>    “about”:        “I like to build cabinets”,<br>    “interests”:  [ “forestry” ]<br>}’</p>
-<p>curl -XGET ‘localhost:9200/megacorp/employee/_search’ -d ‘{<br>    “query” : {<br>        “match” : {<br>            “last_name” : “Smith”<br>        }<br>    }<br>}’</p>
-<p>curl -XGET ‘localhost:9200/megacorp/employee/_search’ -d ‘{<br>    “query” : {<br>        “bool”: {<br>            “must”: {<br>                “match” : {<br>                    “last_name” : “smith”<br>                }<br>            },<br>            “filter”: {<br>                “range” : {<br>                    “age” : { “gt” : 30 }<br>                }<br>            }<br>        }<br>    }<br>}’</p>
-<p>#集群修改<br>vim config/elasticsearch.yml<br>cluster.name: leslie-elastic  #多个instance同一个cluster name<br>node.name: node-1  #独立的node name<br>network.host: 10.239.182.240 #外网访问的IP<br>discovery.zen.ping.unicast.hosts: [“10.239.182.240”, “10.239.182.51”]<br>默认是单播模式，只会在一台机器上去搜索同一个名字的elastic，希望搜索其它host需要在discovery.zen.ping.unicast.hosts添加上搜索的IP</p>
+<h1 id="restful-API命令格式"><a href="#restful-API命令格式" class="headerlink" title="restful API命令格式"></a>restful API命令格式</h1><p>命令格式：<br><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html</a><br><a id="more"></a></p>
+<h3 id="i-选项"><a href="#i-选项" class="headerlink" title="-i 选项"></a>-i 选项</h3><p>curl -i -XGET ‘localhost:9200/‘<br>-i指定请求返还响应的头</p>
+<h3 id="简单搜索"><a href="#简单搜索" class="headerlink" title="简单搜索"></a>简单搜索</h3><p>GET /megacorp/employee/_search?q=last_name:Smith<br>直接在url后边添加参数，但是这种方式不支持单词的部分匹配<br>GET /megacorp/employee/_search?q=last_name:Sm是搜索不到Smith的</p>
+<h3 id="指定请求体"><a href="#指定请求体" class="headerlink" title="指定请求体"></a>指定请求体</h3><h4 id="count返回符合条件的文档数量"><a href="#count返回符合条件的文档数量" class="headerlink" title="count返回符合条件的文档数量"></a>count返回符合条件的文档数量</h4><p>curl -XGET localhost:9200/_count?pretty -d ‘<br>{<br>    “query”: {<br>        “match_all”: {}<br>    }<br>}’</p>
+<h4 id="count返回符合条件的文档数量-1"><a href="#count返回符合条件的文档数量-1" class="headerlink" title="count返回符合条件的文档数量"></a>count返回符合条件的文档数量</h4><p>curl -XGET ‘localhost:9200/megacorp/employee/_search’ -d ‘{<br>    “query” : {<br>        “match” : {<br>            “last_name” : “Smith”<br>        }<br>    }<br>}’</p>
+<h4 id="单查询与组合多查询"><a href="#单查询与组合多查询" class="headerlink" title="单查询与组合多查询"></a>单查询与组合多查询</h4><ul>
+<li><p>单查询<br>‘{<br>  “query” : {</p>
+<pre><code>&quot;match&quot; : {
+    &quot;last_name&quot; : &quot;Smith&quot;
+}
+</code></pre><p>  }<br>}’<br>query和filter的区别<br>filter用于精确字段的精确查找和过滤，没有scoce，只返回精确匹配查找到的doc<br>query用于</p>
+</li>
+<li><p>filtered用于组合query和filter<br>‘{<br>“query”:{<br>  “filtered”:{</p>
+<pre><code>&quot;query&quot; : {
+    &quot;match&quot; : {
+        &quot;last_name&quot; : &quot;Smith&quot;
+    }
+},
+&quot;filter&quot;:{
+  term:{
+    &quot;age&quot;:12
+  }
+}
+</code></pre><p>  }</p>
+<p>}<br>}’<br>组合多查询:使用bool<br>bool下面可以包含4个子句: must,must_not,should,filter<br>‘{<br>  “query” : {</p>
+<pre><code>&quot;bool&quot;: {
+    &quot;must&quot;: {
+        &quot;match&quot; : {
+            &quot;last_name&quot; : &quot;smith&quot;
+        }
+    },
+    &quot;filter&quot;: {
+        &quot;range&quot; : {
+            &quot;age&quot; : { &quot;gt&quot; : 30 }
+        }
+    }
+}
+</code></pre><p>  }<br>}’<br>constant_score可以用来代替bool查询语句<br><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/combining-queries-together.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/combining-queries-together.html</a></p>
+</li>
+</ul>
+<h4 id="创建索引或者添加文档"><a href="#创建索引或者添加文档" class="headerlink" title="创建索引或者添加文档"></a>创建索引或者添加文档</h4><p>添加文档时，若索引不存在会自动创建索引，可以指定自动创建的索引所使用的模板，这样对于自动创建的索引进行控制<br>curl -XPUT ‘localhost:9200/intel/employee/3’ -d ‘{<br>    “first_name” :  “Douglas”,<br>    “last_name” :   “Fir”,<br>    “age” :         35,<br>    “about”:        “I like to build cabinets”,<br>    “interests”:  [ “forestry” ]<br>}’</p>
+<h2 id="查询语句的区别"><a href="#查询语句的区别" class="headerlink" title="查询语句的区别:"></a>查询语句的区别:</h2><p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_most_important_queries.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_most_important_queries.html</a><br>match: 会用对应查询的字段的分析器去分词并匹配计算score，与term的区别<br>match_all: 匹配所有对应文档<br>  {<br>      “query”: {<br>          “match_all”: {}<br>      }<br>  }<br>match_phrase: 精确完全匹配上整串短语<br><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_phrase_search.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_phrase_search.html</a><br>term:查询被用于精确值 匹配<br>terms:<br>prefix:<br>wildcard:<br>regexp:<br>match_phrase_prefix:<br>range</p>
+<p>range和term常用于filter</p>
+<h2 id="查看字段映射信息"><a href="#查看字段映射信息" class="headerlink" title="查看字段映射信息"></a>查看字段映射信息</h2><p>GET /_mapping?pretty<br>GET /index/_mapping?pretty<br>GET /index/_mapping/type?pretty</p>
+<h2 id="查看分析器"><a href="#查看分析器" class="headerlink" title="查看分析器"></a>查看分析器</h2><p>curl -XGET <a href="http://10.239.182.93:9200/_analyze?pretty" target="_blank" rel="external">http://10.239.182.93:9200/_analyze?pretty</a> -d ‘{“analyzer”:”standard”,”text”:”Text to analyze”}’<br>用于查看standard分析器是如何分析Text to analyze这句话的</p>
+<h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><p>#集群修改<br>vim config/elasticsearch.yml<br>cluster.name: leslie-elastic  #多个instance同一个cluster name<br>node.name: node-1  #独立的node name<br>network.host: 10.239.182.240 #外网访问的IP<br>discovery.zen.ping.unicast.hosts: [“10.239.182.240”, “10.239.182.51”]<br>默认是单播模式，只会在一台机器上去搜索同一个名字的elastic，希望搜索其它host需要在discovery.zen.ping.unicast.hosts添加上搜索的IP</p>
 <p>vim config/kibana.yml<br>server.host: 10.239.182.240<br>elasticsearch.url: “<a href="http://10.239.182.240:9200" target="_blank" rel="external">http://10.239.182.240:9200</a>“</p>
 
       
@@ -438,6 +454,10 @@ curl ‘http://localh">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/05/logstash/" rel="prev" title="logstash">
+                logstash <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +533,7 @@ curl ‘http://localh">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -561,7 +581,7 @@ curl ‘http://localh">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Redirect</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#restful-API"><span class="nav-number">3.</span> <span class="nav-text">restful API</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建非root用户"><span class="nav-number">1.1.</span> <span class="nav-text">创建非root用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用新用户下载"><span class="nav-number">1.2.</span> <span class="nav-text">使用新用户下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动："><span class="nav-number">1.3.</span> <span class="nav-text">启动：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Redirect</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改绑定ip"><span class="nav-number">2.1.</span> <span class="nav-text">修改绑定ip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装kibana-sense"><span class="nav-number">2.2.</span> <span class="nav-text">安装kibana sense</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#restful-API命令格式"><span class="nav-number">3.</span> <span class="nav-text">restful API命令格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#i-选项"><span class="nav-number">3.0.1.</span> <span class="nav-text">-i 选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单搜索"><span class="nav-number">3.0.2.</span> <span class="nav-text">简单搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定请求体"><span class="nav-number">3.0.3.</span> <span class="nav-text">指定请求体</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#count返回符合条件的文档数量"><span class="nav-number">3.0.3.1.</span> <span class="nav-text">count返回符合条件的文档数量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#count返回符合条件的文档数量-1"><span class="nav-number">3.0.3.2.</span> <span class="nav-text">count返回符合条件的文档数量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单查询与组合多查询"><span class="nav-number">3.0.3.3.</span> <span class="nav-text">单查询与组合多查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建索引或者添加文档"><span class="nav-number">3.0.3.4.</span> <span class="nav-text">创建索引或者添加文档</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询语句的区别"><span class="nav-number">3.1.</span> <span class="nav-text">查询语句的区别:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看字段映射信息"><span class="nav-number">3.2.</span> <span class="nav-text">查看字段映射信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看分析器"><span class="nav-number">3.3.</span> <span class="nav-text">查看分析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类"><span class="nav-number">3.4.</span> <span class="nav-text">聚类</span></a></li></ol></li></ol></div>
             
 
           </div>
