@@ -250,6 +250,144 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/05/logstash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/08/05/logstash/" itemprop="url">
+                  logstash
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T20:27:38+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/05/logstash/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/05/logstash/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>在配置文件logstash.conf中修改<br>input指定log文件的位置<br>filter对日志进行处理和格式化<br>output指定输出到redis或者elastic</p>
+<p><strong>配置文件中一定需要显示指定一个input和output</strong><br>启动logstash<br>bin/logstash -f logstash.conf</p>
+<p>报错<br>Logstash could not be started because there is already another instance using the configured data directory<br>解决<br>./bin/logstash -f test.conf –path.data=/home/elastic</p>
+<h2 id="filter-介绍"><a href="#filter-介绍" class="headerlink" title="filter 介绍"></a>filter 介绍</h2><p>date filter的作用，原来输出字段中的@timestamp是读取系统时间，通过配置filter date可以从日志的message中简析出时间并格式化时间到@timestamp字段当中<br>先用grok filter从mesage里面解析并转换生成新的字段</p>
+<p>看看grok的用法，基本表达式%{SYNTAX:SEMANTIC}<br>SYNTAX是指定的一个正则表达式，上面这句话的意思就是从message字段中，将匹配到SYNTAX的内容放到新生成的SEMANTIC字段当中</p>
+<p><strong>所以学好logstash一定要熟悉grok的正则匹配</strong></p>
+<h1 id="配置模板"><a href="#配置模板" class="headerlink" title="配置模板"></a>配置模板</h1>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/05/logstash/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/elastic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -520,167 +658,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/HDFS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/05/21/HDFS/" itemprop="url">
-                  HDFS
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T19:49:58+08:00">
-                2018-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/21/HDFS/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/21/HDFS/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>使用bigdl的时候需要将训练数据集放在分布式文件系统中</p>
-<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><p>保证各个节点之间免ssh登陆<br>单节点搭建hadoop<br><a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html" target="_blank" rel="external">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html</a><br>多节点搭建hadoop</p>
-<ul>
-<li>namenode<br>系统环境变量：<br>export JAVA_HOME=/root/jdk1.8.0_161<br>export CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.<br>export HADOOP_PREFIX=/home/hadoop/hadoop-2.6.5<br>export HADOOP_HOME=$HADOOP_PREFIX/bin<br>export HADOOP_CONF_DIR=$HADOOP_PREFIX/etc/hadoop<br>PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin:/home/jiahaofa/spark/spark-2.2.1-bin-hadoop2.7/bin:$HADOOP_HOME:$HADOOP_PREFIX/sbin<br>export PATH</li>
-</ul>
-<p>配置hadoop<br>etc/hadoop/hadoop-env.sh 写入 export JAVA_HOME=/usr/java/latest</p>
-<p>配置etc/hadoop/slaves文件<br>r02s01<br>r02s02</p>
-<p>配置etc/hadoop/core-site.xml</p>
-<configuration><br>        <property><br>                <name>fs.defaultFS</name><br>                <value>hdfs://r02s01:9000</value><br>        </property><br>        <property><br>                <name>io.file.buffer.size</name><br>                <value>131072</value><br>        </property><br>        <property><br>                <name>hadoop.tmp.dir</name><br>                <value>file:///home/hadoop/hadoop-2.6.5/tmp</value><br>        </property><br></configuration>
-
-<p>配置 etc/hadoop/hdfs-site.xml</p>
-<configuration><br>        <property><br>                <name>dfs.namenode.name.dir</name><br>                <value>file:/home/hadoop/hadoop-2.6.5/tmp/dfs/name</value><br>        </property><br>        <property><br>                <name>dfs.datanode.data.dir</name><br>                <value>file:/home/hadoop/hadoop-2.6.5/tmp/dfs/data</value><br>        </property><br></configuration>
-
-
-<ul>
-<li>datanode<br>系统环境变量：<br>系统环境变量：<br>export JAVA_HOME=/root/jdk1.8.0_161<br>export CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.<br>export HADOOP_PREFIX=/home/hadoop/hadoop-2.6.5<br>export HADOOP_HOME=$HADOOP_PREFIX/bin<br>export HADOOP_CONF_DIR=$HADOOP_PREFIX/etc/hadoop<br>PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin:/home/jiahaofa/spark/spark-2.2.1-bin-hadoop2.7/bin:$HADOOP_HOME:$HADOOP_PREFIX:sbin<br>export PATH</li>
-</ul>
-<p>配置hadoop<br>etc/hadoop/hadoop-env.sh 写入 export JAVA_HOME=/usr/java/latest</p>
-<p>配置etc/hadoop/core-site.xml <strong>一定要配置，很重要</strong></p>
-<configuration><br>        <property><br>                <name>fs.defaultFS</name><br>                <value>hdfs://r02s01:9000</value><br>        </property><br></configuration>
-
-<p>不配置 etc/hadoop/hdfs-site.xml</p>
-<p>启动：<br>$HADOOP_PREFIX/bin/hdfs namenode -format<br>$HADOOP_PREFIX/sbin/start-dfs.sh</p>
-<p>启动之后用jps查看namenode和datanode的进程</p>
-<p>关闭：<br>$HADOOP_PREFIX/sbin/stop-dfs.sh</p>
-<p>如果出现namenode或者datanode无法启动，查看机器上的log有明确信息</p>
-<h2 id="hdfs命令测试"><a href="#hdfs命令测试" class="headerlink" title="hdfs命令测试"></a>hdfs命令测试</h2><p>namenode:<br>hdfs dfs -put ./testdata/lesliename.txt /<br>其它节点<br>hdfs dfs -ls /<br>hdfs dfs -cat /lesliename.txt</p>
-<p>datanode:<br>启动spark-shell：<br>val textFile = spark.read.textFile(“hdfs://r02s01:9000/lesliename.txt”)<br>textFile.first()</p>
-<p>输出文件内容说明HDFS部署成功</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -725,7 +707,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
