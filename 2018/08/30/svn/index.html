@@ -87,34 +87,22 @@
 
 
 
-<meta name="description" content="一般先在服务器上建立个仓库
-12mkdir /root/CgiNgsvnadmin create /root/CgiNg
-
+<meta name="description" content="一般先在服务器上建立个仓库12mkdir /root/CgiNgsvnadmin create /root/CgiNg
 进入/root/CgiNg修改conf相关配置文件一般相关的有三个配置文件authz：负责账号权限的管理，控制账号是否有读写权限passwd：负责账号和密码的用户名单管理svnserve.conf：svn服务器配置文件具体修改哪些内容，可以参考这个链接
-
-启动服务
-1svn">
+启动服务1svnserve">
 <meta property="og:type" content="article">
 <meta property="og:title" content="svn">
 <meta property="og:url" content="http://yoursite.com/2018/08/30/svn/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="一般先在服务器上建立个仓库
-12mkdir /root/CgiNgsvnadmin create /root/CgiNg
-
+<meta property="og:description" content="一般先在服务器上建立个仓库12mkdir /root/CgiNgsvnadmin create /root/CgiNg
 进入/root/CgiNg修改conf相关配置文件一般相关的有三个配置文件authz：负责账号权限的管理，控制账号是否有读写权限passwd：负责账号和密码的用户名单管理svnserve.conf：svn服务器配置文件具体修改哪些内容，可以参考这个链接
-
-启动服务
-1svn">
-<meta property="og:updated_time" content="2018-09-01T01:49:42.143Z">
+启动服务1svnserve">
+<meta property="og:updated_time" content="2018-09-01T02:10:37.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn">
-<meta name="twitter:description" content="一般先在服务器上建立个仓库
-12mkdir /root/CgiNgsvnadmin create /root/CgiNg
-
+<meta name="twitter:description" content="一般先在服务器上建立个仓库12mkdir /root/CgiNgsvnadmin create /root/CgiNg
 进入/root/CgiNg修改conf相关配置文件一般相关的有三个配置文件authz：负责账号权限的管理，控制账号是否有读写权限passwd：负责账号和密码的用户名单管理svnserve.conf：svn服务器配置文件具体修改哪些内容，可以参考这个链接
-
-启动服务
-1svn">
+启动服务1svnserve">
 
 
 
@@ -354,22 +342,12 @@
       
 
       
-        <ol>
-<li><p>一般先在服务器上建立个仓库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /root/CgiNg</div><div class="line">svnadmin create /root/CgiNg</div></pre></td></tr></table></figure>
-</li>
-<li><p>进入/root/CgiNg修改conf相关配置文件<br>一般相关的有三个配置文件<br>authz：负责账号权限的管理，控制账号是否有读写权限<br>passwd：负责账号和密码的用户名单管理<br>svnserve.conf：svn服务器配置文件<br>具体修改哪些内容，可以参考这个<a href="https://www.cnblogs.com/mymelon/p/5483215.html" target="_blank" rel="external">链接</a></p>
-</li>
-<li><p>启动服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnserve -d -r /root/CgiNg</div></pre></td></tr></table></figure>
-</li>
-<li><p>下载仓库<br>windows上用tortoise svn<br>右键checkout，输入地址svn://149.28.149.94:3690，和下载到本地的地址<br>Linux上，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir repo &amp;&amp; cd repo</div><div class="line">svn co svn://149.28.149.94:3690</div></pre></td></tr></table></figure>
-</li>
-<li><p>提交文件</p>
-</li>
-</ol>
-<ul>
+        <h2 id="一般先在服务器上建立个仓库"><a href="#一般先在服务器上建立个仓库" class="headerlink" title="一般先在服务器上建立个仓库"></a>一般先在服务器上建立个仓库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /root/CgiNg</div><div class="line">svnadmin create /root/CgiNg</div></pre></td></tr></table></figure>
+<h2 id="进入-root-CgiNg修改conf相关配置文件"><a href="#进入-root-CgiNg修改conf相关配置文件" class="headerlink" title="进入/root/CgiNg修改conf相关配置文件"></a>进入/root/CgiNg修改conf相关配置文件</h2><p>一般相关的有三个配置文件<br>authz：负责账号权限的管理，控制账号是否有读写权限<br>passwd：负责账号和密码的用户名单管理<br>svnserve.conf：svn服务器配置文件<br>具体修改哪些内容，可以参考这个<a href="https://www.cnblogs.com/mymelon/p/5483215.html" target="_blank" rel="external">链接</a></p>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnserve -d -r /root/CgiNg</div></pre></td></tr></table></figure>
+<h2 id="下载仓库"><a href="#下载仓库" class="headerlink" title="下载仓库"></a>下载仓库</h2><p>windows上用tortoise svn<br>右键checkout，输入地址svn://149.28.149.94:3690，和下载到本地的地址<br>Linux上，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir repo &amp;&amp; cd repo</div><div class="line">svn co svn://149.28.149.94:3690</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="提交文件"><a href="#提交文件" class="headerlink" title="提交文件"></a>提交文件</h2><ul>
 <li>所有文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">svn add ./*</div><div class="line">svn commit -m &quot;message&quot;</div></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -382,17 +360,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">svn add 目录</div><div class="line">svn commit -m &quot;message&quot;</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<ol>
-<li>删除文件(注意删除本地和远程的)<br>两种方法：</li>
-</ol>
+<h2 id="删除文件-注意删除本地和远程的"><a href="#删除文件-注意删除本地和远程的" class="headerlink" title="删除文件(注意删除本地和远程的)"></a>删除文件(注意删除本地和远程的)</h2><p>两种方法：</p>
 <ul>
 <li>方法1直接删除远程文件<br>svn　delete　svn://路径(目录或文件的全路径) -m “删除备注信息文本” 推荐如下操作：</li>
 <li>先删除本地文件然后commit上去<br>svn　delete　文件名<br>svn　ci　-m　“删除备注信息文本” &lt;- ci是commit的简写</li>
 </ul>
-<ol>
-<li>不小心add了多余的文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">svn add ./*</div><div class="line">之后发现有的文件不应该提交</div><div class="line">svn revert 文件</div><div class="line">svn revert --depth infinity 目录</div></pre></td></tr></table></figure>
-</li>
-</ol>
+<h2 id="不小心add了多余的文件"><a href="#不小心add了多余的文件" class="headerlink" title="不小心add了多余的文件"></a>不小心add了多余的文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">svn add ./*</div><div class="line">之后发现有的文件不应该提交</div><div class="line">svn revert 文件</div><div class="line">svn revert --depth infinity 目录</div></pre></td></tr></table></figure>
 <p>Linux端命令<a href="https://vosamo.github.io/2015/11/Linux-SVN/" target="_blank" rel="external">详细手册</a></p>
 
       
@@ -493,8 +466,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -547,6 +529,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一般先在服务器上建立个仓库"><span class="nav-number">1.</span> <span class="nav-text">一般先在服务器上建立个仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入-root-CgiNg修改conf相关配置文件"><span class="nav-number">2.</span> <span class="nav-text">进入/root/CgiNg修改conf相关配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动服务"><span class="nav-number">3.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载仓库"><span class="nav-number">4.</span> <span class="nav-text">下载仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交文件"><span class="nav-number">5.</span> <span class="nav-text">提交文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件-注意删除本地和远程的"><span class="nav-number">6.</span> <span class="nav-text">删除文件(注意删除本地和远程的)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不小心add了多余的文件"><span class="nav-number">7.</span> <span class="nav-text">不小心add了多余的文件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

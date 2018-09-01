@@ -470,49 +470,17 @@
 
       
         
-          
-            <ol>
-<li><p>一般先在服务器上建立个仓库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /root/CgiNg</div><div class="line">svnadmin create /root/CgiNg</div></pre></td></tr></table></figure>
-</li>
-<li><p>进入/root/CgiNg修改conf相关配置文件<br>一般相关的有三个配置文件<br>authz：负责账号权限的管理，控制账号是否有读写权限<br>passwd：负责账号和密码的用户名单管理<br>svnserve.conf：svn服务器配置文件<br>具体修改哪些内容，可以参考这个<a href="https://www.cnblogs.com/mymelon/p/5483215.html" target="_blank" rel="external">链接</a></p>
-</li>
-<li><p>启动服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnserve -d -r /root/CgiNg</div></pre></td></tr></table></figure>
-</li>
-<li><p>下载仓库<br>windows上用tortoise svn<br>右键checkout，输入地址svn://149.28.149.94:3690，和下载到本地的地址<br>Linux上，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir repo &amp;&amp; cd repo</div><div class="line">svn co svn://149.28.149.94:3690</div></pre></td></tr></table></figure>
-</li>
-<li><p>提交文件</p>
-</li>
-</ol>
-<ul>
-<li>所有文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">svn add ./*</div><div class="line">svn commit -m &quot;message&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>注意在服务器端仓库中文件是用另外格式存储的，所以你在服务器端find是找不到代码文件的</p>
-<ul>
-<li><p>单独文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">svn add 文件名</div><div class="line">svn commit -m &quot;message&quot;</div></pre></td></tr></table></figure>
-</li>
-<li><p>目录以及目录下文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">svn add 目录</div><div class="line">svn commit -m &quot;message&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol>
-<li>删除文件(注意删除本地和远程的)<br>两种方法：</li>
-</ol>
-<ul>
-<li>方法1直接删除远程文件<br>svn　delete　svn://路径(目录或文件的全路径) -m “删除备注信息文本” 推荐如下操作：</li>
-<li>先删除本地文件然后commit上去<br>svn　delete　文件名<br>svn　ci　-m　“删除备注信息文本” &lt;- ci是commit的简写</li>
-</ul>
-<ol>
-<li>不小心add了多余的文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">svn add ./*</div><div class="line">之后发现有的文件不应该提交</div><div class="line">svn revert 文件</div><div class="line">svn revert --depth infinity 目录</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>Linux端命令<a href="https://vosamo.github.io/2015/11/Linux-SVN/" target="_blank" rel="external">详细手册</a></p>
-
-          
+          <h2 id="一般先在服务器上建立个仓库"><a href="#一般先在服务器上建立个仓库" class="headerlink" title="一般先在服务器上建立个仓库"></a>一般先在服务器上建立个仓库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /root/CgiNg</div><div class="line">svnadmin create /root/CgiNg</div></pre></td></tr></table></figure>
+<h2 id="进入-root-CgiNg修改conf相关配置文件"><a href="#进入-root-CgiNg修改conf相关配置文件" class="headerlink" title="进入/root/CgiNg修改conf相关配置文件"></a>进入/root/CgiNg修改conf相关配置文件</h2><p>一般相关的有三个配置文件<br>authz：负责账号权限的管理，控制账号是否有读写权限<br>passwd：负责账号和密码的用户名单管理<br>svnserve.conf：svn服务器配置文件<br>具体修改哪些内容，可以参考这个<a href="https://www.cnblogs.com/mymelon/p/5483215.html">链接</a></p>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnserve -d -r /root/CgiNg</div></pre></td></tr></table></figure>
+<h2 id="下载仓库"><a href="#下载仓库" class="headerlink" title="下载仓库"></a>下载仓库</h2><p>windows上用tortoise svn<br>右键checkout，输入地址svn://149.28.149.94:3690，和下载到本地的地址<br>Linux上，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir repo &amp;&amp; cd repo</div><div class="line">svn co svn://149.28.149.94:3690</div></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/30/svn/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
