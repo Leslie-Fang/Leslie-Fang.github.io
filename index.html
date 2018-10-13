@@ -338,8 +338,10 @@
         
           
             <h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>前端：小程序<br>后台： django<br>数据库: mysql<br>缓存: redis</p>
-<h2 id="数据库搭建"><a href="#数据库搭建" class="headerlink" title="数据库搭建"></a>数据库搭建</h2><p>开启远程登录<br><a href="https://blog.csdn.net/xiexievv/article/details/50513996" target="_blank" rel="external">https://blog.csdn.net/xiexievv/article/details/50513996</a><br>授权<br>然后注释：#bind-address = 127.0.0.1<br>vim /etc/mysql/mysql.conf.d/mysqld.cnf</p>
+<h2 id="数据库搭建"><a href="#数据库搭建" class="headerlink" title="数据库搭建"></a>数据库搭建</h2><h4 id="配置mysql支持中文"><a href="#配置mysql支持中文" class="headerlink" title="配置mysql支持中文"></a>配置mysql支持中文</h4><p><a href="https://blog.csdn.net/u014657752/article/details/48206885" target="_blank" rel="external">https://blog.csdn.net/u014657752/article/details/48206885</a><br><a href="https://blog.csdn.net/crave_shy/article/details/23345869" target="_blank" rel="external">https://blog.csdn.net/crave_shy/article/details/23345869</a><br>再修改一个databases的字符集:<br><a href="https://stackoverflow.com/questions/22572558/how-to-set-character-set-database-and-collation-database-to-utf8-in-my-ini" target="_blank" rel="external">https://stackoverflow.com/questions/22572558/how-to-set-character-set-database-and-collation-database-to-utf8-in-my-ini</a><br>重启mysql，/etc/init.d/mysql restart</p>
+<h4 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h4><h4 id="创建数据库，并授权给新用户"><a href="#创建数据库，并授权给新用户" class="headerlink" title="创建数据库，并授权给新用户"></a>创建数据库，并授权给新用户</h4><h4 id="开启数据库远程登录"><a href="#开启数据库远程登录" class="headerlink" title="开启数据库远程登录"></a>开启数据库远程登录</h4><p><a href="https://blog.csdn.net/xiexievv/article/details/50513996" target="_blank" rel="external">https://blog.csdn.net/xiexievv/article/details/50513996</a><br>授权<br>然后注释：#bind-address = 127.0.0.1<br>vim /etc/mysql/mysql.conf.d/mysqld.cnf</p>
 <p>重启/etc/init.d/mysql restart</p>
+<h3 id="django"><a href="#django" class="headerlink" title="django"></a>django</h3><p>初始化时<br>python manage.py migrate<br>之后某个APP改动之后<br>$ python manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更<br>$ python manage.py migrate TestModel   # 创建表结构</p>
 
           
         
