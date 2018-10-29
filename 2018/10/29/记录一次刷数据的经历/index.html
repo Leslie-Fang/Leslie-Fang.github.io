@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="背景今天刷线上数据，需求很简单，DB中有一个字段，需要向缓存中添加。具体的做法就是，将DB中updatetime字段加1更新一下，从而可以触发同步组件，从DB拉取数据向CKV同步。
 过程看似简单的一个操作，在测试环境实验了多遍之后，第一次在线上环境操作的时候还是踩坑了看到的现象：在刷完数据之后，用脚本对比数据发现最后三条数据没有从db向CKV更新。解决方法:还好数据量不大，就手动把这三条数据刷了一">
-<meta property="og:updated_time" content="2018-10-29T14:15:46.323Z">
+<meta property="og:updated_time" content="2018-10-29T14:18:16.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次刷数据的经历">
 <meta name="twitter:description" content="背景今天刷线上数据，需求很简单，DB中有一个字段，需要向缓存中添加。具体的做法就是，将DB中updatetime字段加1更新一下，从而可以触发同步组件，从DB拉取数据向CKV同步。
@@ -345,10 +345,10 @@
 <li>从第一次的刷新的结束点开始往末尾再刷一下数据</li>
 <li>全量再刷一遍数据</li>
 </ul>
-<h2 id="刷数据的注意点"><a href="#刷数据的注意点" class="headerlink" title="刷数据的注意点"></a>刷数据的注意点</h2><ol>
+<h2 id="刷数据的注意点"><a href="#刷数据的注意点" class="headerlink" title="刷数据的注意点"></a>刷数据的注意点</h2><ul>
 <li>运行脚本的时候，<code>bash test.sh | tee run.log 2 &amp;</code> 一定要要全量保存日志，方便出错定位</li>
 <li>一定要写个脚本在刷完数据之后，全量比较一下DB和缓存中的数据是否一致，确保全量更新成功</li>
-</ol>
+</ul>
 
       
     </div>
