@@ -250,6 +250,151 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/高并发系统开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/04/12/高并发系统开发/" itemprop="url">
+                  高并发系统开发
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T19:56:25+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/12/高并发系统开发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/12/高并发系统开发/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>分布式系统<br><a href="https://www.zhihu.com/question/23645117" target="_blank" rel="external">https://www.zhihu.com/question/23645117</a></p>
+</li>
+<li><p>两个系统之前如何实现事务的同步<br><a href="!http://www.importnew.com/26212.html">eBay架构</a><br>看一个例子：<br>中行账户A向建行账户B转账1000元，应该如何实现，<br>首先，中行本地有两张表，第一张表是账户表，第二张表是消息表。</p>
+</li>
+</ul>
+<ol>
+<li>开始转账后，中行账户A扣款1000元，通过本地事务将事务消息插入至消息表。</li>
+<li>本地通常通过消息MQ(消息队列)的方式发送异步消息通知建行账户B，增加1000元。<br>对方订阅并监听消息后自动触发转账的操作，为了保证幂等性，防止触发重复的转账操作，需要在执行转账操作方新增一个trans_recv_log表用来做幂等，在第二阶段收到消息后，通过判断trans_recv_log表中的字段来检测相关记录是否被执行，如果未被执行则会对B账户余额执行加1000元的操作，并会将该记录增加至trans_recv_log,事件结束后通过回调更新trans_message的状态值。</li>
+</ol>
+<ul>
+<li><p>在上述例子中，转账方由于网络原因出现<em>多次发送</em>请求的情况怎么处理<br>在中行账户中，每次请求都有个ID，hash值，在收款方的trans_recv_log表首先查询是否有这行请求的记录，没有的话就插入记录，并将这行的状态位标志为未处理，然后开始处理业务，在业务处理完成后，将状态位标志为已经处理。<br>这样当重复请求过来，查看到状态位为已经处理，就不再处理业务。</p>
+</li>
+<li><p>在上述例子中，两次重复请求之间时间间隔很短怎么办，也就是第二次请求发过来的时候，第一次请求还在处理业务，还没来得及回调更新trans_recv_log表的标志位<br>给trans_recv_log表的每一行加锁，这样第二请求来的时候就会等待，等到第一个请求完成，第二请求查询到标志位已经完成就不会触发业务了</p>
+</li>
+<li><p>在上述例子中，可能存在一个情况，就是第一个请求刚处理完业务，给行解锁准备更新标志位的时候，第二请求来了，因为还没来的及更新标志位，所以第二个请求会触发业务，业务被击穿了<br>在业务请求之前，一定要写上锁，再查询<br>在业务完成之后，一定要先更新状态，再解锁</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/C-C-内联汇编/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -511,142 +656,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/22/powerManagement/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/22/powerManagement/" itemprop="url">
-                  powerManagement
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T22:09:14+08:00">
-                2018-03-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/22/powerManagement/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/22/powerManagement/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Power-mode"><a href="#Power-mode" class="headerlink" title="Power mode"></a>Power mode</h2><p>设置cpupower模式为performance或者powersave<br>cpupower frequency-set -g performance(powersave)</p>
-<h2 id="修改kernel的启动参数"><a href="#修改kernel的启动参数" class="headerlink" title="修改kernel的启动参数"></a>修改kernel的启动参数</h2><p>如何添加kernel启动的参数<br>vi /boot/efi/EFI/redhat/grub.cfg<br>找到对应的启动的kernel<br>找到这一行<br>linuxefi /vmlinuz-3.10.0-514.6.1.el7.x86_64 root=UUID=b3343e70-94d7-4506-88e2-025037204d23 ro crashkernel=auto rhgb quiet LANG=en_US.UTF-8</p>
-<p>在这一行末尾添加参数，，以intel_pstate为例（<a href="https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html）" target="_blank" rel="external">https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html）</a><br>linuxefi /vmlinuz-3.10.0-514.6.1.el7.x86_64 root=UUID=b3343e70-94d7-4506-88e2-025037204d23 ro crashkernel=auto rhgb quiet LANG=en_US.UTF-8 intel_pstate=disable</p>
-<p>reboot机器之后会生效</p>
-<h2 id="Driver"><a href="#Driver" class="headerlink" title="Driver"></a>Driver</h2><p>有两种power manager的driver<br>intel_pstate 和 acpi-cpufreq</p>
-<p>通过 cpupower frequency-info 可以查看到当前使用的驱动<br>通过在kernel设置intel_pstate=disable来使用acpi-cpufreq</p>
-<p>intel_pstate会使用hardware P state control (HWP)去控制cpu的P state<br>acpi-cpufreq 不会使用hardware P state control (HWP)</p>
-<p>使用intel_pstate时，fixfreq的脚本不起作用<br>只有set 0x774寄存器<br>set 一下fixfreq的脚本<br>rdmsr -a 0x774<br>rdmsr -a 0x198 读取0x198的寄存器看频率数据<br>cpupower monitor(freqency-info) 去看看<br>会看到数值之间有差距</p>
-<p>使用acpi-cpufreq时，fixfreq的脚本起作用<br>set 一下fixfreq的脚本<br>rdmsr -a 0x774<br>rdmsr -a 0x198 读取0x198的寄存器看频率数据<br>cpupower monitor(freqency-info) 去看看</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -696,7 +705,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
