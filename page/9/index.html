@@ -250,6 +250,142 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/19/MKL/" itemprop="url">
+                  MKL
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T17:06:48+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/19/MKL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/19/MKL/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MKL是intel开发的一个数学运算库，集成在psxe软件包中。提供了一写API供开发者调用。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先安装psxe包含了所有的原件，或者单独安装mkl以及icc</p>
+<h2 id="如何使用MKL"><a href="#如何使用MKL" class="headerlink" title="如何使用MKL"></a>如何使用MKL</h2><p><a href="https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-2018-getting-started" target="_blank" rel="external">入门教程</a></p>
+<p>C语言：<br>在代码投include mkl的头文件：</p>
+<p>#include “mkl.h”<br>在代码中调用mkl的API</p>
+<h2 id="编译："><a href="#编译：" class="headerlink" title="编译："></a>编译：</h2><p>source MKL的环境，主要配置环境变量，设置动态链接库的路径：<br>source /opt/intel/compilers_and_libraries_2018.1.163/linux/mkl/bin/mklvars.sh intel64</p>
+<p>source一下icc<br>source /opt/intel/bin/iccvars.sh intel64</p>
+<p>直接编译文件：<br>icc mkl-lab-solution.c -mkl<br>用makefile肯定也是类似的</p>
+<p>生成一个可执行文件：<br>a.out<br>可以直接运行：<br>./a.out 1000</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKLDNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -504,154 +640,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/07/kernel学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/07/kernel学习笔记/" itemprop="url">
-                  kernel学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T11:49:26+08:00">
-                2018-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/07/kernel学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/07/kernel学习笔记/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>用户态与内核态<br><a href="http://jakielong.iteye.com/blog/771663" target="_blank" rel="external">http://jakielong.iteye.com/blog/771663</a></p>
-</li>
-<li><p>linux启动过程<br><a href="https://www.youtube.com/watch?v=yeMA7AJFtb8" target="_blank" rel="external">https://www.youtube.com/watch?v=yeMA7AJFtb8</a><br><a href="https://www.youtube.com/watch?v=ALzySqflHJw" target="_blank" rel="external">https://www.youtube.com/watch?v=ALzySqflHJw</a><br>youtube:Basics of the Linux Boot Process</p>
-</li>
-<li><p>内存管理<br><a href="http://gityuan.com/2015/10/30/kernel-memory/" target="_blank" rel="external">http://gityuan.com/2015/10/30/kernel-memory/</a><br>youtube的教程：Virtual Memory，包括TLB的使用</p>
-</li>
-<li><p>Hyper-threading 技术<br>Intel的CPU可以再BIOS仲打开hyper-threading<br>比如说2socket，每个socket有28个物理的core，打开hyper-threading之后可以有56个逻辑core，一共是112个逻辑core<br>可以通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numactl --hardware</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>查看<br>socket 0上的逻辑core的编号是0-27,56-83<br>socket 1上的逻辑core的编号是28-55,84-111<br>可以通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">taskset -c 0,56(逻辑core的编号) process</div></pre></td></tr></table></figure></p>
-<p>将特定的process运行在这些逻辑core上面</p>
-<ul>
-<li>进程与线程<br>进程通过调用fork这个kernel的api实现<br>线程通过调用Pthreads这个kernel的api实现<br>通过top可以看到进程的pid<br>通过top -p 进程pid可以看到这个进程包含的线程</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -696,7 +689,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
