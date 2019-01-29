@@ -565,7 +565,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKLDNN/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKLDNN与AVX512/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -587,8 +587,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/01/19/MKLDNN/" itemprop="url">
-                  MKLDNN
+                <a class="post-title-link" href="/2018/01/19/MKLDNN与AVX512/" itemprop="url">
+                  MKLDNN与AVX512
                 </a>
               
             
@@ -623,8 +623,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/19/MKLDNN/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/19/MKLDNN/" itemprop="commentCount"></span>
+                <a href="/2018/01/19/MKLDNN与AVX512/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/19/MKLDNN与AVX512/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -652,12 +652,16 @@
       
         
           
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.<br><a href="https://github.com/01org" target="_blank" rel="external">Intel 开源软件中心</a><br><a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">MKLDNN Github 主页</a></p>
-<h2 id="编译安装mkldnn"><a href="#编译安装mkldnn" class="headerlink" title="编译安装mkldnn"></a>编译安装mkldnn</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. Git clone mkldnn</div><div class="line">2. source psxe</div><div class="line">3. Cd mkldnn &amp;&amp; mkdir build &amp;&amp; cd build</div><div class="line">4. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../mkldnn_install/</div><div class="line">5. CC=icc CXX=icpc make -j 66 &amp;&amp; make install</div></pre></td></tr></table></figure>
-<p>make install之后：<br>如果第二步没有指定目录，会安装在/usr/local目录下面<br>Shared libraries (/usr/local/lib):<br>头文件：<br>Header files (/usr/local/include):<br>文档:<br>Documentation (/usr/local/share/doc/mkldnn):</p>
-<h2 id="编译链接代码："><a href="#编译链接代码：" class="headerlink" title="编译链接代码："></a>编译链接代码：</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-1-library-overview-and-installation" target="_blank" rel="external">入门文档</a><br>这个文档内容有点问题：<br>具体编译的命令看github的readme：<a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">https://github.com/01org/mkl-dnn</a><br>首先配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">source psxe(应该只需要mkl模块)</div><div class="line">export MKLDNNROOT=/home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install</div><div class="line"></div><div class="line">G++ 编译</div><div class="line">g++ -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin/simple_net_cpp</div><div class="line"></div><div class="line">用icc编译的话：</div><div class="line">icpc -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin_icc/simple_net_cpp</div></pre></td></tr></table></figure></p>
-<p>编译完的运行：<br>报错找不到mkldnn的动态链接库<br>添加动态链接库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=LD_LIBRARY_PATH://home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install/lib</div><div class="line"></div><div class="line">报错找不到mkl_rt：</div><div class="line">source 一下mkl或者psxe</div><div class="line"></div><div class="line">然后运行：</div><div class="line">./bin_icc/simple_net_cpp</div><div class="line">运行成功，不会报错</div></pre></td></tr></table></figure></p>
-<h2 id="Simple-Net-Code-API-代码的解释"><a href="#Simple-Net-Code-API-代码的解释" class="headerlink" title="Simple_Net Code API 代码的解释"></a>Simple_Net Code API 代码的解释</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough" target="_blank" rel="external">https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough</a></p>
+            <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>以caffe2为例子进行解释：<br>caffe2的输入的数据格式为NCHW<br>batchsize，channel，height和width</p>
+<ol>
+<li>对于caffe2来说，在每一层卷积的时候就会直接把这个NCHW的数据塞进mkldnn对应的primitive里面进行计算，</li>
+<li>mkldnn的primitive并行化计算包含两个层面，thread的层面和单个thread内部</li>
+</ol>
+<h3 id="NH方向的并行化"><a href="#NH方向的并行化" class="headerlink" title="NH方向的并行化"></a>NH方向的并行化</h3><p>对于NCHW的数据格式来说, N和H会对应了threads层面的并行化计算，也就是batchsize张图片或者一张图片很大也会被分配到多个不同的threads(每个thread可能绑定了CPU计算的core上)<br><strong>这解释了caffe2，detecture的时候batchsize从1增加到8，性能增加不明显的问题</strong><br>因为detecture的图片像素点很大1024<em>1024,正常resnet50的输入都是224</em>224，所以detecture的图片在H方向上已经在多threads上并行计算了，增大batchsize无法提高性能</p>
+<h3 id="为什么说c16（channel数是16的倍数）很重要"><a href="#为什么说c16（channel数是16的倍数）很重要" class="headerlink" title="为什么说c16（channel数是16的倍数）很重要"></a>为什么说c16（channel数是16的倍数）很重要</h3><p>channel数是16的倍数，我们经常看到卷积核的输出的channel经常是32,64等16的倍数</p>
+<h4 id="AVX512"><a href="#AVX512" class="headerlink" title="AVX512"></a>AVX512</h4><p>AVX512指令集的意思就是一次处理512bit的数据，一个FP32的数据占了32bit，所以一次性可以处理16个FP32的数据</p>
+<p>对应了上面的卷积计算来说，假设有个NCHW的数据，一个batchsize有32个通道，那我们定义的卷积核也有32的通道<br>在第一个像素点上的卷积，可以先读取16个channel(通道)的第一个像素点的数据进来，对应了前16个卷积核的第一个像素点数据，进行一次卷积运算</p>
+<p>同时，一个物理核(这里不确定是物理核还是逻辑核)会有 <strong>16？？</strong> 个AVX512可以读取的寄存器，每个寄存器可以存512bit，所以一次性可以读每个通道的前16个像素点进来，一共(16(通道数)<em>32(一个浮点数)</em>16(一组16个像素点组成的浮点数))一起存在16个AVX512的数据的寄存器里面</p>
 
           
         
@@ -738,7 +742,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
