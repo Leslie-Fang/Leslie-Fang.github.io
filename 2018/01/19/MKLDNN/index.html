@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页
 编译安装mkldnn123451. Git clone mkldnn2. source psxe3. Cd mkldnn &amp;amp;&amp;amp; mkdir build &amp;amp;&amp;amp; cd build4. CC=icc CXX=icpc c">
-<meta property="og:updated_time" content="2019-02-01T02:45:13.738Z">
+<meta property="og:updated_time" content="2019-02-01T02:46:09.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MKLDNN">
 <meta name="twitter:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页
@@ -379,7 +379,8 @@
 <h2 id="编译链接代码："><a href="#编译链接代码：" class="headerlink" title="编译链接代码："></a>编译链接代码：</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-1-library-overview-and-installation" target="_blank" rel="external">入门文档</a><br>这个文档内容有点问题：<br>具体编译的命令看github的readme：<a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">https://github.com/01org/mkl-dnn</a><br>首先配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">source psxe(应该只需要mkl模块)</div><div class="line">export MKLDNNROOT=/home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install</div><div class="line"></div><div class="line">G++ 编译</div><div class="line">g++ -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin/simple_net_cpp</div><div class="line"></div><div class="line">用icc编译的话：</div><div class="line">icpc -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin_icc/simple_net_cpp</div></pre></td></tr></table></figure></p>
 <p>编译完的运行：<br>报错找不到mkldnn的动态链接库<br>添加动态链接库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH://home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install/lib</div><div class="line"></div><div class="line">报错找不到mkl_rt：</div><div class="line">source 一下mkl或者psxe</div><div class="line"></div><div class="line">然后运行：</div><div class="line">./bin_icc/simple_net_cpp</div><div class="line">运行成功，不会报错</div></pre></td></tr></table></figure></p>
 <h2 id="Simple-Net-Code-API-代码的解释"><a href="#Simple-Net-Code-API-代码的解释" class="headerlink" title="Simple_Net Code API 代码的解释"></a>Simple_Net Code API 代码的解释</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough" target="_blank" rel="external">https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough</a></p>
-<h2 id="MKLDNN框架介绍"><a href="#MKLDNN框架介绍" class="headerlink" title="MKLDNN框架介绍"></a>MKLDNN框架介绍</h2><h3 id="Caffe调用MKLDNN"><a href="#Caffe调用MKLDNN" class="headerlink" title="Caffe调用MKLDNN"></a>Caffe调用MKLDNN</h3><p>可以我的另外一篇博客参考：Caffe中的生产者模式</p>
+<h2 id="MKLDNN框架介绍"><a href="#MKLDNN框架介绍" class="headerlink" title="MKLDNN框架介绍"></a>MKLDNN框架介绍</h2><a id="more"></a>
+<h3 id="Caffe调用MKLDNN"><a href="#Caffe调用MKLDNN" class="headerlink" title="Caffe调用MKLDNN"></a>Caffe调用MKLDNN</h3><p>可以我的另外一篇博客参考：Caffe中的生产者模式</p>
 <ol>
 <li>caffe的layer_factory会去创建mkldnn的层</li>
 <li>caffe在调用layer.forward函数的时候会调用到对应mkldnn的层的forward_cpu函数</li>
@@ -514,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

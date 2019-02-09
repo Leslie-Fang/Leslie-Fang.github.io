@@ -284,6 +284,151 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/30/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/30/Spark/" itemprop="url">
+                  Spark
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T18:55:11+08:00">
+                2018-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/30/Spark/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/30/Spark/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Download</a> &amp; uncompressed jdk</li>
+<li><p>set the environment variables of java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/automation/java/jdk1.8.0_161</div><div class="line">export CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.</div><div class="line">export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</div><div class="line">export SBT_HOME=/home/automation/spark/sbt/sbt</div><div class="line">export SPARK_HOME=/home/automation/spark/spark-2.2.1-bin-hadoop2.7</div><div class="line">export PATH=$PATH:$SBT_HOME/bin:$SPARK_HOME/bin</div></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz">Download</a> &amp; uncompressed spark</p>
+</li>
+<li>set the environment variables of spark</li>
+<li>install sbt： used to build scala</li>
+</ul>
+<h2 id="Doc"><a href="#Doc" class="headerlink" title="Doc"></a>Doc</h2><p><a href="https://spark.apache.org/docs/latest/quick-start.html">官方入门文档</a></p>
+<ul>
+<li>打开命令行交互<br>dataset的构造函数中传入输入文件，调用dataset的[API处理文档]（<a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset）">https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset）</a></li>
+<li>编写可运行的文件
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/30/Spark/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/MKL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -506,156 +651,20 @@
 
       
         
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.<br><a href="https://github.com/01org" target="_blank" rel="external">Intel 开源软件中心</a><br><a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">MKLDNN Github 主页</a></p>
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.<br><a href="https://github.com/01org">Intel 开源软件中心</a><br><a href="https://github.com/01org/mkl-dnn">MKLDNN Github 主页</a></p>
 <h2 id="编译安装mkldnn"><a href="#编译安装mkldnn" class="headerlink" title="编译安装mkldnn"></a>编译安装mkldnn</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. Git clone mkldnn</div><div class="line">2. source psxe</div><div class="line">3. Cd mkldnn &amp;&amp; mkdir build &amp;&amp; cd build</div><div class="line">4. CC=icc CXX=icpc cmake .. -DCMAKE_INSTALL_PREFIX=../mkldnn_install/</div><div class="line">5. CC=icc CXX=icpc make -j 66 &amp;&amp; make install</div></pre></td></tr></table></figure>
 <p>make install之后：<br>如果第二步没有指定目录，会安装在/usr/local目录下面<br>Shared libraries (/usr/local/lib):<br>头文件：<br>Header files (/usr/local/include):<br>文档:<br>Documentation (/usr/local/share/doc/mkldnn):</p>
-<h2 id="编译链接代码："><a href="#编译链接代码：" class="headerlink" title="编译链接代码："></a>编译链接代码：</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-1-library-overview-and-installation" target="_blank" rel="external">入门文档</a><br>这个文档内容有点问题：<br>具体编译的命令看github的readme：<a href="https://github.com/01org/mkl-dnn" target="_blank" rel="external">https://github.com/01org/mkl-dnn</a><br>首先配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">source psxe(应该只需要mkl模块)</div><div class="line">export MKLDNNROOT=/home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install</div><div class="line"></div><div class="line">G++ 编译</div><div class="line">g++ -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin/simple_net_cpp</div><div class="line"></div><div class="line">用icc编译的话：</div><div class="line">icpc -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin_icc/simple_net_cpp</div></pre></td></tr></table></figure></p>
+<h2 id="编译链接代码："><a href="#编译链接代码：" class="headerlink" title="编译链接代码："></a>编译链接代码：</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-1-library-overview-and-installation">入门文档</a><br>这个文档内容有点问题：<br>具体编译的命令看github的readme：<a href="https://github.com/01org/mkl-dnn">https://github.com/01org/mkl-dnn</a><br>首先配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">source psxe(应该只需要mkl模块)</div><div class="line">export MKLDNNROOT=/home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install</div><div class="line"></div><div class="line">G++ 编译</div><div class="line">g++ -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin/simple_net_cpp</div><div class="line"></div><div class="line">用icc编译的话：</div><div class="line">icpc -std=c++11 -I$&#123;MKLDNNROOT&#125;/include -L$&#123;MKLDNNROOT&#125;/lib simple_net.cpp -lmkldnn -o ./bin_icc/simple_net_cpp</div></pre></td></tr></table></figure></p>
 <p>编译完的运行：<br>报错找不到mkldnn的动态链接库<br>添加动态链接库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH://home/automation/mkldnn/selfBuilt/mkl-dnn-0.12/mkldnn_install/lib</div><div class="line"></div><div class="line">报错找不到mkl_rt：</div><div class="line">source 一下mkl或者psxe</div><div class="line"></div><div class="line">然后运行：</div><div class="line">./bin_icc/simple_net_cpp</div><div class="line">运行成功，不会报错</div></pre></td></tr></table></figure></p>
-<h2 id="Simple-Net-Code-API-代码的解释"><a href="#Simple-Net-Code-API-代码的解释" class="headerlink" title="Simple_Net Code API 代码的解释"></a>Simple_Net Code API 代码的解释</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough" target="_blank" rel="external">https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough</a></p>
-<h2 id="MKLDNN框架介绍"><a href="#MKLDNN框架介绍" class="headerlink" title="MKLDNN框架介绍"></a>MKLDNN框架介绍</h2><h3 id="Caffe调用MKLDNN"><a href="#Caffe调用MKLDNN" class="headerlink" title="Caffe调用MKLDNN"></a>Caffe调用MKLDNN</h3><p>可以我的另外一篇博客参考：Caffe中的生产者模式</p>
-<ol>
-<li>caffe的layer_factory会去创建mkldnn的层</li>
-<li>caffe在调用layer.forward函数的时候会调用到对应mkldnn的层的forward_cpu函数</li>
-<li>在这个函数中(initxxxpd)的方法会先去判断对应的pd(privimite descriptive)和privimite是否存在，如果不存在的话会去创建对应的pd</li>
-<li>在initxxxpd方法中会去调用reset的方法去创建pd(privimite descriptive)和privimite</li>
-<li>reset方法的传入的参数就是new出来的一个新的mkldnn的primitive<br><strong>进入mkldnn</strong></li>
-<li>在new一个新的mkldnn的primitive的时候，可以看到create后缀或者init后缀的函数</li>
-<li>在这些create函数中最后会去调用一个privimite-&gt;create_primitivate的函数，这是个虚函数</li>
-<li>这个虚函数和具体的运算kernel之间如何调用实现的，<strong>暂时不是很清楚</strong>，应该有复杂的调用关系，但是核心的思想是：在调用privimite-&gt;create_primitivate的时候会去遍历所有的kernel，在每个kernel的函数中都有一个init_conf的函数，在遍历所有的kernel的时候，会去看这个init_conf的函数是否满足条件，满足条件就意味着调用这个kernel，否则的话就看下个kernel</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/17/区块链/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/17/区块链/" itemprop="url">
-                  区块链
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-17T19:03:45+08:00">
-                2018-01-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/17/区块链/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/17/区块链/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="入门资料"><a href="#入门资料" class="headerlink" title="入门资料"></a>入门资料</h1><ol>
-<li>什么是区块链<br><a href="https://www.youtube.com/watch?v=chQttZ4PH24" target="_blank" rel="external">https://www.youtube.com/watch?v=chQttZ4PH24</a></li>
-</ol>
-
-          
+<h2 id="Simple-Net-Code-API-代码的解释"><a href="#Simple-Net-Code-API-代码的解释" class="headerlink" title="Simple_Net Code API 代码的解释"></a>Simple_Net Code API 代码的解释</h2><p><a href="https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough">https://software.intel.com/en-us/articles/intel-mkl-dnn-part-2-sample-code-build-and-walkthrough</a></p>
+<h2 id="MKLDNN框架介绍"><a href="#MKLDNN框架介绍" class="headerlink" title="MKLDNN框架介绍"></a>MKLDNN框架介绍</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/19/MKLDNN/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -689,7 +698,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -734,7 +743,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
