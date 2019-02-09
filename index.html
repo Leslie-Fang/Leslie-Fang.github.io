@@ -370,11 +370,18 @@
 
       
         
-          
-            <h2 id="介绍做的一个电商的搜索引擎"><a href="#介绍做的一个电商的搜索引擎" class="headerlink" title="介绍做的一个电商的搜索引擎"></a>介绍做的一个电商的搜索引擎</h2><p>使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁</p>
-<h2 id="logstash配置"><a href="#logstash配置" class="headerlink" title="logstash配置"></a>logstash配置</h2><p>logstash的基本安装和配置可以参考logstash的文章<br>如何做数据同步参考这边文章<br><a href="https://zhuanlan.zhihu.com/p/40177683" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/40177683</a></p>
-
-          
+          <h2 id="介绍做的一个电商的搜索引擎"><a href="#介绍做的一个电商的搜索引擎" class="headerlink" title="介绍做的一个电商的搜索引擎"></a>介绍做的一个电商的搜索引擎</h2><p>使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁</p>
+<h2 id="logstash配置"><a href="#logstash配置" class="headerlink" title="logstash配置"></a>logstash配置</h2><p>logstash的基本安装和配置可以参考logstash的文章<br>如何做数据同步参考这边文章<br><a href="https://zhuanlan.zhihu.com/p/40177683">https://zhuanlan.zhihu.com/p/40177683</a></p>
+<p>logstash 每次只同步更新一条数据的问题<br><a href="https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search">https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search</a></p>
+<p>配置的参数的官方文档：<br><a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html">https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html</a></p>
+<h2 id="完整的logstash的配置"><a href="#完整的logstash的配置" class="headerlink" title="完整的logstash的配置"></a>完整的logstash的配置</h2><p>初始化时候的配置,logstash-es-mysql.conf<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/08/搜索/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
