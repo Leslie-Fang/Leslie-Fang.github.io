@@ -307,7 +307,7 @@
               
                 
                 <a class="post-title-link" href="/2019/02/08/搜索/" itemprop="url">
-                  handlebars
+                  搭建电商搜索引擎
                 </a>
               
             
@@ -371,6 +371,7 @@
       
         
           <h2 id="介绍做的一个电商的搜索引擎"><a href="#介绍做的一个电商的搜索引擎" class="headerlink" title="介绍做的一个电商的搜索引擎"></a>介绍做的一个电商的搜索引擎</h2><p>使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁</p>
+<p>其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。<br>参考wide&amp;deep模型：<a href="https://zhuanlan.zhihu.com/p/29640272">https://zhuanlan.zhihu.com/p/29640272</a></p>
 <h2 id="logstash配置"><a href="#logstash配置" class="headerlink" title="logstash配置"></a>logstash配置</h2><p>logstash的基本安装和配置可以参考logstash的文章<br>如何做数据同步参考这边文章<br><a href="https://zhuanlan.zhihu.com/p/40177683">https://zhuanlan.zhihu.com/p/40177683</a></p>
 <p>logstash 每次只同步更新一条数据的问题<br><a href="https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search">https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search</a></p>
 <p>配置的参数的官方文档：<br><a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html">https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html</a></p>

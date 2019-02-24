@@ -88,21 +88,18 @@
 
 
 <meta name="description" content="介绍做的一个电商的搜索引擎使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁
-logstash配置logstash的基本安装和配置可以参考logstash的文章如何做数据同步参考这边文章https://zhuanlan.zhihu.com/p/40177683
-logstash 每次只同步更新一条数据的问题https://stac">
+其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。参考wide&amp;amp;deep模型：https://zhuanlan.z">
 <meta property="og:type" content="article">
-<meta property="og:title" content="handlebars">
+<meta property="og:title" content="搭建电商搜索引擎">
 <meta property="og:url" content="http://yoursite.com/2019/02/08/搜索/index.html">
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍做的一个电商的搜索引擎使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁
-logstash配置logstash的基本安装和配置可以参考logstash的文章如何做数据同步参考这边文章https://zhuanlan.zhihu.com/p/40177683
-logstash 每次只同步更新一条数据的问题https://stac">
-<meta property="og:updated_time" content="2019-02-09T11:14:54.654Z">
+其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。参考wide&amp;amp;deep模型：https://zhuanlan.z">
+<meta property="og:updated_time" content="2019-02-24T14:16:29.297Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="handlebars">
+<meta name="twitter:title" content="搭建电商搜索引擎">
 <meta name="twitter:description" content="介绍做的一个电商的搜索引擎使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁
-logstash配置logstash的基本安装和配置可以参考logstash的文章如何做数据同步参考这边文章https://zhuanlan.zhihu.com/p/40177683
-logstash 每次只同步更新一条数据的问题https://stac">
+其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。参考wide&amp;amp;deep模型：https://zhuanlan.z">
 
 
 
@@ -136,7 +133,7 @@ logstash 每次只同步更新一条数据的问题https://stac">
 
 
 
-  <title> handlebars | 沉思语录 </title>
+  <title> 搭建电商搜索引擎 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -310,7 +307,7 @@ logstash 每次只同步更新一条数据的问题https://stac">
             
             
               
-                handlebars
+                搭建电商搜索引擎
               
             
           </h1>
@@ -377,11 +374,15 @@ logstash 每次只同步更新一条数据的问题https://stac">
 
       
         <h2 id="介绍做的一个电商的搜索引擎"><a href="#介绍做的一个电商的搜索引擎" class="headerlink" title="介绍做的一个电商的搜索引擎"></a>介绍做的一个电商的搜索引擎</h2><p>使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁</p>
+<p>其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。<br>参考wide&amp;deep模型：<a href="https://zhuanlan.zhihu.com/p/29640272" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/29640272</a></p>
 <h2 id="logstash配置"><a href="#logstash配置" class="headerlink" title="logstash配置"></a>logstash配置</h2><p>logstash的基本安装和配置可以参考logstash的文章<br>如何做数据同步参考这边文章<br><a href="https://zhuanlan.zhihu.com/p/40177683" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/40177683</a></p>
 <p>logstash 每次只同步更新一条数据的问题<br><a href="https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search" target="_blank" rel="external">https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search</a></p>
 <p>配置的参数的官方文档：<br><a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html</a></p>
 <h2 id="完整的logstash的配置"><a href="#完整的logstash的配置" class="headerlink" title="完整的logstash的配置"></a>完整的logstash的配置</h2><p>初始化时候的配置,logstash-es-mysql.conf<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">input&#123;</div><div class="line">     stdin &#123;</div><div class="line">     &#125;</div><div class="line">     jdbc &#123;</div><div class="line">         jdbc_driver_library =&gt; &quot;/home/elastic/mysql-connector/mysql-connector-java.jar&quot;</div><div class="line">         jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;</div><div class="line">         jdbc_connection_string =&gt; &quot;jdbc:mysql://116.62.126.101:3306/manzuoTestENV?characterEncoding=utf8&amp;useSSL=false&quot;</div><div class="line">         jdbc_user =&gt; &quot;manzuo&quot;</div><div class="line">         jdbc_password =&gt; &quot;password&quot;</div><div class="line">         jdbc_paging_enabled =&gt; &quot;true&quot;</div><div class="line">         jdbc_page_size =&gt; &quot;50000&quot;</div><div class="line">         schedule =&gt; &quot;* * * * * &quot;#配置为每一分钟都更新一次</div><div class="line">         type =&gt; &quot;jdbc&quot;</div><div class="line">         statement =&gt; &quot;select * from `index_alllist`&quot;</div><div class="line">         #statement =&gt; &quot;select itemId,title,title2,parameter,author from `index_alllist`&quot;</div><div class="line">         tracking_column =&gt; &quot;itemId&quot;</div><div class="line">         tracking_column_type =&gt; &quot;numeric&quot;</div><div class="line">         clean_run =&gt; true</div><div class="line">       &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">filter&#123;</div><div class="line">    json&#123;</div><div class="line">        source =&gt; &quot;message&quot;</div><div class="line">        remove_field =&gt; [&quot;message&quot;]</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">output&#123;</div><div class="line">     elasticsearch &#123;</div><div class="line">         hosts =&gt; [&quot;http://47.75.156.162:9200&quot;]</div><div class="line">         index =&gt; &quot;manzuo_list&quot;</div><div class="line">         document_type =&gt;&quot;items&quot;</div><div class="line">         document_id =&gt; &quot;%&#123;itemid&#125;&quot; #这里全用小写的itemid，很重要，和mysql的大小写不同，应为es字段全是小写的啦</div><div class="line">      &#125;</div><div class="line">      stdout &#123;</div><div class="line">         codec =&gt; json_lines</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>启动logstash:<br>./bin/logstash -f logstash-es-mysql.conf</p>
+<p>启动之前首先创建索引，因为要使用中文的分词器<br>先安装中文分词器的插件<br><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-smartcn.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-smartcn.html</a><br>删除已有的索引(存在的话):<br>DELETE /manzuo_list<br>设置新索引的analyzer:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">PUT /manzuo_list</div><div class="line">&#123;</div><div class="line">  &quot;settings&quot;: &#123;</div><div class="line">    &quot;index&quot;: &#123;</div><div class="line">      &quot;analysis&quot;: &#123;</div><div class="line">        &quot;analyzer&quot;: &#123;</div><div class="line">          &quot;default&quot;: &#123;</div><div class="line">            &quot;type&quot;: &quot;smartcn&quot;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>启动logstash去同步数据:<br>./bin/logstash -f logstash-es-mysql.conf<br>搜索:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET /manzuo_list/items/_search</div><div class="line">&#123;</div><div class="line">    &quot;query&quot;: &#123;</div><div class="line">        &quot;match&quot;: &#123;</div><div class="line">          &quot;title&quot;: &quot;核桃&quot;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>参考中文教程<br><a href="https://www.elastic.co/cn/blog/how-to-search-ch-jp-kr-part-1" target="_blank" rel="external">https://www.elastic.co/cn/blog/how-to-search-ch-jp-kr-part-1</a></p>
 <h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>这样的配置只能做到mysql中的新数据向es中去追加<br>一旦mysql删除了老数据，es并不会同步去删除</p>
 
       
@@ -454,7 +455,7 @@ logstash 每次只同步更新一条数据的问题https://stac">
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2019/02/08/搜索/"
-           data-title="handlebars" data-url="http://yoursite.com/2019/02/08/搜索/">
+           data-title="搭建电商搜索引擎" data-url="http://yoursite.com/2019/02/08/搜索/">
       </div>
     
   </div>
