@@ -284,6 +284,165 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/tensorflow二次开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/02/27/tensorflow二次开发/" itemprop="url">
+                  tensorflow二次开发
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T10:50:46+08:00">
+                2019-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/27/tensorflow二次开发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/27/tensorflow二次开发/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><ul>
+<li>方法1：<br>./configure<br>bazel build –config=opt //tensorflow/tools/pip_package:build_pip_package</li>
+</ul>
+<p>build出错清理：<br>/root/.cache/bazel<br>把下面的之前出错的缓存文件给删除掉</p>
+<p>生成whell包<br>bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</p>
+<ul>
+<li>方法2：<br>yes “” | python configure.py<br>bazel build –config=mkl –copt=-mavx2 –copt=-O3 –copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</li>
+</ul>
+<p>生成whell包<br>bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</p>
+<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><p>直接bazel build<br>然后重新生成wheel包</p>
+<p>pip unistall tensorflow<br><strong>一定先卸载然后重新安装</strong><br>否则还是原来的包</p>
+<h2 id="编译之后"><a href="#编译之后" class="headerlink" title="编译之后"></a>编译之后</h2><p>生成pywrap_tensorflow_internal.py 以及 pywrap_tensorflow_internal.cc在~/.cache/bazel目录下面,所有代码都在_pywrap_tensorflow_internal.so 的动态链接库里面<br>pywrap_tensorflow_internal.py: 负责对接上层 Python 调用<br>pywrap_tensorflow_internal.cc: 负责对接下层 C API 调用</p>
+<ul>
+<li>pywrap_tensorflow_internal.py 模块首次被导入时，自动地加<br>载 _pywrap_tensorflow_internal.so 的动态链接库；其中， _pywrap_tensorflow_internal.so<br>包含了整个 TensorFlow 运行时的所有符号。</li>
+<li>在 pywrap_tensorflow_internal.cc 的实现中，静态注册了一个函数符号表，实现了 Python 函数名到 C 函数名的二元关系。在运行时，按照 Python 的函数名称，匹找到对应的 C 函数实现，最终实现 Python 到 c_api.c 具体实现的调用关系。</li>
+</ul>
+<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:</p>
+<ol>
+<li>gdb python</li>
+<li>run file.py</li>
+<li>bt</li>
+</ol>
+<p>method2:</p>
+<ol>
+<li>跑测试</li>
+<li>top 看到python进程的pid</li>
+<li>gdb -p pid<br>挂上之后，原来测试会挂住<br>bt 函数名或者其它打上断点<br>continue 继续测试直到core-dump</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/27/tensorflow二次开发/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/搜索/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -551,143 +710,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/MKLDNN与AVX512/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/01/19/MKLDNN与AVX512/" itemprop="url">
-                  MKLDNN与AVX512
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T17:02:02+08:00">
-                2019-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/19/MKLDNN与AVX512/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/01/19/MKLDNN与AVX512/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>以caffe2为例子进行解释：<br>caffe2的输入的数据格式为NCHW<br>batchsize，channel，height和width</p>
-<ol>
-<li>对于caffe2来说，在每一层卷积的时候就会直接把这个NCHW的数据塞进mkldnn对应的primitive里面进行计算，</li>
-<li>mkldnn的primitive并行化计算包含两个层面，thread的层面和单个thread内部</li>
-</ol>
-<h3 id="NH方向的并行化"><a href="#NH方向的并行化" class="headerlink" title="NH方向的并行化"></a>NH方向的并行化</h3><p>对于NCHW的数据格式来说, N和H会对应了threads层面的并行化计算，也就是batchsize张图片或者一张图片很大也会被分配到多个不同的threads(每个thread可能绑定了CPU计算的core上)<br><strong>这解释了caffe2，detecture的时候batchsize从1增加到8，性能增加不明显的问题</strong><br>因为detecture的图片像素点很大1024<em>1024,正常resnet50的输入都是224</em>224，所以detecture的图片在H方向上已经在多threads上并行计算了，增大batchsize无法提高性能</p>
-<h3 id="为什么说c16（channel数是16的倍数）很重要"><a href="#为什么说c16（channel数是16的倍数）很重要" class="headerlink" title="为什么说c16（channel数是16的倍数）很重要"></a>为什么说c16（channel数是16的倍数）很重要</h3><p>channel数是16的倍数，我们经常看到卷积核的输出的channel经常是32,64等16的倍数</p>
-<h4 id="AVX512"><a href="#AVX512" class="headerlink" title="AVX512"></a>AVX512</h4><p>AVX512指令集的意思就是一次处理512bit的数据，一个FP32的数据占了32bit，所以一次性可以处理16个FP32的数据</p>
-<p>对应了上面的卷积计算来说，假设有个NCHW的数据，一个batchsize有32个通道，那我们定义的卷积核也有32的通道<br>在第一个像素点上的卷积，可以先读取16个channel(通道)的第一个像素点的数据进来，对应了前16个卷积核的第一个像素点数据，进行一次卷积运算</p>
-<p>同时，一个物理核(这里不确定是物理核还是逻辑核)会有 <strong>16？？</strong> 个AVX512可以读取的寄存器，每个寄存器可以存512bit，所以一次性可以读每个通道的前16个像素点进来，一共(16(通道数)<em>32(一个浮点数)</em>16(一组16个像素点组成的浮点数))一起存在16个AVX512的数据的寄存器里面</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -737,7 +759,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -750,7 +772,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

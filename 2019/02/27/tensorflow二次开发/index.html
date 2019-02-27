@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术 tensorflow," />
 
 
 
@@ -87,15 +87,28 @@
 
 
 
-<meta name="description" content="记录心情与能力的成长">
-<meta property="og:type" content="website">
-<meta property="og:title" content="沉思语录">
-<meta property="og:url" content="http://yoursite.com/page/17/index.html">
+<meta name="description" content="编译
+方法1：./configurebazel build –config=opt //tensorflow/tools/pip_package:build_pip_package
+
+build出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉
+生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip_packa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow二次开发">
+<meta property="og:url" content="http://yoursite.com/2019/02/27/tensorflow二次开发/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="记录心情与能力的成长">
+<meta property="og:description" content="编译
+方法1：./configurebazel build –config=opt //tensorflow/tools/pip_package:build_pip_package
+
+build出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉
+生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip_packa">
+<meta property="og:updated_time" content="2019-02-27T03:18:01.456Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="沉思语录">
-<meta name="twitter:description" content="记录心情与能力的成长">
+<meta name="twitter:title" content="tensorflow二次开发">
+<meta name="twitter:description" content="编译
+方法1：./configurebazel build –config=opt //tensorflow/tools/pip_package:build_pip_package
+
+build出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉
+生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip_packa">
 
 
 
@@ -123,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/17/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/02/27/tensorflow二次开发/"/>
 
 
 
 
 
-  <title> 沉思语录 </title>
+  <title> tensorflow二次开发 | 沉思语录 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,9 +167,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,9 +284,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -284,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/基于express和reactjs开发的web框架/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/tensorflow二次开发/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -305,10 +316,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/07/23/基于express和reactjs开发的web框架/" itemprop="url">
-                  基于express和reactjs开发的web框架
-                </a>
+                tensorflow二次开发
               
             
           </h1>
@@ -323,8 +331,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T18:23:22+08:00">
-                2017-07-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T10:50:46+08:00">
+                2019-02-27
               </time>
             
 
@@ -342,8 +350,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/23/基于express和reactjs开发的web框架/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/23/基于express和reactjs开发的web框架/" itemprop="commentCount"></span>
+                <a href="/2019/02/27/tensorflow二次开发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/27/tensorflow二次开发/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -352,6 +360,11 @@
           
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
           
 
           
@@ -369,338 +382,112 @@
       
 
       
-        
-          <p>前几个月基于express和reactjs写过几个简单的web应用，现在回过头来看很多代码都想不起来了。这周利用下班时间重新将这个框架梳理了一下，并写下这篇文章作为基于这两个框架开发web应用的BKM。</p>
-<h2 id="使用到的主要工具介绍"><a href="#使用到的主要工具介绍" class="headerlink" title="使用到的主要工具介绍"></a>使用到的主要工具介绍</h2><ul>
-<li>Express：基于nodejs的后端框架</li>
-<li>Reactjs+Redux：前端框架，React更多的是扮演着MVC中的view的角色，Model以及Control类似的功能可以用flux或者更进一步用Redux来实现，<a href="https://github.com/buckyroberts/React-Redux-Boilerplate">链接</a> 里面的图片将redux和reactjs之间的关系描述的很清楚</li>
-<li>Babel：转换ES6以及JSX的语法到ES5，commonJS</li>
-<li>Webpack: 浏览器不支持commonJS，因此需要通过webpack打包之后，才可以将js嵌入到html当中，当然经过webpack之后在生产环境中最好再用gulp经过一次uglify，可以减小js文件的大小</li>
-<li>Gulp：前端开发自动化的利器，在开发过程中可以监听文件的变化重启服务器</li>
-<li>数据库：目前使用MySQL存储用户信息，使用Redis存储session的hotdata。下一步可以把mongodb的接口移植过来。</li>
+        <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><ul>
+<li>方法1：<br>./configure<br>bazel build –config=opt //tensorflow/tools/pip_package:build_pip_package</li>
 </ul>
-<h2 id="框架实现的基础功能"><a href="#框架实现的基础功能" class="headerlink" title="框架实现的基础功能"></a>框架实现的基础功能</h2><p>这是个基础框架，不涉及任何的业务逻辑。在这个框架的基础上可以根据实际需求，开发主页面和相关的业务逻辑。</p>
+<p>build出错清理：<br>/root/.cache/bazel<br>把下面的之前出错的缓存文件给删除掉</p>
+<p>生成whell包<br>bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</p>
 <ul>
-<li>注册和登入功能：使用bcrypt模块对密码进行加密，用户名和密码存储在MySQL里面进行用户信息的验证。验证通过、用户登入之后在cookie中设置session id对应的session数据，并将session的用户热点数据储存在Redis里面。</li>
-<li>登出功能：通过销毁和重新建立session，来实现用户的登出功能。redis的session数据可以再redis里面设置数据自动销毁的超时时间。当然cookie中的session id也可以通过设置cookie的超时销毁时间来实现。</li>
-<li>用户登入状态控制：用户的每一次访问根据cookie中的session id进行用户登录状态的控制，未登录用户无法看到定制的信息。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/23/基于express和reactjs开发的web框架/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/python调用命令行脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/19/python调用命令行脚本/" itemprop="url">
-                  python调用命令行脚本
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T19:45:49+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/19/python调用命令行脚本/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/19/python调用命令行脚本/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。<br>两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。<br>在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。</p>
-<h2 id="阻塞态调用"><a href="#阻塞态调用" class="headerlink" title="阻塞态调用"></a>阻塞态调用</h2><p>使用os模块，主要涉及到popen和system两种方法。<br>这两种方法的区别参考一下<a href="http://blog.csdn.net/windone0109/article/details/8895875" target="_blank" rel="external">链接</a><br>os.system(cmd) 返回的是程序运行的结果状态，比如程序运行成功，则返回0，有错误则返回其对应的错误代码<br>os.popen(cmd) 返回的是程序输出的结果，比如cmd=“ls”的时候，通过popen就可以得到ls的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd = &quot;echo hello wolrd&quot;</div><div class="line">ret = os.popen(cmd)</div><div class="line">information = os.system(cmd)</div></pre></td></tr></table></figure>
-<h2 id="非阻塞态调用"><a href="#非阻塞态调用" class="headerlink" title="非阻塞态调用"></a>非阻塞态调用</h2><p>非阻塞态调用主要用到了subprocess 这个<a href="https://docs.python.org/2/library/subprocess.html" target="_blank" rel="external">模块</a><br>简单的用法就用subprocess.call(cmd)就可以了<br>更高级复杂的用法可以使用subprocess.popen(cmd)<br>比如说有时候因为环境变量的配置我们需要在特点的目录下执行脚本，就可以使用subprocess.popen的cwd参数,要配置环境变量而不是继承原有的环境变量可以使用env参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">workingDirector = r&quot;C:/testcode&quot;</div><div class="line">cmd = r&quot;test.bat&quot;</div><div class="line">subprocess.popen(cmd,cwd=workingDirector)</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/15/卷积神经网络/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/15/卷积神经网络/" itemprop="url">
-                  卷积神经网络（CNN）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-15T18:15:10+08:00">
-                2017-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/15/卷积神经网络/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/15/卷积神经网络/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
-<li>卷积核： 用来和图像做卷积运算的小矩阵</li>
-<li>stride 步长：每一次卷积运算之后，卷积核沿着图像移动的像素点的长度</li>
-<li>Padding： 在图像边沿位置做卷积运算时，需要补充的像素点，一般像素点值补0就可以</li>
+<li>方法2：<br>yes “” | python configure.py<br>bazel build –config=mkl –copt=-mavx2 –copt=-O3 –copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</li>
 </ul>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li>图像卷积（将特征值平均化，提取特征值）,根据需要 可以/不 将图像padding补0，定义一个需要的卷积核(如果定义多个不同的卷积核，每一个卷积核可以对应于一个图像的通道(ex. rgb/hsv 三个通道)，卷积和池化之后就可以得到不同的通道对应的新的图像</li>
-<li>池化（降采样，减少图像运算的像素点的个数），con-max-pooling 就是取一片区域当中的最大值，对每一个通道都进行池化操作<br>1，2步骤可以重复多次<br>最后将图像的每一个通道都flattern（展开成一维数组），每一个通道都作为一个输入量，输入到全连接的前馈神经网络中进行训练（一般在网络中会对不同通道的值进行融合）</li>
+<p>生成whell包<br>bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</p>
+<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><p>直接bazel build<br>然后重新生成wheel包</p>
+<p>pip unistall tensorflow<br><strong>一定先卸载然后重新安装</strong><br>否则还是原来的包</p>
+<h2 id="编译之后"><a href="#编译之后" class="headerlink" title="编译之后"></a>编译之后</h2><p>生成pywrap_tensorflow_internal.py 以及 pywrap_tensorflow_internal.cc在~/.cache/bazel目录下面,所有代码都在_pywrap_tensorflow_internal.so 的动态链接库里面<br>pywrap_tensorflow_internal.py: 负责对接上层 Python 调用<br>pywrap_tensorflow_internal.cc: 负责对接下层 C API 调用</p>
+<ul>
+<li>pywrap_tensorflow_internal.py 模块首次被导入时，自动地加<br>载 _pywrap_tensorflow_internal.so 的动态链接库；其中， _pywrap_tensorflow_internal.so<br>包含了整个 TensorFlow 运行时的所有符号。</li>
+<li>在 pywrap_tensorflow_internal.cc 的实现中，静态注册了一个函数符号表，实现了 Python 函数名到 C 函数名的二元关系。在运行时，按照 Python 的函数名称，匹找到对应的 C 函数实现，最终实现 Python 到 c_api.c 具体实现的调用关系。</li>
+</ul>
+<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:</p>
+<ol>
+<li>gdb python</li>
+<li>run file.py</li>
+<li>bt</li>
 </ol>
-<h2 id="CNN用于手写数字识别"><a href="#CNN用于手写数字识别" class="headerlink" title="CNN用于手写数字识别"></a>CNN用于手写数字识别</h2><p>整个项目的框架如下图所示：<br><img src="http://omdthfazl.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-15%20%E4%B8%8B%E5%8D%889.02.57.png" alt="项目框架"><br>通过摄像头捕获手写数字，输入到计算机中，运行手写数字算法，将识别结果通过无线设备发送到智能硬件<br>算法的框图入如下图所示<br><img src="http://omdthfazl.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-15%20%E4%B8%8B%E5%8D%889.00.21.png" alt="算法框图"><br>整个神经网络共包含了5层（除去第一层输入层）<br>其中包含了二层卷积层、一层全连接层、一层dropout层以及一层的输出层<br>在每一层的卷积层中，每一个卷积操作，定义stride为1，Padding补充为0；每一个池化操作，都使用2x2的矩阵块中取出最大值</p>
-<h3 id="第一层神经网络"><a href="#第一层神经网络" class="headerlink" title="第一层神经网络"></a>第一层神经网络</h3><h4 id="第一个卷积层"><a href="#第一个卷积层" class="headerlink" title="第一个卷积层"></a>第一个卷积层</h4><p>定义了32个通道（对应了32个卷积核），每一个卷积核是5x5的矩阵块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># First convolutional layer - maps one grayscale image to 32 feature maps.</div><div class="line">W_conv1 = weight_variable([5, 5, 1, 32])</div><div class="line">b_conv1 = bias_variable([32])</div><div class="line">h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)</div></pre></td></tr></table></figure></p>
-<p>其中weight_variable([5, 5, 1, 32])<br>前两个参数对应了卷积核的大小，第三个参数是输入的通道数(原始为灰度图像1个通道)，第四个参数为输出的通道数<br>最后用卷积后的结果作为relu神经元的构造函数，<strong>神经元里面定义了对应的激活函数</strong><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/15/卷积神经网络/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>method2:</p>
+<ol>
+<li>跑测试</li>
+<li>top 看到python进程的pid</li>
+<li>gdb -p pid<br>挂上之后，原来测试会挂住<br>bt 函数名或者其它打上断点<br>continue 继续测试直到core-dump</li>
+</ol>
+<a id="more"></a>
+<h2 id="看python到C-调用关系"><a href="#看python到C-调用关系" class="headerlink" title="看python到C++调用关系"></a>看python到C++调用关系</h2><p>以Session 为例子：tf.Session时候的调用关系</p>
+<ul>
+<li>python api<br>/root/tensorflow_src/test_code/private-tensorflow/tensorflow/python<br>目录下面：</li>
+</ul>
+<ol>
+<li>grep -rni “class Session”<br>client/session.py:1475:class Session(BaseSession):<br>里面调用了baseSession的构造函数</li>
+<li><p>看baseSession<br>里面调用了tf_session</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self._session = tf_session.TF_NewSessionRef(self._graph._c_graph, opts)</div><div class="line">from tensorflow.python import pywrap_tensorflow as tf_session</div></pre></td></tr></table></figure>
+</li>
+<li><p>看pywrap_tensorflow.py<br>这个就是对应了编译出来的so文件</p>
+</li>
+<li><p>在source insight里面搜索TF_NewSessionRef<br>看到定义在tf_session_help.cc里面<br>里面调用了TF_NewSession</p>
+</li>
+<li><p>source insight里面搜索TF_NewSession<br>已经进入到C++ 代码内部</p>
+</li>
+</ol>
+<h2 id="自己定义个operation"><a href="#自己定义个operation" class="headerlink" title="自己定义个operation"></a>自己定义个operation</h2>
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/技术-tensorflow/" rel="tag"># 技术 tensorflow</a>
+          
+        </div>
       
 
       
+        
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/08/搜索/" rel="next" title="搭建电商搜索引擎">
+                <i class="fa fa-chevron-left"></i> 搭建电商搜索引擎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -708,6 +495,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/02/27/tensorflow二次开发/"
+           data-title="tensorflow二次开发" data-url="http://yoursite.com/2019/02/27/tensorflow二次开发/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -727,8 +522,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -781,6 +585,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">1.</span> <span class="nav-text">编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增量编译"><span class="nav-number">1.1.</span> <span class="nav-text">增量编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译之后"><span class="nav-number">2.</span> <span class="nav-text">编译之后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译debug版本的tensorflow"><span class="nav-number">3.</span> <span class="nav-text">编译debug版本的tensorflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb-调试"><span class="nav-number">4.</span> <span class="nav-text">gdb 调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看python到C-调用关系"><span class="nav-number">5.</span> <span class="nav-text">看python到C++调用关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自己定义个operation"><span class="nav-number">6.</span> <span class="nav-text">自己定义个operation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -909,6 +729,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
