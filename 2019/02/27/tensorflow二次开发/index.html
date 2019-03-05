@@ -97,7 +97,7 @@
 <meta property="og:description" content="编译
 方法1：
 1234567./configurebazel build --config=opt //tensorflow/tools/pip_package:build_pip_packagebuild出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip">
-<meta property="og:updated_time" content="2019-03-03T05:33:01.237Z">
+<meta property="og:updated_time" content="2019-03-05T12:24:48.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow二次开发">
 <meta name="twitter:description" content="编译
@@ -397,7 +397,23 @@
 <h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. gdb python</div><div class="line">2. run file.py</div><div class="line">3. bt</div></pre></td></tr></table></figure></p>
 <p>method2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 跑测试</div><div class="line">2. top 看到python进程的pid</div><div class="line">3. gdb -p pid</div><div class="line">挂上之后，原来测试会挂住</div><div class="line">break 函数名或者其它打上断点,tensorflow找不到符号的情况下可以 文件名:line的方式去打断点</div><div class="line">continue 继续测试直到core-dump</div></pre></td></tr></table></figure></p>
 <h2 id="mkldnn调试"><a href="#mkldnn调试" class="headerlink" title="mkldnn调试"></a>mkldnn调试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export MKLDNN_VERBOSE=1</div><div class="line">python ***</div></pre></td></tr></table></figure>
-<p>在运行测试之前，添加环境变量<br>可以打出mkldnn的信息</p>
+<p>在运行测试之前，添加环境变量<br>可以打出mkldnn的信息<br>每一行的信息Each line with verbose information is formatted as a comma-separated list containing:</p>
+<ul>
+<li>mkldnn_verbose</li>
+<li>stage, e.g. create or exec</li>
+<li>primitive-kind, e.g. convolution, reorder, sum, …</li>
+<li>primitive implementation name</li>
+<li>propagation-kind, e.g. forward_training</li>
+<li>input/output data info, e.g. data type and data format</li>
+<li>auxiliary information, e.g. algorithm or number of input</li>
+<li>problem description<ul>
+<li>for convolution the problem description is dumped in benchdnn friendly format</li>
+<li>for reorder, sum, and concat problem description is simply logical dims</li>
+<li>for other primitives the problem description is similar to convolution one</li>
+</ul>
+</li>
+<li>execution time in milliseconds</li>
+</ul>
 <a id="more"></a>
 <h2 id="看python到C-调用关系"><a href="#看python到C-调用关系" class="headerlink" title="看python到C++调用关系"></a>看python到C++调用关系</h2><h3 id="以Session-为例子：tf-Session时候的调用关系"><a href="#以Session-为例子：tf-Session时候的调用关系" class="headerlink" title="以Session 为例子：tf.Session时候的调用关系"></a>以Session 为例子：tf.Session时候的调用关系</h3><ul>
 <li>python api<br>/root/tensorflow_src/test_code/private-tensorflow/tensorflow/python<br>目录下面：</li>
