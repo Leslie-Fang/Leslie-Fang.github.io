@@ -444,7 +444,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/配置ssl证书/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/GDB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -466,8 +466,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/09/25/配置ssl证书/" itemprop="url">
-                  配置https的ssl证书
+                <a class="post-title-link" href="/2017/09/25/GDB/" itemprop="url">
+                  GDB调试程序
                 </a>
               
             
@@ -502,8 +502,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/25/配置ssl证书/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/配置ssl证书/" itemprop="commentCount"></span>
+                <a href="/2017/09/25/GDB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/GDB/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -530,10 +530,17 @@
 
       
         
-          
-            <p>使用nginx配置ssl证书<br><a href="https://aotu.io/notes/2016/08/16/nginx-https/index.html" target="_blank" rel="external">https://aotu.io/notes/2016/08/16/nginx-https/index.html</a><br>阿里云服务器配置<br><a href="https://www.cnblogs.com/tianhei/p/7726505.html" target="_blank" rel="external">https://www.cnblogs.com/tianhei/p/7726505.html</a></p>
-
-          
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>GDB可以用在linux shell下debug程序<br>GDB简明教程：<br><a href="https://zhuanlan.zhihu.com/p/21987947">https://zhuanlan.zhihu.com/p/21987947</a><br><a href="https://www.jianshu.com/p/08de5cef2de9">https://www.jianshu.com/p/08de5cef2de9</a></p>
+<h2 id="编译程序"><a href="#编译程序" class="headerlink" title="编译程序"></a>编译程序</h2><p>在编译的时候手动加上-g选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">g++ -g file.cpp -o file</div></pre></td></tr></table></figure></p>
+<h2 id="启动GDB环境"><a href="#启动GDB环境" class="headerlink" title="启动GDB环境"></a>启动GDB环境</h2><p>进入GDB调试环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb file #file为编译后的可执行文件</div></pre></td></tr></table></figure></p>
+<h2 id="查看源码"><a href="#查看源码" class="headerlink" title="查看源码"></a>查看源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">list #查看后10行</div><div class="line">list - #查看前10行</div><div class="line">help list #查看帮助，看到可以列出指定文件指定的行，或者函数</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/25/GDB/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
