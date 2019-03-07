@@ -284,6 +284,136 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/rapidJson/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/09/22/rapidJson/" itemprop="url">
+                  rapidJson
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-22T09:58:02+08:00">
+                2018-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/22/rapidJson/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/22/rapidJson/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>RapidJSON 是一个高效的 C++ JSON 解析／生成器<br><a href="http://rapidjson.org/zh-cn/md_doc_tutorial_8zh-cn.html" target="_blank" rel="external">http://rapidjson.org/zh-cn/md_doc_tutorial_8zh-cn.html</a></p>
+<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rapidjson::StringBuffer buffer1;</div><div class="line">rapidjson::Writer&lt;rapidjson::StringBuffer&gt; writer1(buffer1);</div><div class="line">    </div><div class="line">writer1.StartObject();</div><div class="line">writer1.Key(&quot;count&quot;);</div><div class="line">writer1.Int(2);    </div><div class="line">writer1.EndObject();</div><div class="line">printf(&quot;%s\n&quot;, buffer1.GetString());</div></pre></td></tr></table></figure>
+<h3 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#include &quot;rapidjson/document.h&quot;</div><div class="line">using namespace rapidjson;</div><div class="line">string a=&quot;&#123;</div><div class="line">    &quot;hello&quot;: &quot;world&quot;,</div><div class="line">    &quot;t&quot;: true ,</div><div class="line">    &quot;f&quot;: false,</div><div class="line">    &quot;n&quot;: null,</div><div class="line">    &quot;i&quot;: 123,</div><div class="line">    &quot;pi&quot;: 3.1416,</div><div class="line">    &quot;a&quot;: [1, 2, 3, 4]</div><div class="line">&#125;&quot;</div><div class="line"></div><div class="line">Document document;</div><div class="line">document.Parse(a.c_str());</div><div class="line">if(!document.HasMember(&quot;hello&quot;))</div><div class="line">&#123;</div><div class="line">  return -1;</div><div class="line">&#125;</div><div class="line">printf(&quot;hello = %s\n&quot;, document[&quot;hello&quot;].GetString());</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/protobuf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -544,140 +674,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/C语言处理参数不定函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/08/09/C语言处理参数不定函数/" itemprop="url">
-                  C语言处理参数不定函数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T20:46:08+08:00">
-                2018-08-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/09/C语言处理参数不定函数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/09/C语言处理参数不定函数/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>使用va函数<br>示例：求N个数的和</p>
-<p>int sum(int count, …)<br>{<br>    int sum = 0;<br>    int i;<br>    va_list ap;<br>    va_start(ap, count);<br>    for (i = 0; i &lt; count; ++i)<br>    {<br>        sum += va_arg(ap, int);<br>    }<br>    va_end(ap);<br>    return sum;<br>}</p>
-<p>下面是 <stdarg.h> 里面重要的几个宏定义如下：<br>typedef char* va_list;<br>void va_start ( va_list ap, prev_param );<br>type va_arg ( va_list ap, type );<br>void va_end ( va_list ap );<br>va_list 是一个字符指针，可以理解为指向当前参数的一个指针，取参必须通过这个指针进行。</stdarg.h></p>
-<p><step 1=""> 在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</step></p>
-<p><step 2=""> 然后应该对ap 进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</step></p>
-<p><step 3=""> 然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把 ap 的位置指向变参表的下一个变量位置；</step></p>
-<p><step 4=""> 获取所有的参数之后，我们有必要将这个 ap 指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数 ap 置为 NULL，应该养成获取完参数表之后关闭指针的习惯。说白了，就是让我们的程序具有健壮性。通常va_start和va_end是成对出现。<br><a href="http://www.cnblogs.com/hanyonglu/archive/2011/05/07/2039916.html" target="_blank" rel="external">http://www.cnblogs.com/hanyonglu/archive/2011/05/07/2039916.html</a><br><a href="https://blog.csdn.net/xyang81/article/details/41223527" target="_blank" rel="external">https://blog.csdn.net/xyang81/article/details/41223527</a></step></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -727,7 +723,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
