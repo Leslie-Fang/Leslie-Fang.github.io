@@ -284,6 +284,150 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/crontab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/10/crontab/" itemprop="url">
+                  crontab
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T10:58:08+08:00">
+                2017-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/10/crontab/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/10/crontab/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>crontab常用来周期性的执行命令。</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>service cron(crond) status //ubuntu 和centos有不同</p>
+<p>service cron(crond) start(restart,reload)  //如果没有启动，启动一下</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>查看crontab命令：<figure class="highlight plain"><figcaption><span>-l``` :系统级配置的任务好像无法通过crontab -l 来查看</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">编辑crontab命令:```crontab -e</div></pre></td></tr></table></figure></p>
+<p>移除crontab命令:<figure class="highlight plain"><figcaption><span>-r```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 修改配置文件</div><div class="line">系统级配置:在/etc/crontab 文件中编辑</div><div class="line"></div><div class="line">用户级配置:用特定用户登录，在命令行中配置命令，是配置和用户相关的```crontab -e</div></pre></td></tr></table></figure></p>
+<p>将命令写入文件中，然后直接crontab filename来读取文件中的所有命令</p>
+<h3 id="配置文件的写法："><a href="#配置文件的写法：" class="headerlink" title="配置文件的写法："></a>配置文件的写法：</h3><ul>
+<li>周期性定时执行</li>
+</ul>
+<p>分     小时    日       月       星期     命令</p>
+<p>0-59   0-23   1-31   1-12     0-6     command     (取值范围,0表示周日一般一行对应一个任务)</p>
+<p>日中有数字，表示的每个月到这一日都会执行<br>月中有数字，表示每年到这个月都会执行<br>星期中有数组，表示每周到这一天都会执行</p>
+<ul>
+<li>在特定时候执行</li>
+</ul>
+<p>@reboot command<br>such as：<br>@reboot root /bin/bash /test.sh</p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>查看/var/log/cron文件</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/创建和发布npm包/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -558,142 +702,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/python调用命令行脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/19/python调用命令行脚本/" itemprop="url">
-                  python调用命令行脚本
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T19:45:49+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/19/python调用命令行脚本/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/19/python调用命令行脚本/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>阻塞态调用和非阻塞态调用，这两个名字是自己根据调用的特点给区分的。<br>两者主要的区别在于是否会另外开辟一个子进程去调用这些命令行的脚本。在所谓的阻塞态调用下，python会等待这个脚本执行完毕再顺序往下执行其它的程序。<br>在所谓的非阻塞态调用下，python则会开辟一个子进程，将脚本放在子进程里面执行，自己则立刻向下运行。</p>
-<h2 id="阻塞态调用"><a href="#阻塞态调用" class="headerlink" title="阻塞态调用"></a>阻塞态调用</h2><p>使用os模块，主要涉及到popen和system两种方法。<br>这两种方法的区别参考一下<a href="http://blog.csdn.net/windone0109/article/details/8895875" target="_blank" rel="external">链接</a><br>os.system(cmd) 返回的是程序运行的结果状态，比如程序运行成功，则返回0，有错误则返回其对应的错误代码<br>os.popen(cmd) 返回的是程序输出的结果，比如cmd=“ls”的时候，通过popen就可以得到ls的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd = &quot;echo hello wolrd&quot;</div><div class="line">ret = os.popen(cmd)</div><div class="line">information = os.system(cmd)</div></pre></td></tr></table></figure>
-<h2 id="非阻塞态调用"><a href="#非阻塞态调用" class="headerlink" title="非阻塞态调用"></a>非阻塞态调用</h2><p>非阻塞态调用主要用到了subprocess 这个<a href="https://docs.python.org/2/library/subprocess.html" target="_blank" rel="external">模块</a><br>简单的用法就用subprocess.call(cmd)就可以了<br>更高级复杂的用法可以使用subprocess.popen(cmd)<br>比如说有时候因为环境变量的配置我们需要在特点的目录下执行脚本，就可以使用subprocess.popen的cwd参数,要配置环境变量而不是继承原有的环境变量可以使用env参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">workingDirector = r&quot;C:/testcode&quot;</div><div class="line">cmd = r&quot;test.bat&quot;</div><div class="line">subprocess.popen(cmd,cwd=workingDirector)</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -738,7 +751,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -751,7 +764,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
