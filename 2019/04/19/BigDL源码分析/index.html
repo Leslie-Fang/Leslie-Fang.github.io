@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术 深度学习 框架源码分析," />
 
 
 
@@ -87,16 +87,22 @@
 
 
 
-<meta name="description" content="记录心情与能力的成长">
+<meta name="description" content="Install先安装sparkhttps://spark.apache.org/downloads.html
+编译bigdlhttps://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/1bash make-dist.sh -P spark_2.x
+运行的例子每个model下面都有具体该如何运行的例子https:/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BigDL源码分析">
 <meta property="og:url" content="http://yoursite.com/2019/04/19/BigDL源码分析/index.html">
 <meta property="og:site_name" content="沉思语录">
-<meta property="og:description" content="记录心情与能力的成长">
-<meta property="og:updated_time" content="2019-04-19T00:10:34.875Z">
+<meta property="og:description" content="Install先安装sparkhttps://spark.apache.org/downloads.html
+编译bigdlhttps://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/1bash make-dist.sh -P spark_2.x
+运行的例子每个model下面都有具体该如何运行的例子https:/">
+<meta property="og:updated_time" content="2019-04-19T00:12:34.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BigDL源码分析">
-<meta name="twitter:description" content="记录心情与能力的成长">
+<meta name="twitter:description" content="Install先安装sparkhttps://spark.apache.org/downloads.html
+编译bigdlhttps://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/1bash make-dist.sh -P spark_2.x
+运行的例子每个model下面都有具体该如何运行的例子https:/">
 
 
 
@@ -370,7 +376,29 @@
       
 
       
-        
+        <h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><h3 id="先安装spark"><a href="#先安装spark" class="headerlink" title="先安装spark"></a>先安装spark</h3><p><a href="https://spark.apache.org/downloads.html" target="_blank" rel="external">https://spark.apache.org/downloads.html</a></p>
+<h3 id="编译bigdl"><a href="#编译bigdl" class="headerlink" title="编译bigdl"></a>编译bigdl</h3><p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/" target="_blank" rel="external">https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash make-dist.sh -P spark_2.x</div></pre></td></tr></table></figure></p>
+<h2 id="运行的例子"><a href="#运行的例子" class="headerlink" title="运行的例子"></a>运行的例子</h2><p>每个model下面都有具体该如何运行的例子<br><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet</a></p>
+<p>训练的时候<br>java虚拟机的堆空间溢出<br>java.lang.OutOfMemoryError: Java heap space</p>
+<p>设置driver的memory<br>spark-submit –driver-memory 12g –master local[1] –class com.intel.analytics.bigdl.models.vgg.Train dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/cifar10/cifar-10-batches-bin -b 4</p>
+<h2 id="Issue"><a href="#Issue" class="headerlink" title="Issue"></a>Issue</h2><ol>
+<li>requirement failed: only mini-batch supported (2D tensor), got 1D tensor instead<br>-b 指定的batchszie应该是core数量的4倍<br><a href="https://github.com/intel-analytics/BigDL/issues/462" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/issues/462</a></li>
+</ol>
+<h2 id="源代码阅读"><a href="#源代码阅读" class="headerlink" title="源代码阅读"></a>源代码阅读</h2><p>如何在intellij中导入项目<br><a href="https://www.jianshu.com/p/81a484ac83ae" target="_blank" rel="external">https://www.jianshu.com/p/81a484ac83ae</a><br><a href="http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/" target="_blank" rel="external">http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/</a></p>
+<h3 id="设计概念"><a href="#设计概念" class="headerlink" title="设计概念"></a>设计概念</h3><ol>
+<li>运行初始化时的模型构建<br>BigDL的设计是初始化的时候，一层一层将模型的读入，然后转化（每一层都寻找合适的BigDL的层，根据你输入的参数engine类型等），构建一个内部的图存在内存里面，以后的train或者inference的时候就使用这个内部的图</li>
+</ol>
+<p>BigDL的INT8化也是这么做的，是在inference初始化的时候，读取FP32的模型，然后一层层转换成INT8的层，放到运行时内部的模型，正式inference的时候就使用这个内部模型</p>
+<ol>
+<li>latency的问题<br>Spark适合进行批处理<br>但是针对一张图片进行inference的时候，因为spark需要构造图等初始化的工作，导致效率比较低<br>所以BigDL针对一张图片的latency的测试 <strong>不使用spark</strong>，走另外一套逻辑</li>
+</ol>
+<h3 id="Resnet代码示例"><a href="#Resnet代码示例" class="headerlink" title="Resnet代码示例"></a>Resnet代码示例</h3><p>看这个package：package com.intel.analytics.bigdl.models.resnet<br>目录里面的文件和结构：<br>ResNet 构建resnet的模型<br>DataSet<br>TrainCIFAR10这个例子</p>
+<h2 id="碎片知识"><a href="#碎片知识" class="headerlink" title="碎片知识"></a>碎片知识</h2><h3 id="设置和读取环境变量"><a href="#设置和读取环境变量" class="headerlink" title="设置和读取环境变量"></a>设置和读取环境变量</h3><p>System.getProperty(“leslie”, “false”)<br>可以在编译的时候-Dleslie=100去设定这个环境变量<br>在intellij里面为VM的参数<br>然后通过System.getProperty(“leslie”, “false”)就可以去获取这个变量的值了，false这个地方填的是默认值</p>
+<h3 id="this-synchronized-原子操作"><a href="#this-synchronized-原子操作" class="headerlink" title="this.synchronized 原子操作"></a>this.synchronized 原子操作</h3><p><a href="https://www.jianshu.com/p/0cc4c330f25a" target="_blank" rel="external">https://www.jianshu.com/p/0cc4c330f25a</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def getUniqueId() = this.synchronized &#123;</div><div class="line">    val freshUid = uidCount + 1</div><div class="line">    uidCount = freshUid</div><div class="line">    freshUid</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>把这个函数定义成原子操作，也就是多个线程调用这个函数的时候，必须等一个线程调用结束之后，另一个线程才可以开始调用</p>
+<h2 id="INT8"><a href="#INT8" class="headerlink" title="INT8"></a>INT8</h2><h3 id="scaling"><a href="#scaling" class="headerlink" title="scaling:"></a>scaling:</h3><p>spark-submit –master local[1] –driver-memory 50G –executor-memory 100G –executor-cores 32 –total-executor-cores 1 –class com.intel.analytics.bigdl.example.mkldnn.int8.GenerateInt8Scales ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet –batchSize 4 –model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl</p>
+<h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><p>spark-submit –master local[1] –driver-memory 50G –conf “spark.serializer=org.apache.spark.serializer.JavaSerializer” –conf “spark.network.timeout=1000000” –conf “spark.driver.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true” –conf “spark.executor.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true” –executor-memory 100G –executor-cores 1 –class com.intel.analytics.bigdl.example.mkldnn.int8.ImageNetInference ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet –batchSize 4 –model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl 2&gt;&amp;1 | tee test.log</p>
+
       
     </div>
 
@@ -390,6 +418,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术-深度学习-框架源码分析/" rel="tag"># 技术 深度学习 框架源码分析</a>
+          
+        </div>
       
 
       
@@ -459,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/popeve.jpg"
@@ -488,7 +531,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -513,6 +556,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-number">1.</span> <span class="nav-text">Install</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先安装spark"><span class="nav-number">1.1.</span> <span class="nav-text">先安装spark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译bigdl"><span class="nav-number">1.2.</span> <span class="nav-text">编译bigdl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行的例子"><span class="nav-number">2.</span> <span class="nav-text">运行的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issue"><span class="nav-number">3.</span> <span class="nav-text">Issue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码阅读"><span class="nav-number">4.</span> <span class="nav-text">源代码阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计概念"><span class="nav-number">4.1.</span> <span class="nav-text">设计概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resnet代码示例"><span class="nav-number">4.2.</span> <span class="nav-text">Resnet代码示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#碎片知识"><span class="nav-number">5.</span> <span class="nav-text">碎片知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置和读取环境变量"><span class="nav-number">5.1.</span> <span class="nav-text">设置和读取环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this-synchronized-原子操作"><span class="nav-number">5.2.</span> <span class="nav-text">this.synchronized 原子操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INT8"><span class="nav-number">6.</span> <span class="nav-text">INT8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scaling"><span class="nav-number">6.1.</span> <span class="nav-text">scaling:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inference"><span class="nav-number">6.2.</span> <span class="nav-text">inference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
