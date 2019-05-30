@@ -523,6 +523,25 @@
 <h3 id="指定编译目录"><a href="#指定编译目录" class="headerlink" title="指定编译目录"></a>指定编译目录</h3><p>默认编译在/root/.cache/bazel目录下面，有时候root目录空间不够<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">build_dir=/home/lesliefang/bazel_build</div><div class="line">bazel --output_user_root=$build_dir clean</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
 <h3 id="编译报错找不到–march-broadwell"><a href="#编译报错找不到–march-broadwell" class="headerlink" title="编译报错找不到–march=broadwell"></a>编译报错找不到–march=broadwell</h3><p>使用gcc6.3</p>
 <h3 id="whell太大无法打包"><a href="#whell太大无法打包" class="headerlink" title="whell太大无法打包"></a>whell太大无法打包</h3><p><a href="https://github.com/tensorflow/tensorflow/issues/5538">https://github.com/tensorflow/tensorflow/issues/5538</a></p>
+<h2 id="替换mkldnn版本"><a href="#替换mkldnn版本" class="headerlink" title="替换mkldnn版本"></a>替换mkldnn版本</h2><p>以TF从0.18升级到0.19为例</p>
+<ol>
+<li>下载mkldnn0.19计算sha256sum<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/intel/mkl-dnn/archive/v0.19.tar.gz</div><div class="line">sha256sum v0.19.tar.gz</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>记录这个结果<br>ba39da6adb263df05c4ca2a120295641fc97be75b588922e4274cb628dbe1dcd<br>后面会用到</p>
+<ol>
+<li>修改$tensorflow_root/tensorflow/workspace.bzl<br>搜索mkl_dnn<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">121     # Important: If you are upgrading MKL-DNN, then update the version numbers</div><div class="line"> 122     # in third_party/mkl_dnn/mkldnn.BUILD. In addition, the new version of</div><div class="line"> 123     # MKL-DNN might require upgrading MKL ML libraries also. If they need to be</div><div class="line"> 124     # upgraded then update the version numbers on all three versions above</div><div class="line"> 125     # (Linux, Mac, Windows).</div><div class="line"> 126     tf_http_archive(</div><div class="line"> 127         name = &quot;mkl_dnn&quot;,</div><div class="line"> 128         build_file = clean_dep(&quot;//third_party/mkl_dnn:mkldnn.BUILD&quot;),</div><div class="line"> 129         sha256 = &quot;38a1c02104ee9f630c1ad68164119cd58ad0aaf59e04ccbe7bd5781add7bfbea&quot;,</div><div class="line"> 130         strip_prefix = &quot;mkl-dnn-0.18&quot;,</div><div class="line"> 131         urls = [</div><div class="line"> 132             &quot;http://mirror.tensorflow.org/github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 133             &quot;https://github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 134         ],</div><div class="line"> 135     )</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>把里面所有0.18替换成0.19</li>
+<li>替换上面得到的sha256sum</li>
+</ul>
+<ol>
+<li>看第二步的注释和代码<br>需要修改”//third_party/mkl_dnn:mkldnn.BUILD”<br>$tensorflow_root/tensorflow/workspace.bzl<br>vim $tensorflow_root/third_party/mkl_dnn/mkldnn.BUILD<br>把里面的版本号从0.18改到0.19</li>
+</ol>
+<p>注意：<br>tensorflow里面，mkldnn是被当做source code编译进去的，<br>所以不存在动态链接库</p>
+<p>check:<br>build_dir/b3a4cb07d89ceca0353d37b5d32ffadc/external/mkl_dnn<br>里面是mkldnn下载下来的代码<br>里面有个readme文件在开头的地方可以check版本是0.18还是0.19</p>
 <h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. gdb python</div><div class="line">2. run file.py</div><div class="line">3. bt</div></pre></td></tr></table></figure></p>
 <p>method2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 跑测试</div><div class="line">2. top 看到python进程的pid</div><div class="line">3. gdb -p pid</div><div class="line">挂上之后，原来测试会挂住</div><div class="line">break 函数名或者其它打上断点,tensorflow找不到符号的情况下可以 文件名:line的方式去打断点</div><div class="line">continue 继续测试直到core-dump</div></pre></td></tr></table></figure></p>
 <p><strong>如何添加python的信息</strong> 参考这个blog<br><a href="http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/">http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/</a></p>
