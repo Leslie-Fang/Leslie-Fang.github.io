@@ -99,7 +99,7 @@
 编译程序在编译的时候手动加上-g选项1g++ -g file.cpp -o file
 启动GDB环境进入GDB调试环境1gdb file #file为编译后的可执行文件
 查看源">
-<meta property="og:updated_time" content="2019-01-28T11:19:25.924Z">
+<meta property="og:updated_time" content="2019-06-16T14:42:06.217Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GDB调试程序">
 <meta name="twitter:description" content="介绍GDB可以用在linux shell下debug程序GDB简明教程：https://zhuanlan.zhihu.com/p/21987947https://www.jianshu.com/p/08de5cef2de9
@@ -403,6 +403,9 @@
 <p>查看文件中是否有O3<br>find . -name “Makefile” | xargs grep O3<br>查找所有makefile文件<br>xargs命令的作用就是把每个查找到的文件送入grep</p>
 <h2 id="打印变量出错"><a href="#打印变量出错" class="headerlink" title="打印变量出错"></a>打印变量出错</h2><p>gdb <optimized out=""></optimized></p>
 <p>因为编译时的优化，在makefile里面把O2去掉或者改成O0<br>或者makefile里面定义一个OPTIMIZATION变量OPTIMIZATION?=-O0<br>make OPTIMIZATION=-O0</p>
+<h2 id="GUI工具"><a href="#GUI工具" class="headerlink" title="GUI工具"></a>GUI工具</h2><p>试了下gdbgui感觉还可以(<a href="https://www.gdbgui.com/" target="_blank" rel="external">https://www.gdbgui.com/</a>)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install gdbgui</div><div class="line"></div><div class="line">gdbgui #start</div></pre></td></tr></table></figure></p>
+<p>启动之后会自动弹出来服务器的firefox(如果服务器有桌面，工具配置了X11)，也可以关闭之后，像notebook一样在命令行配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -N -f -L localhost:5000:localhost:5000 root@remoteip</div></pre></td></tr></table></figure></p>
+<p>在本地chrome里面启动<a href="http://localhost:5000/" target="_blank" rel="external">http://localhost:5000/</a><br>启动之后可以加载binary也可以attach process<br>右上角可以debug<br>右侧中边可以看到各个变量的值</p>
 
       
     </div>
@@ -439,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/24/numpy/" rel="next" title="numpy">
-                <i class="fa fa-chevron-left"></i> numpy
+              <a href="/2017/09/25/Nginx/" rel="next" title="Nginx">
+                <i class="fa fa-chevron-left"></i> Nginx
               </a>
             
           </div>
@@ -449,8 +452,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/25/Nginx/" rel="prev" title="Nginx">
-                Nginx <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/25/配置ssl证书/" rel="prev" title="配置https的ssl证书">
+                配置https的ssl证书 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -575,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译程序"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动GDB环境"><span class="nav-number">3.</span> <span class="nav-text">启动GDB环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看源码"><span class="nav-number">4.</span> <span class="nav-text">查看源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加断点"><span class="nav-number">5.</span> <span class="nav-text">添加断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行程序"><span class="nav-number">6.</span> <span class="nav-text">运行程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量"><span class="nav-number">7.</span> <span class="nav-text">打印变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开图形化界面"><span class="nav-number">8.</span> <span class="nav-text">打开图形化界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看调用栈"><span class="nav-number">9.</span> <span class="nav-text">查看调用栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体列子"><span class="nav-number">10.</span> <span class="nav-text">具体列子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量出错"><span class="nav-number">11.</span> <span class="nav-text">打印变量出错</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译程序"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动GDB环境"><span class="nav-number">3.</span> <span class="nav-text">启动GDB环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看源码"><span class="nav-number">4.</span> <span class="nav-text">查看源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加断点"><span class="nav-number">5.</span> <span class="nav-text">添加断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行程序"><span class="nav-number">6.</span> <span class="nav-text">运行程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量"><span class="nav-number">7.</span> <span class="nav-text">打印变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开图形化界面"><span class="nav-number">8.</span> <span class="nav-text">打开图形化界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看调用栈"><span class="nav-number">9.</span> <span class="nav-text">查看调用栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体列子"><span class="nav-number">10.</span> <span class="nav-text">具体列子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印变量出错"><span class="nav-number">11.</span> <span class="nav-text">打印变量出错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GUI工具"><span class="nav-number">12.</span> <span class="nav-text">GUI工具</span></a></li></ol></div>
             
 
           </div>
