@@ -97,7 +97,7 @@
 <meta property="og:description" content="编译
 方法1：
 1234567./configurebazel build --config=opt //tensorflow/tools/pip_package:build_pip_packagebuild出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip">
-<meta property="og:updated_time" content="2019-06-17T13:01:47.313Z">
+<meta property="og:updated_time" content="2019-06-17T13:10:07.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow二次开发">
 <meta name="twitter:description" content="编译
@@ -384,6 +384,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="编译命令和过程分析"><a href="#编译命令和过程分析" class="headerlink" title="编译命令和过程分析"></a>编译命令和过程分析</h3><p>视频：<a href="https://www.youtube.com/watch?v=Rw-KrbfyABQ" target="_blank" rel="external">https://www.youtube.com/watch?v=Rw-KrbfyABQ</a><br><a href="https://www.cnblogs.com/shouhuxianjian/p/9416934.html" target="_blank" rel="external">https://www.cnblogs.com/shouhuxianjian/p/9416934.html</a></p>
+<p>运行configure.py会把一些编译参数放入.bazelrc和.tf_configure.bazelrc文件里面(<a href="https://www.jianshu.com/p/5cd111ebb8bb" target="_blank" rel="external">https://www.jianshu.com/p/5cd111ebb8bb</a>)<br>bazelrc文件的解释<br><a href="https://docs.bazel.build/versions/master/guide.html" target="_blank" rel="external">https://docs.bazel.build/versions/master/guide.html</a></p>
+<p>build 后面接的都是默认的编译参数<br>build:mkl 后面接的编译参数只有当bazel build –config=mkl的时候mkl后面的编译参数才会起作用</p>
+<p><strong>-c的选项有可能是–config的缩写</strong></p>
+<p>bazel build的其他编译选项：<br><a href="https://docs.bazel.build/versions/master/user-manual.html" target="_blank" rel="external">https://docs.bazel.build/versions/master/user-manual.html</a><br>–copt： This option takes an argument which is to be passed to the compiler. 所以–copt后面传进来的都是gcc或者是icc的编译参数</p>
+<p>–strip是否删除debug信息，never表示不删除debug信息</p>
 <h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><p>直接bazel build<br>然后重新生成wheel包<br>pip unistall tensorflow<br><strong>一定先卸载然后重新安装</strong><br>否则还是原来的包</p>
 <h2 id="编译之后"><a href="#编译之后" class="headerlink" title="编译之后"></a>编译之后</h2><p>生成pywrap_tensorflow_internal.py 以及 pywrap_tensorflow_internal.cc在~/.cache/bazel目录下面,所有代码都在_pywrap_tensorflow_internal.so 的动态链接库里面<br>pywrap_tensorflow_internal.py: 负责对接上层 Python 调用<br>pywrap_tensorflow_internal.cc: 负责对接下层 C API 调用</p>
 <ul>
@@ -669,7 +675,7 @@ with tf.Session() as sess:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">1.</span> <span class="nav-text">编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增量编译"><span class="nav-number">1.1.</span> <span class="nav-text">增量编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译之后"><span class="nav-number">2.</span> <span class="nav-text">编译之后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调整日志等级"><span class="nav-number">3.</span> <span class="nav-text">调整日志等级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#coding-utf-8"><span class="nav-number"></span> <span class="nav-text">-- coding: utf-8 --</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">1.</span> <span class="nav-text">编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译命令和过程分析"><span class="nav-number">1.1.</span> <span class="nav-text">编译命令和过程分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量编译"><span class="nav-number">1.2.</span> <span class="nav-text">增量编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译之后"><span class="nav-number">2.</span> <span class="nav-text">编译之后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调整日志等级"><span class="nav-number">3.</span> <span class="nav-text">调整日志等级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#coding-utf-8"><span class="nav-number"></span> <span class="nav-text">-- coding: utf-8 --</span></a></div>
             
 
           </div>
