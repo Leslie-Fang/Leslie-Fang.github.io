@@ -419,7 +419,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/配置ssl证书/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/Nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leslie">
@@ -441,8 +441,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/09/25/配置ssl证书/" itemprop="url">
-                  配置https的ssl证书
+                <a class="post-title-link" href="/2017/09/25/Nginx/" itemprop="url">
+                  Nginx
                 </a>
               
             
@@ -477,8 +477,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/25/配置ssl证书/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/配置ssl证书/" itemprop="commentCount"></span>
+                <a href="/2017/09/25/Nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/Nginx/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,10 +505,37 @@
 
       
         
-          
-            <p>使用nginx配置ssl证书<br><a href="https://aotu.io/notes/2016/08/16/nginx-https/index.html" target="_blank" rel="external">https://aotu.io/notes/2016/08/16/nginx-https/index.html</a><br>阿里云服务器配置<br><a href="https://www.cnblogs.com/tianhei/p/7726505.html" target="_blank" rel="external">https://www.cnblogs.com/tianhei/p/7726505.html</a></p>
-
-          
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>一些web框架入django,flask，express等内部已经集成了一些web服务器，如：web服务器与应用程序交互规范：最早出现的是 CGI，后来又出现了改进 CGI 性能的FasgCGI，Java 专用的 Servlet 规范，Python 专用的 WSGI 规范等等<br>但是这些web服务器社和用在开发环境不适合用在生产环境。<br>在生产环境的用法是nginx+uWSGI+web应用框架程序</p>
+<ul>
+<li>其中web应用程序的框架只提供服务</li>
+<li>uWSGI作为web程序和nginx服务器之间的桥梁</li>
+<li>ngnix作为服务器</li>
+</ul>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><ol>
+<li>下载安装nginx<br>官网<br><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/">https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</a><br>添加repo仓库，然后安装，根据平台不同，repo仓库的配置文件有一些对应的字段需要修改<br><a href="http://nginx.org/en/linux_packages.html">http://nginx.org/en/linux_packages.html</a><br>基本的安装以及入门教程<br><a href="http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html">http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-nginx-on-centos-7-rhel-7.html</a></li>
+</ol>
+<p>ubuntu:<a href="http://wiki.ubuntu.org.cn/Nginx">http://wiki.ubuntu.org.cn/Nginx</a><br>通过apt-get install 安装<br>也可以通过systemctl start(stop,reload,restart) nginx来控制ngnix<br>配置文件目录：/etc/nginx<br>log文件目录：/var/log/nginx<br>自带的html目录: /usr/share/nginx/html</p>
+<ol>
+<li><p>uWSGI<br>uWSGI的介绍：<a href="https://github.com/unbit/uwsgi">https://github.com/unbit/uwsgi</a></p>
+<ul>
+<li><p>安装<br>pip install uwsgi<br>报错: no python.h file，<a href="https://github.com/MeetMe/newrelic-plugin-agent/issues/151">https://github.com/MeetMe/newrelic-plugin-agent/issues/151</a><br>先装python-devel和<br>装 python-devel,<a href="https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5">https://stackoverflow.com/questions/23215535/how-to-install-python27-devel-on-centos-6-5</a><br>先找到适合的包，yum search python | grep -i devel<br>然后Yum install</p>
+</li>
+<li><p>配置<br>快速入门教程: <a href="http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html">http://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a><br>这个快速入门教程里面介绍了如何使用:1.uWSGI+web程序框架 2.ngnix+uWSGI+web程序框架（flask,djano等）</p>
+</li>
+</ul>
+</li>
+<li><p>ngnix<br>最好的nginx的教程：<br><a href="http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html">http://openresty.org/download/agentzh-nginx-tutorials-zhcn.html</a></p>
+</li>
+<li><p>三者集成的一些文章<br>生产环境不使用flask自带的WSGI服务器，独立配置<br><a href="http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/">http://knarfeh.com/2016/06/11/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9C%8B%E7%9A%84Flask+uwsgi+Nginx+Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</a><br>flask官方：<a href="http://flask.pocoo.org/docs/0.12/deploying/uwsgi/">http://flask.pocoo.org/docs/0.12/deploying/uwsgi/</a><br>入门配置nginx: <a href="https://segmentfault.com/a/1190000002411626">https://segmentfault.com/a/1190000002411626</a></p>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/25/Nginx/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
