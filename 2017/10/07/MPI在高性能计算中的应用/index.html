@@ -115,7 +115,7 @@ open-mpi
 intel-mpi
 
 其中前两个库是开源的，intel的库不是开源的，集成在intel的MKL当">
-<meta property="og:updated_time" content="2017-10-07T11:01:04.000Z">
+<meta property="og:updated_time" content="2019-07-02T11:41:17.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MPI在高性能计算中的应用">
 <meta name="twitter:description" content="介绍MPI(Message Passing Interface)在高性能计算中(High performance calculation 下面简称为HPC)具有广泛的应用。基本的应用范式可以分为两类:
@@ -431,13 +431,23 @@ intel-mpi
 </ol>
 </li>
 </ol>
+<h3 id="Openmpi的安装"><a href="#Openmpi的安装" class="headerlink" title="Openmpi的安装"></a>Openmpi的安装</h3><p>解压缩之后，编译安装<a href="https://www.open-mpi.org/faq/?category=building#easy-build" target="_blank" rel="external">https://www.open-mpi.org/faq/?category=building#easy-build</a>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://download.open-mpi.org/release/open-mpi/v3.0/openmpi-3.0.4.tar.gz</div><div class="line">./configure --prefix=/home/lesliefang/openmpi/openmpi_install/</div><div class="line">make all install -j $logistic_corenum-1</div><div class="line">PATH=$PATH:/home/lesliefang/openmpi/openmpi_install/</div></pre></td></tr></table></figure></p>
+<h3 id="添加非root用户运行mpi"><a href="#添加非root用户运行mpi" class="headerlink" title="添加非root用户运行mpi"></a>添加非root用户运行mpi</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">useradd multinode</div></pre></td></tr></table></figure>
+<p>各个节点的新用户都需要配置openmpi的信息</p>
+<h3 id="写hostfile"><a href="#写hostfile" class="headerlink" title="写hostfile"></a>写hostfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">10.239.182.51</div><div class="line">10.239.183.42</div></pre></td></tr></table></figure>
+<p>配置各个节点之间无密码ssh登录:要保证 <strong>.ssh</strong> 目录只有 <strong>新添加的非root用户自己有权限</strong> 否则配置的ssh不起作用，参考ssh免秘钥登录的文章<br>hostfile里面为各个节点的IP地址</p>
+<p>关闭防火墙：<br>systemctl stop firewalld<br>systemctl disable firewalld</p>
+<h3 id="测试代码已经编译"><a href="#测试代码已经编译" class="headerlink" title="测试代码已经编译"></a>测试代码已经编译</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#include &quot;mpi.h&quot;</div><div class="line"></div><div class="line">int main(int argc, char *argv[])</div><div class="line">&#123;</div><div class="line"> int nproc;</div><div class="line"> int iproc;</div><div class="line"> char proc_name[MPI_MAX_PROCESSOR_NAME];</div><div class="line"> int nameLength;</div><div class="line"> MPI_Init(&amp;argc,&amp;argv);</div><div class="line"> MPI_Comm_size(MPI_COMM_WORLD,&amp;nproc);</div><div class="line"> MPI_Comm_rank(MPI_COMM_WORLD,&amp;iproc);</div><div class="line"></div><div class="line"> MPI_Get_processor_name(proc_name,&amp;nameLength);</div><div class="line"> printf(&quot;Hello World, Iam host %s with rank %d of %d\n&quot;, proc_name,iproc,nproc);</div><div class="line"></div><div class="line"> MPI_Finalize();</div><div class="line"></div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mpicc -o hello hello.c</div><div class="line">mpirun -N 2 -hostfile hostfile hello</div></pre></td></tr></table></figure>
+<p>-N参数指定的是单个节点上运行的进程数量<br>远程节点对应目录下面必须有相同的文件，否则这个远程节点不运行程序，不打印东西</p>
 <h2 id="MPI-编程"><a href="#MPI-编程" class="headerlink" title="MPI 编程"></a>MPI 编程</h2><p>基本的流程可以分成3个步骤<br><a id="more"></a></p>
 <ol>
 <li>调用MPI的API，实现代码逻辑</li>
 <li>编译:mpic++ -std=c++11 -o 可执行文件名字 源码</li>
 <li>运行mpiexec -n 进程数 ./可执行文件 输入参数（mpiexec基本与mpirun等价）</li>
 </ol>
-<h2 id="MPI的一般代码逻辑"><a href="#MPI的一般代码逻辑" class="headerlink" title="MPI的一般代码逻辑"></a>MPI的一般代码逻辑</h2><h3 id="开启MPI"><a href="#开启MPI" class="headerlink" title="开启MPI:"></a>开启MPI:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MPI_Init(NULL, NULL);</div><div class="line">MPI_Comm_size(MPI_COMM_WORLD, &amp;comm_size);//comm_size is the number of process</div><div class="line">MPI_Comm_rank(MPI_COMM_WORLD, &amp;comm_rank);//comm_rank is the process&apos;s number</div></pre></td></tr></table></figure>
+<h2 id="MPI的一般代码逻辑"><a href="#MPI的一般代码逻辑" class="headerlink" title="MPI的一般代码逻辑"></a>MPI的一般代码逻辑</h2><!--more-->
+<h3 id="开启MPI"><a href="#开启MPI" class="headerlink" title="开启MPI:"></a>开启MPI:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MPI_Init(NULL, NULL);</div><div class="line">MPI_Comm_size(MPI_COMM_WORLD, &amp;comm_size);//comm_size is the number of process</div><div class="line">MPI_Comm_rank(MPI_COMM_WORLD, &amp;comm_rank);//comm_rank is the process&apos;s number</div></pre></td></tr></table></figure>
 <p>其中comm_size就是调用命令时传入的进程数量<br>comm_rank是每个进程的标识分别从(0到comm_size-1)</p>
 <h3 id="逻辑块"><a href="#逻辑块" class="headerlink" title="逻辑块"></a>逻辑块</h3><ul>
 <li>一般的编程思路是将大量独立的计算分割成几个块，每个块分别放入到一个进程中进行并行计算，计算结束之后，在第一个进程(rank 0)中搜集各个进程的计算结果，归总判断，进行下一轮计算或者结束计算</li>
@@ -490,8 +500,8 @@ intel-mpi
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/25/Nginx/" rel="next" title="Nginx">
-                <i class="fa fa-chevron-left"></i> Nginx
+              <a href="/2017/09/25/GDB/" rel="next" title="GDB调试程序">
+                <i class="fa fa-chevron-left"></i> GDB调试程序
               </a>
             
           </div>
@@ -626,7 +636,7 @@ intel-mpi
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI安装"><span class="nav-number">2.</span> <span class="nav-text">MPI安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-编程"><span class="nav-number">3.</span> <span class="nav-text">MPI 编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI的一般代码逻辑"><span class="nav-number">4.</span> <span class="nav-text">MPI的一般代码逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开启MPI"><span class="nav-number">4.1.</span> <span class="nav-text">开启MPI:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑块"><span class="nav-number">4.2.</span> <span class="nav-text">逻辑块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束MPI"><span class="nav-number">4.3.</span> <span class="nav-text">结束MPI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">5.</span> <span class="nav-text">实例代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI安装"><span class="nav-number">2.</span> <span class="nav-text">MPI安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Openmpi的安装"><span class="nav-number">2.1.</span> <span class="nav-text">Openmpi的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加非root用户运行mpi"><span class="nav-number">2.2.</span> <span class="nav-text">添加非root用户运行mpi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写hostfile"><span class="nav-number">2.3.</span> <span class="nav-text">写hostfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码已经编译"><span class="nav-number">2.4.</span> <span class="nav-text">测试代码已经编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-编程"><span class="nav-number">3.</span> <span class="nav-text">MPI 编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI的一般代码逻辑"><span class="nav-number">4.</span> <span class="nav-text">MPI的一般代码逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开启MPI"><span class="nav-number">4.1.</span> <span class="nav-text">开启MPI:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑块"><span class="nav-number">4.2.</span> <span class="nav-text">逻辑块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束MPI"><span class="nav-number">4.3.</span> <span class="nav-text">结束MPI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">5.</span> <span class="nav-text">实例代码</span></a></li></ol></div>
             
 
           </div>
