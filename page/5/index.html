@@ -284,6 +284,146 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/定位进程占用内存问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/11/01/定位进程占用内存问题/" itemprop="url">
+                  定位进程占用内存问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T22:21:29+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/01/定位进程占用内存问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/11/01/定位进程占用内存问题/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>定位一个服务内存占用率过高的问题：</p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>机器报警，内存不足，用free命令去看，看到内存不足<br>用top 然后M按内存使用率排序，找到服务的进程号<pidnum><br>top -p 进程号<pidnum><br>看到这个进程占用了1.5G的虚拟内存</pidnum></pidnum></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">cat /proc/&lt;pidnum&gt;/status</div><div class="line">......</div><div class="line">Groups:	0 1 2 3 4 6 10</div><div class="line">VmPeak:	 1614960 kB</div><div class="line">VmSize:	 1549424 kB</div><div class="line">VmLck:	      12 kB</div><div class="line">VmPin:	       0 kB</div><div class="line">VmHWM:	   65352 kB</div><div class="line">VmRSS:	   33520 kB</div><div class="line">VmData:	 1046480 kB</div><div class="line">VmStk:	     688 kB</div><div class="line">VmExe:	     640 kB</div><div class="line">VmLib:	   55276 kB</div><div class="line">VmPTE:	     540 kB</div><div class="line">VmSwap:	       0 kB</div><div class="line">Threads:	30</div></pre></td></tr></table></figure>
+<p>VmStk 栈区大概688KB还ok<br>看到VmData占了将近1G大小，google了一下VmData介绍说是堆区</p>
+<p>把代码遍历了一遍，找到所有new的地方，看看有没有delete，排除了内存泄漏的情况<br>然后在代码中print了一把所有的new的类 cout&lt;&lt;sizeof(classname)&lt;&lt;endl;<br>看到这些类加起来也就100KB，一共100个微线程加起来也就10MB的样子</p>
+<h2 id="进一步分析"><a href="#进一步分析" class="headerlink" title="进一步分析"></a>进一步分析</h2><p>这时候就纠结了<br>问了几个老同事，提供了些新的思路：</p>
+<ol>
+<li>内存泄漏，已经排除过，而且程序刚启动就占用了很大的内存大小</li>
+<li>把微线程限制到1个，在程序运行过程中，打印内存使用情况</li>
+</ol>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>这时候有个以前搞安全的同事帮忙一起看了：<br>cat /proc/29912/smaps<br>看看<a href="https://blog.csdn.net/tangtang_yue/article/details/78298067" target="_blank" rel="external">https://blog.csdn.net/tangtang_yue/article/details/78298067</a><br>smaps文件中，每一条记录表示进程虚拟内存空间中一块连续的区域<br>其中权限标识，rw-s表示可读可写的共享内存，rw-p表示可读可写的私有<br>还可以在里面搜索heap和stack，应该有多块连续区域，可以累加得到堆栈的大小<br>进一步在这个文件里搜索：<br>看到最大的一块区域：<br>5249 7fb495e28000-7fb49c228000 rw-s 00000000 00:04 1277991                    /SYSV10910931 (deleted)<br>5250 Size:             102400 kB</p>
+<p> /SYSV10910931 表示是一个共享内存</p>
+<p> 在/proc目录下,grep -rni “SYSV10910931” ./*/smaps<br> 看到所有使用这块共享内存的进程<br> 然后一个个单独 top -p 进程<br> 判断一下哪个进程是最后可能创建这个共享内存的</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/29/记录一次刷数据的经历/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -554,143 +694,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/13/小程序开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/10/13/小程序开发/" itemprop="url">
-                  小程序开发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-13T09:16:53+08:00">
-                2018-10-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/13/小程序开发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/13/小程序开发/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>前端：小程序<br>后台： django<br>数据库: mysql<br>缓存: redis</p>
-<h2 id="数据库搭建"><a href="#数据库搭建" class="headerlink" title="数据库搭建"></a>数据库搭建</h2><h4 id="配置mysql支持中文"><a href="#配置mysql支持中文" class="headerlink" title="配置mysql支持中文"></a>配置mysql支持中文</h4><p><a href="https://blog.csdn.net/u014657752/article/details/48206885" target="_blank" rel="external">https://blog.csdn.net/u014657752/article/details/48206885</a><br><a href="https://blog.csdn.net/crave_shy/article/details/23345869" target="_blank" rel="external">https://blog.csdn.net/crave_shy/article/details/23345869</a><br>再修改一个databases的字符集:<br><a href="https://stackoverflow.com/questions/22572558/how-to-set-character-set-database-and-collation-database-to-utf8-in-my-ini" target="_blank" rel="external">https://stackoverflow.com/questions/22572558/how-to-set-character-set-database-and-collation-database-to-utf8-in-my-ini</a><br>重启mysql，/etc/init.d/mysql restart</p>
-<h4 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h4><h4 id="创建数据库，并授权给新用户"><a href="#创建数据库，并授权给新用户" class="headerlink" title="创建数据库，并授权给新用户"></a>创建数据库，并授权给新用户</h4><h4 id="开启数据库远程登录"><a href="#开启数据库远程登录" class="headerlink" title="开启数据库远程登录"></a>开启数据库远程登录</h4><p><a href="https://blog.csdn.net/xiexievv/article/details/50513996" target="_blank" rel="external">https://blog.csdn.net/xiexievv/article/details/50513996</a><br>授权<br>然后注释：#bind-address = 127.0.0.1<br>vim /etc/mysql/mysql.conf.d/mysqld.cnf</p>
-<p>重启/etc/init.d/mysql restart</p>
-<h3 id="django"><a href="#django" class="headerlink" title="django"></a>django</h3><p>初始化时<br>python manage.py migrate<br>之后某个APP改动之后<br>$ python manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更<br>$ python manage.py migrate TestModel   # 创建表结构</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -735,7 +743,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-count">73</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

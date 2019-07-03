@@ -284,6 +284,152 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/elastic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/07/31/elastic/" itemprop="url">
+                  elastic
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-31T21:28:54+08:00">
+                2018-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/31/elastic/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/31/elastic/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="创建非root用户"><a href="#创建非root用户" class="headerlink" title="创建非root用户"></a>创建非root用户</h2><p>adduser elastic<br>passwd elastic</p>
+<h2 id="使用新用户下载"><a href="#使用新用户下载" class="headerlink" title="使用新用户下载"></a>使用新用户下载</h2><p>curl -L -O <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz</a></p>
+<h2 id="启动："><a href="#启动：" class="headerlink" title="启动："></a>启动：</h2><p>./bin/elasticsearch</p>
+<p>打开另一个终端进行测试：</p>
+<p>curl ‘<a href="http://localhost:9200/?pretty">http://localhost:9200/?pretty</a>‘<br>你能看到以下返回信息：<br>{<br>   “status”: 200,<br>   “name”: “Shrunken Bones”,<br>   “version”: {<br>      “number”: “1.4.0”,<br>      “lucene_version”: “4.10”<br>   },<br>   “tagline”: “You Know, for Search”<br>}</p>
+<p>报错：<br>[root@localhost ~]# curl -XGET ‘<a href="http://localhost:9200/?pretty">http://localhost:9200/?pretty</a>‘</p>
+<p><HTML></p>
+<p><HEAD><TITLE>Redirection</TITLE></HEAD></p>
+<BODY><H1>Redirect</H1></BODY>
+
+<p>关闭防火墙和代理<br>unset $http_proxy<br>unset $https_proxy</p>
+<h2 id="修改绑定ip"><a href="#修改绑定ip" class="headerlink" title="修改绑定ip"></a>修改绑定ip</h2><p>尝试修改配置文件 elasticsearch.yml<br>中network.host(注意配置文件格式不是以#开头的要空一格， ：后要空一格) 为network.host: 0.0.0.0</p>
+<h2 id="安装kibana-sense"><a href="#安装kibana-sense" class="headerlink" title="安装kibana sense"></a>安装kibana sense</h2><p>下载解压kibana5.6.10<br>Sense was renamed to Console and is built into Kibana 5.<br><a href="https://github.com/elastic/sense/blob/master/README.md">https://github.com/elastic/sense/blob/master/README.md</a></p>
+<p>直接启动./bin/kibana<br>会连接上默认配置的elastic</p>
+<h1 id="restful-API命令格式"><a href="#restful-API命令格式" class="headerlink" title="restful API命令格式"></a>restful API命令格式</h1><p>命令格式：<br><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_talking_to_elasticsearch.html</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/31/elastic/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/反汇编/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -564,156 +710,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/高并发系统开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/04/12/高并发系统开发/" itemprop="url">
-                  高并发系统开发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T19:56:25+08:00">
-                2018-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/12/高并发系统开发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/12/高并发系统开发/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>分布式系统<br><a href="https://www.zhihu.com/question/23645117" target="_blank" rel="external">https://www.zhihu.com/question/23645117</a></p>
-</li>
-<li><p>两个系统之前如何实现事务的同步<br><a href="!http://www.importnew.com/26212.html">eBay架构</a><br>看一个例子：<br>中行账户A向建行账户B转账1000元，应该如何实现，<br>首先，中行本地有两张表，第一张表是账户表，第二张表是消息表。</p>
-</li>
-</ul>
-<ol>
-<li>开始转账后，中行账户A扣款1000元，通过本地事务将事务消息插入至消息表。</li>
-<li>本地通常通过消息MQ(消息队列)的方式发送异步消息通知建行账户B，增加1000元。<br>对方订阅并监听消息后自动触发转账的操作，为了保证幂等性，防止触发重复的转账操作，需要在执行转账操作方新增一个trans_recv_log表用来做幂等，在第二阶段收到消息后，通过判断trans_recv_log表中的字段来检测相关记录是否被执行，如果未被执行则会对B账户余额执行加1000元的操作，并会将该记录增加至trans_recv_log,事件结束后通过回调更新trans_message的状态值。</li>
-</ol>
-<ul>
-<li><p>在上述例子中，转账方由于网络原因出现<em>多次发送</em>请求的情况怎么处理<br>在中行账户中，每次请求都有个ID，hash值，在收款方的trans_recv_log表首先查询是否有这行请求的记录，没有的话就插入记录，并将这行的状态位标志为未处理，然后开始处理业务，在业务处理完成后，将状态位标志为已经处理。<br>这样当重复请求过来，查看到状态位为已经处理，就不再处理业务。</p>
-</li>
-<li><p>在上述例子中，两次重复请求之间时间间隔很短怎么办，也就是第二次请求发过来的时候，第一次请求还在处理业务，还没来得及回调更新trans_recv_log表的标志位<br>给trans_recv_log表的每一行加锁，这样第二请求来的时候就会等待，等到第一个请求完成，第二请求查询到标志位已经完成就不会触发业务了</p>
-</li>
-<li><p>在上述例子中，可能存在一个情况，就是第一个请求刚处理完业务，给行解锁准备更新标志位的时候，第二请求来了，因为还没来的及更新标志位，所以第二个请求会触发业务，业务被击穿了<br>在业务请求之前，一定要写上锁，再查询<br>在业务完成之后，一定要先更新状态，再解锁</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -758,7 +759,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-count">73</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

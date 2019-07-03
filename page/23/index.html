@@ -284,6 +284,160 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/sed学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/sed学习笔记/" itemprop="url">
+                  sed学习笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T17:55:11+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/26/sed学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/26/sed学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="学习使用sed"><a href="#学习使用sed" class="headerlink" title="学习使用sed"></a>学习使用sed</h1><p>This blog is used to record the usage of sed.<br>sed 不会对原始文件产生影响，一行行读取，一行行匹配处理</p>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>正则表达式,在sed里面要加两个slash</p>
+<ul>
+<li>^匹配开头  </li>
+<li>/^#/ 匹配#开头的行，注释行</li>
+<li>$匹配末尾</li>
+<li>/^$/ 匹配空行</li>
+<li>/./ 匹配一个字符</li>
+<li>/../ 匹配两个字符</li>
+<li>* 匹配前面0个或多个字符</li>
+</ul>
+<h2 id="剔除指定行，打印剩余行"><a href="#剔除指定行，打印剩余行" class="headerlink" title="剔除指定行，打印剩余行"></a>剔除指定行，打印剩余行</h2><ul>
+<li>sed -e ‘1,5d’ filename   删除1到5行，打印剩余行</li>
+<li>sed -e ‘/^#/d’ filename  删除所有#开头的行，打印剩余行</li>
+<li>sed -e ‘/leslie/p’ filename 删除所有包含leslie的行，打印剩余行</li>
+</ul>
+<h2 id="打印指定的行"><a href="#打印指定的行" class="headerlink" title="打印指定的行"></a>打印指定的行</h2><ul>
+<li>sed -n -e ‘1,5p’ filename 打印1到5行</li>
+<li>sed -n -e ‘/^#/p’ filename 打印所有#开头的行</li>
+<li>sed -n -e ‘/leslie/p’ filename 打印所有包含leslie的行</li>
+<li>sed -n -e ‘regureexpression1,regureexpression2’ filename 从匹配第一个正则表达式的第一行开始到匹配第二正则表达式的第一行</li>
+<li>sed -e ‘=’ filename    打印行号</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/26/sed学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/18/handlebars/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -547,157 +701,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/15/Django/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/15/Django/" itemprop="url">
-                  Django
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T14:01:54+08:00">
-                2017-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/15/Django/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/15/Django/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="开发过程"><a href="#开发过程" class="headerlink" title="开发过程"></a>开发过程</h1><p>新建一个app之后，在settings.py的INSTALLED_APPS中需要注册一下这个APP</p>
-<h2 id="模板的配置"><a href="#模板的配置" class="headerlink" title="模板的配置"></a>模板的配置</h2><p>在app的目录下面新建一个tempaltes的目录<br>在base_dir/app_name/templates/app_name/xxx.html这个目录下面去写html<br>然后在setting.py的TEMPLATES的’DIRS’加上，[os.path.join(BASE_DIR, app_name, ‘templates’),<br>这样在app下面的views里面就可以render这个html了，然后在url里面做配置</p>
-<h2 id="静态文件的配置"><a href="#静态文件的配置" class="headerlink" title="静态文件的配置"></a>静态文件的配置</h2><p>在app的目录下面新建一个static的目录<br>在base_dir/app_name/static/app_name/目录下面去建imgaes，css,js等目录<br>在下面摆放静态文件<br>在settings.py按照模板配置</p>
-<h2 id="集成ajax"><a href="#集成ajax" class="headerlink" title="集成ajax"></a>集成ajax</h2><p>主要是要注意：在用ajax提交表单的时候，需要在header中包含进csrf-token</p>
-<h2 id="集成reactjs"><a href="#集成reactjs" class="headerlink" title="集成reactjs"></a>集成reactjs</h2><p>Django默认使用的templates比较适合用在静态页面(页面不太变化的场景下面)，所有的html中的数据都通过context传进去。<br>Reactjs则比较适合用在动态页面中，一般会在项目的根目录下建立一个目录(front)专门用于储存reactjs的代码，同时将reactjs的code经过webpack之后的代码放入另一个目录中(webpack)。在Django的setting中static文件需要包含从这个webpack目录中去找。<br>在Django的html文件中：1.需要包含reactjs渲染的主块 2.另外reactjs的代码express中是通过script包含进去的，在django中则是使用django webpack load去包含进去。</p>
-<p>同时在webpack中可以配置生成的文件用hash之后的名字命名。这样在生产环境中可以避免浏览器缓存的问题，就是浏览器缓存了上一版本的js文件，用hash之后的文件名就会重新加载。webpack会生成一个json文件，里面包含了webpack前后的文件名的对应关系，这样在html中引入webpack之后的hash名的js文件的时候，就不需要没有刺激都修改引入的文件名了。<br>比如：通过webpack-bundle-tracker会写入webpack-stats.json文件中</p>
-<ol>
-<li>python manage.py runserver 来启动django</li>
-<li>敲gulp 来生成babel和webpack的文件</li>
-<li>webpack配置webpack-bundle-tracker来生成webpack-stats.json文件</li>
-</ol>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>部署到阿里云上，创建好数据库之后，启动，会报错说数据表不存在，python manager.py makemigrations 也会报同样的错<br>有两种可能的解决方法：</p>
-<ol>
-<li>数据迁移<br>把开发环境中的数据都迁移到云端，mysql比较方便，用冷迁移就可以了<br>备份数据: mysqldump -u root -p databaseName &gt; data.sql<br>恢复: mysqldump -u root -p  databaseName &lt; data.sql</li>
-</ol>
-<p>当然mysql也支持数据的热备份，只需要在mysql中配置就可以了，本质上就是在A服务器上对数据库操作的sql语句会备份在一个log文件中，B服务器会监听这个log文件，实时更新到本地，并执行对应的sql语句</p>
-<ol>
-<li>将各个APP下面的migration文件夹中的00x开头的记录django数据model变化的文件删除，然后重新migrate一下</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -742,7 +750,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-count">73</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
