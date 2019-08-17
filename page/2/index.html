@@ -284,6 +284,181 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/BigDL源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/04/19/BigDL源码分析/" itemprop="url">
+                  BigDL源码分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T08:10:34+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/19/BigDL源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/04/19/BigDL源码分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><h3 id="先安装spark"><a href="#先安装spark" class="headerlink" title="先安装spark"></a>先安装spark</h3><p><a href="https://spark.apache.org/downloads.html" target="_blank" rel="external">https://spark.apache.org/downloads.html</a></p>
+<h3 id="编译bigdl"><a href="#编译bigdl" class="headerlink" title="编译bigdl"></a>编译bigdl</h3><p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/" target="_blank" rel="external">https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash make-dist.sh -P spark_2.x</div></pre></td></tr></table></figure></p>
+<h2 id="运行的例子"><a href="#运行的例子" class="headerlink" title="运行的例子"></a>运行的例子</h2><p>每个model下面都有具体该如何运行的例子<br><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet</a></p>
+<p>训练的时候<br>java虚拟机的堆空间溢出<br>java.lang.OutOfMemoryError: Java heap space</p>
+<p>设置driver的memory<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --driver-memory 12g --master local[1] --class com.intel.analytics.bigdl.models.vgg.Train dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/cifar10/cifar-10-batches-bin -b 4</div></pre></td></tr></table></figure></p>
+<h2 id="Issue"><a href="#Issue" class="headerlink" title="Issue"></a>Issue</h2><ol>
+<li>requirement failed: only mini-batch supported (2D tensor), got 1D tensor instead<br>-b 指定的batchszie应该是core数量的4倍<br><a href="https://github.com/intel-analytics/BigDL/issues/462" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/issues/462</a></li>
+</ol>
+<h2 id="源代码阅读"><a href="#源代码阅读" class="headerlink" title="源代码阅读"></a>源代码阅读</h2><p>如何在intellij中导入项目<br><a href="https://www.jianshu.com/p/81a484ac83ae" target="_blank" rel="external">https://www.jianshu.com/p/81a484ac83ae</a><br><a href="http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/" target="_blank" rel="external">http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/</a></p>
+<h3 id="设计概念"><a href="#设计概念" class="headerlink" title="设计概念"></a>设计概念</h3><ol>
+<li>运行初始化时的模型构建<br>BigDL的设计是初始化的时候，一层一层将模型的读入，然后转化（每一层都寻找合适的BigDL的层，根据你输入的参数engine类型等），构建一个内部的图存在内存里面，以后的train或者inference的时候就使用这个内部的图</li>
+</ol>
+<p>BigDL的INT8化也是这么做的，是在inference初始化的时候，读取FP32的模型，然后一层层转换成INT8的层，放到运行时内部的模型，正式inference的时候就使用这个内部模型</p>
+<ol>
+<li><p>latency的问题<br>Spark适合进行批处理<br>但是针对一张图片进行inference的时候，因为spark需要构造图等初始化的工作，导致效率比较低<br>所以BigDL针对一张图片的latency的测试 <strong>不使用spark</strong>，走另外一套逻辑</p>
+</li>
+<li><p>MKLDNN的调用<br>通过JNI接口去调用C++ 代码<br>例子：</p>
+</li>
+<li>模型中的调用ConvForwardDescInit</li>
+<li><p>MklDnn.class 中的JNI函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public static native long ConvForwardDescInit(int var0, int var1, long var2, long var4, long var6, long var8, int[] var10, int[] var11, int[] var12, int var13);</div></pre></td></tr></table></figure>
+</li>
+<li><p>ConvForwardDescInit 是定义在子项目 BigDL-core里面<br>native-dnn/src/main/c/conv.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">JNIEXPORT long JNICALL Java_com_intel_analytics_bigdl_mkl_MklDnn_DilatedConvForwardDescInit(</div><div class="line">  JNIEnv *env, jclass cls,</div><div class="line">  int prop_kind,</div><div class="line">  int alg_kind,</div><div class="line">  long src_desc,</div><div class="line">  long weights_desc,</div><div class="line">  long bias_desc,</div><div class="line">  long dst_desc,</div><div class="line">  jintArray strides,</div><div class="line">  jintArray dilates,</div><div class="line">  jintArray padding_l,</div><div class="line">  jintArray padding_r,</div><div class="line">  int padding_kind)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Resnet代码示例"><a href="#Resnet代码示例" class="headerlink" title="Resnet代码示例"></a>Resnet代码示例</h3><p>看这个package：package com.intel.analytics.bigdl.models.resnet<br>目录里面的文件和结构：<br>ResNet 构建resnet的模型<br>DataSet<br>TrainCIFAR10这个例子</p>
+<h2 id="碎片知识"><a href="#碎片知识" class="headerlink" title="碎片知识"></a>碎片知识</h2><h3 id="设置和读取环境变量"><a href="#设置和读取环境变量" class="headerlink" title="设置和读取环境变量"></a>设置和读取环境变量</h3><p>System.getProperty(“leslie”, “false”)<br>可以在编译的时候-Dleslie=100去设定这个环境变量<br>在intellij里面为VM的参数<br>然后通过System.getProperty(“leslie”, “false”)就可以去获取这个变量的值了，false这个地方填的是默认值</p>
+<h3 id="this-synchronized-原子操作"><a href="#this-synchronized-原子操作" class="headerlink" title="this.synchronized 原子操作"></a>this.synchronized 原子操作</h3><p><a href="https://www.jianshu.com/p/0cc4c330f25a" target="_blank" rel="external">https://www.jianshu.com/p/0cc4c330f25a</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def getUniqueId() = this.synchronized &#123;</div><div class="line">    val freshUid = uidCount + 1</div><div class="line">    uidCount = freshUid</div><div class="line">    freshUid</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>把这个函数定义成原子操作，也就是多个线程调用这个函数的时候，必须等一个线程调用结束之后，另一个线程才可以开始调用</p>
+<h2 id="INT8"><a href="#INT8" class="headerlink" title="INT8"></a>INT8</h2><h3 id="scaling"><a href="#scaling" class="headerlink" title="scaling"></a>scaling</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --executor-memory 100G --executor-cores 32 --total-executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.GenerateInt8Scales ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet --batchSize 4 --model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl</div></pre></td></tr></table></figure>
+<h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --conf &quot;spark.serializer=org.apache.spark.serializer.JavaSerializer&quot; --conf &quot;spark.network.timeout=1000000&quot; --conf &quot;spark.driver.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true&quot; --conf &quot;spark.executor.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true&quot; --executor-memory 100G --executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.ImageNetInference ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet --batchSize 4 --model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl 2&gt;&amp;1 | tee test.log</div></pre></td></tr></table></figure>
+<h2 id="Lenet的例子"><a href="#Lenet的例子" class="headerlink" title="Lenet的例子"></a>Lenet的例子</h2><h3 id="解决问题1："><a href="#解决问题1：" class="headerlink" title="解决问题1："></a>解决问题1：</h3><p>Lenet 现在用了LeNet5 和 dnnGraph 两种方式，生成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#125; else &#123;</div><div class="line">  Engine.getEngineType() match &#123;</div><div class="line">    case MklBlas =&gt; LeNet5(10)</div><div class="line">    case MklDnn =&gt; LeNet5.dnnGraph(param.batchSize / Engine.nodeNumber(), 10)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样导致mkldnn train后的模型也是用dnnGraph保存这会带来错误</p>
+<p>现在新的BigDL的代码都已经改成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LeNet5(10)</div></pre></td></tr></table></figure></p>
+<p>用这个序列化的原始模型就可以了， MKLDNN 改写参考MKLDNN章节</p>
+<h3 id="解决问题2："><a href="#解决问题2：" class="headerlink" title="解决问题2："></a>解决问题2：</h3><p>INT8化之前，模型需要保存成protubuf的格式而不是java的格式<br>解决方法：<br>java 的序列化方式是  model.save 和 Module.load，protobuf 对应的是 model.saveModule 和 Module.loadModule<br>Method 1: 在train的时候saveModel函数 用model.saveModule 而不是 model.save(推荐修改成这种method)<br>Method 2: 之前lenet train的时候模型是java序列化之后保存的，改下GenerateInt8Scales 用Module.load去载入模型</p>
+<p>否则INT8化会报错<br>Exception in thread “main” java.lang.NullPointerException<br>        at com.intel.analytics.bigdl.utils.serializer.ModuleLoader$.initTensorStorage(ModuleLoader.scala:122)</p>
+<h3 id="FP32-train"><a href="#FP32-train" class="headerlink" title="FP32 train"></a>FP32 train</h3><p>MKL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --driver-class-path ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar --class com.intel.analytics.bigdl.models.lenet.Train ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --checkpoint /root/mnist_type1_trainsave/model</div></pre></td></tr></table></figure></p>
+<p>/root/mnist_type1_trainsave/model 目录下生成训练好的模型，取最新保存的一个作为test</p>
+<h3 id="FP32-Test"><a href="#FP32-Test" class="headerlink" title="FP32 Test"></a>FP32 Test</h3><p>MKL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --class com.intel.analytics.bigdl.models.lenet.Test ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure></p>
+<p>Top1Accuracy is Accuracy(correct: 9854, count: 10000, accuracy: 0.9854)</p>
+<p>MKLDNN<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --conf &quot;spark.driver.extraJavaOptions=-Dbigdl.engineType=mkldnn&quot; --class com.intel.analytics.bigdl.models.lenet.Test ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure></p>
+<p>Top1Accuracy is Accuracy(correct: 9854, count: 10000, accuracy: 0.9854)</p>
+<h3 id="INT8-化"><a href="#INT8-化" class="headerlink" title="INT8 化"></a>INT8 化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --executor-memory 100G --executor-cores 32 --total-executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.GenerateInt8Scales ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 --batchSize 4 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure>
+<h2 id="MKLDNN-改写"><a href="#MKLDNN-改写" class="headerlink" title="MKLDNN 改写"></a>MKLDNN 改写</h2><h3 id="Train的时候"><a href="#Train的时候" class="headerlink" title="Train的时候"></a>Train的时候</h3><p>普通的sequential模型(不用DNNGraph)在DistriOptimizer第548行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">val convertedModel = ConversionUtils.convert(model)</div></pre></td></tr></table></figure></p>
+<p>会去做原始OP向MKLDNN OP的转换的过程，但是和tensorflow不同的一点是，BigDL不会去插入reorder的节点，reorder的操作都是在运算过程中动态判断，动态生成的<br>生成的convertedModel模型，在第一次forward的计算的时候会去做MKLDNN的初始化操作</p>
+<h3 id="Test的时候"><a href="#Test的时候" class="headerlink" title="Test的时候"></a>Test的时候</h3><p>Evaluator.scala 的test函数做MKLDNN化的改写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">val modelBroad = ModelBroadcast[T]().broadcast(dataset.sparkContext,</div><div class="line">  ConversionUtils.convert(model.evaluate()))</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/wnd代码阅读/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -559,198 +734,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/tensorflow二次开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/02/27/tensorflow二次开发/" itemprop="url">
-                  tensorflow二次开发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T10:50:46+08:00">
-                2019-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/27/tensorflow二次开发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/27/tensorflow二次开发/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><ul>
-<li><p>方法1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">./configure</div><div class="line">bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package</div><div class="line">build出错清理：</div><div class="line">/root/.cache/bazel</div><div class="line">把下面的之前出错的缓存文件给删除掉</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
-</li>
-<li><p>方法2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="编译命令和过程分析"><a href="#编译命令和过程分析" class="headerlink" title="编译命令和过程分析"></a>编译命令和过程分析</h3><p>视频：<a href="https://www.youtube.com/watch?v=Rw-KrbfyABQ">https://www.youtube.com/watch?v=Rw-KrbfyABQ</a><br><a href="https://www.cnblogs.com/shouhuxianjian/p/9416934.html">https://www.cnblogs.com/shouhuxianjian/p/9416934.html</a></p>
-<p>运行configure.py会把一些编译参数放入.bazelrc和.tf_configure.bazelrc文件里面(<a href="https://www.jianshu.com/p/5cd111ebb8bb">https://www.jianshu.com/p/5cd111ebb8bb</a>)<br>bazelrc文件的解释<br><a href="https://docs.bazel.build/versions/master/guide.html">https://docs.bazel.build/versions/master/guide.html</a></p>
-<p>build 后面接的都是默认的编译参数<br>build:mkl 后面接的编译参数只有当bazel build –config=mkl的时候mkl后面的编译参数才会起作用</p>
-<p><strong>-c的选项有可能是–config的缩写</strong></p>
-<p>bazel build的其他编译选项：<br><a href="https://docs.bazel.build/versions/master/user-manual.html">https://docs.bazel.build/versions/master/user-manual.html</a><br>–copt： This option takes an argument which is to be passed to the compiler. 所以–copt后面传进来的都是gcc或者是icc的编译参数</p>
-<p>–strip是否删除debug信息，never表示不删除debug信息</p>
-<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><p>直接bazel build<br>然后重新生成wheel包<br>pip unistall tensorflow<br><strong>一定先卸载然后重新安装</strong><br>否则还是原来的包</p>
-<h2 id="编译之后"><a href="#编译之后" class="headerlink" title="编译之后"></a>编译之后</h2><p>生成pywrap_tensorflow_internal.py 以及 pywrap_tensorflow_internal.cc在~/.cache/bazel目录下面,所有代码都在_pywrap_tensorflow_internal.so 的动态链接库里面<br>pywrap_tensorflow_internal.py: 负责对接上层 Python 调用<br>pywrap_tensorflow_internal.cc: 负责对接下层 C API 调用</p>
-<ul>
-<li>pywrap_tensorflow_internal.py 模块首次被导入时，自动地加<br>载 _pywrap_tensorflow_internal.so 的动态链接库；其中， _pywrap_tensorflow_internal.so<br>包含了整个 TensorFlow 运行时的所有符号。</li>
-<li>在 pywrap_tensorflow_internal.cc 的实现中，静态注册了一个函数符号表，实现了 Python 函数名到 C 函数名的二元关系。在运行时，按照 Python 的函数名称，匹找到对应的 C 函数实现，最终实现 Python 到 c_api.c 具体实现的调用关系。</li>
-</ul>
-<h2 id="调整tensorflow运行的日志等级"><a href="#调整tensorflow运行的日志等级" class="headerlink" title="调整tensorflow运行的日志等级"></a>调整tensorflow运行的日志等级</h2><p>TF代码又两个函数打印日志,LOG以及VLOG<br>LOG是正常的打印日志，通过TF_CPP_MIN_LOG_LEVEL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=level</div></pre></td></tr></table></figure></p>
-<p>去设置，值越小，打印日志越多<br>VLOG通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_VLOG_LEVEL=level</div></pre></td></tr></table></figure></p>
-<p>去设置，但是VLOG只有在LOG等级为0的时候设置才有用<br>比如要打印mkl_layout_pass.cc初始化rewirte op时的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=0</div><div class="line">export TF_CPP_MIN_VLOG_LEVEL=1</div></pre></td></tr></table></figure></p>
-<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><p>添加 -c dbg选项<br>移除优化选项 –copt=-O3 以及 -c opt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
-<p>debug版本编译完大概有20G左右<br>export OMP_NUM_THREADS=1<br>设置intra和inter值为1</p>
-<h3 id="指定编译目录"><a href="#指定编译目录" class="headerlink" title="指定编译目录"></a>指定编译目录</h3><p>默认编译在/root/.cache/bazel目录下面，有时候root目录空间不够<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">build_dir=/home/lesliefang/bazel_build</div><div class="line">bazel --output_user_root=$build_dir clean</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
-<h3 id="编译报错找不到–march-broadwell"><a href="#编译报错找不到–march-broadwell" class="headerlink" title="编译报错找不到–march=broadwell"></a>编译报错找不到–march=broadwell</h3><p>使用gcc6.3以及以上版本，低版本的编译器不认识broadwell的选项</p>
-<h3 id="whell太大无法打包"><a href="#whell太大无法打包" class="headerlink" title="whell太大无法打包"></a>whell太大无法打包</h3><p><a href="https://github.com/tensorflow/tensorflow/issues/5538">https://github.com/tensorflow/tensorflow/issues/5538</a></p>
-<h2 id="替换mkldnn版本"><a href="#替换mkldnn版本" class="headerlink" title="替换mkldnn版本"></a>替换mkldnn版本</h2><p>以TF从0.18升级到0.19为例</p>
-<h3 id="下载mkldnn0-19计算sha256sum"><a href="#下载mkldnn0-19计算sha256sum" class="headerlink" title="下载mkldnn0.19计算sha256sum"></a>下载mkldnn0.19计算sha256sum</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/intel/mkl-dnn/archive/v0.19.tar.gz</div><div class="line">sha256sum v0.19.tar.gz</div><div class="line">记录这个结果</div><div class="line">ba39da6adb263df05c4ca2a120295641fc97be75b588922e4274cb628dbe1dcd</div><div class="line">后面会用到</div></pre></td></tr></table></figure>
-<h3 id="修改-tensorflow-root-tensorflow-workspace-bzl"><a href="#修改-tensorflow-root-tensorflow-workspace-bzl" class="headerlink" title="修改$tensorflow_root/tensorflow/workspace.bzl"></a>修改$tensorflow_root/tensorflow/workspace.bzl</h3><p>搜索mkl_dnn<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">121     # Important: If you are upgrading MKL-DNN, then update the version numbers</div><div class="line"> 122     # in third_party/mkl_dnn/mkldnn.BUILD. In addition, the new version of</div><div class="line"> 123     # MKL-DNN might require upgrading MKL ML libraries also. If they need to be</div><div class="line"> 124     # upgraded then update the version numbers on all three versions above</div><div class="line"> 125     # (Linux, Mac, Windows).</div><div class="line"> 126     tf_http_archive(</div><div class="line"> 127         name = &quot;mkl_dnn&quot;,</div><div class="line"> 128         build_file = clean_dep(&quot;//third_party/mkl_dnn:mkldnn.BUILD&quot;),</div><div class="line"> 129         sha256 = &quot;38a1c02104ee9f630c1ad68164119cd58ad0aaf59e04ccbe7bd5781add7bfbea&quot;,</div><div class="line"> 130         strip_prefix = &quot;mkl-dnn-0.18&quot;,</div><div class="line"> 131         urls = [</div><div class="line"> 132             &quot;http://mirror.tensorflow.org/github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 133             &quot;https://github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 134         ],</div><div class="line"> 135     )</div></pre></td></tr></table></figure></p>
-<ul>
-<li>把里面所有0.18替换成0.19</li>
-<li>替换上面得到的sha256sum</li>
-</ul>
-<h3 id="看第二步的注释和代码"><a href="#看第二步的注释和代码" class="headerlink" title="看第二步的注释和代码"></a>看第二步的注释和代码</h3><p>需要修改”//third_party/mkl_dnn:mkldnn.BUILD”<br>$tensorflow_root/tensorflow/workspace.bzl<br>vim $tensorflow_root/third_party/mkl_dnn/mkldnn.BUILD<br>把里面的版本号从0.18改到0.19</p>
-<p>注意：<br>tensorflow里面，mkldnn是被当做source code编译进去的，<br>所以不存在动态链接库</p>
-<p>check:<br>build_dir/b3a4cb07d89ceca0353d37b5d32ffadc/external/mkl_dnn<br>里面是mkldnn下载下来的代码<br>里面有个readme文件在开头的地方可以check版本是0.18还是0.19</p>
-<h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. gdb python</div><div class="line">2. run file.py</div><div class="line">3. bt</div></pre></td></tr></table></figure></p>
-<p>method2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 跑测试</div><div class="line">2. top 看到python进程的pid</div><div class="line">3. gdb -p pid</div><div class="line">挂上之后，原来测试会挂住</div><div class="line">break 函数名或者其它打上断点,tensorflow找不到符号的情况下可以 文件名:line的方式去打断点</div><div class="line">continue 继续测试直到core-dump</div></pre></td></tr></table></figure></p>
-<p><strong>如何添加python的信息</strong> 参考这个blog<br><a href="http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/">http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/</a></p>
-<h3 id="warning找不到文件"><a href="#warning找不到文件" class="headerlink" title="warning找不到文件"></a>warning找不到文件</h3><p>dir 目录<br>去指定文件的搜索根目录<br>使用gdbgui去调试的时候，也需要指定了目录之后才可以显示文件</p>
-<h3 id="调试前的参数设置以及技巧"><a href="#调试前的参数设置以及技巧" class="headerlink" title="调试前的参数设置以及技巧"></a>调试前的参数设置以及技巧</h3><p><strong>所有并行计算线程设置为1</strong>，避免多线程导致断点带来的麻烦<br>命令后加&amp;echo $! 输出PID，进行gdb -p的调试</p>
-<h2 id="mkldnn调试"><a href="#mkldnn调试" class="headerlink" title="mkldnn调试"></a>mkldnn调试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export MKLDNN_VERBOSE=1</div><div class="line">python ***</div></pre></td></tr></table></figure>
-<p>在运行测试之前，添加环境变量<br>可以打出mkldnn的信息<br>每一行的信息Each line with verbose information is formatted as a comma-separated list containing:</p>
-<ul>
-<li>mkldnn_verbose</li>
-<li>stage, e.g. create or exec</li>
-<li>primitive-kind, e.g. convolution, reorder, sum, …</li>
-<li>primitive implementation name</li>
-<li>propagation-kind, e.g. forward_training</li>
-<li>input/output data info, e.g. data type and data format</li>
-<li>auxiliary information, e.g. algorithm or number of input</li>
-<li>problem description<ul>
-<li>for convolution the problem description is dumped in benchdnn friendly format</li>
-<li>for reorder, sum, and concat problem description is simply logical dims</li>
-<li>for other primitives the problem description is similar to convolution one</li>
-</ul>
-</li>
-<li>execution time in milliseconds</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/27/tensorflow二次开发/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -800,7 +783,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">73</span>
+                <span class="site-state-item-count">74</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

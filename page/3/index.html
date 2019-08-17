@@ -284,6 +284,198 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/tensorflow二次开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/02/27/tensorflow二次开发/" itemprop="url">
+                  tensorflow二次开发
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T10:50:46+08:00">
+                2019-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/27/tensorflow二次开发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/27/tensorflow二次开发/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><ul>
+<li><p>方法1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">./configure</div><div class="line">bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package</div><div class="line">build出错清理：</div><div class="line">/root/.cache/bazel</div><div class="line">把下面的之前出错的缓存文件给删除掉</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
+</li>
+<li><p>方法2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="编译命令和过程分析"><a href="#编译命令和过程分析" class="headerlink" title="编译命令和过程分析"></a>编译命令和过程分析</h3><p>视频：<a href="https://www.youtube.com/watch?v=Rw-KrbfyABQ">https://www.youtube.com/watch?v=Rw-KrbfyABQ</a><br><a href="https://www.cnblogs.com/shouhuxianjian/p/9416934.html">https://www.cnblogs.com/shouhuxianjian/p/9416934.html</a></p>
+<p>运行configure.py会把一些编译参数放入.bazelrc和.tf_configure.bazelrc文件里面(<a href="https://www.jianshu.com/p/5cd111ebb8bb">https://www.jianshu.com/p/5cd111ebb8bb</a>)<br>bazelrc文件的解释<br><a href="https://docs.bazel.build/versions/master/guide.html">https://docs.bazel.build/versions/master/guide.html</a></p>
+<p>build 后面接的都是默认的编译参数<br>build:mkl 后面接的编译参数只有当bazel build –config=mkl的时候mkl后面的编译参数才会起作用</p>
+<p><strong>-c的选项有可能是–config的缩写</strong></p>
+<p>bazel build的其他编译选项：<br><a href="https://docs.bazel.build/versions/master/user-manual.html">https://docs.bazel.build/versions/master/user-manual.html</a><br>–copt： This option takes an argument which is to be passed to the compiler. 所以–copt后面传进来的都是gcc或者是icc的编译参数</p>
+<p>–strip是否删除debug信息，never表示不删除debug信息</p>
+<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><p>直接bazel build<br>然后重新生成wheel包<br>pip unistall tensorflow<br><strong>一定先卸载然后重新安装</strong><br>否则还是原来的包</p>
+<h2 id="编译之后"><a href="#编译之后" class="headerlink" title="编译之后"></a>编译之后</h2><p>生成pywrap_tensorflow_internal.py 以及 pywrap_tensorflow_internal.cc在~/.cache/bazel目录下面,所有代码都在_pywrap_tensorflow_internal.so 的动态链接库里面<br>pywrap_tensorflow_internal.py: 负责对接上层 Python 调用<br>pywrap_tensorflow_internal.cc: 负责对接下层 C API 调用</p>
+<ul>
+<li>pywrap_tensorflow_internal.py 模块首次被导入时，自动地加<br>载 _pywrap_tensorflow_internal.so 的动态链接库；其中， _pywrap_tensorflow_internal.so<br>包含了整个 TensorFlow 运行时的所有符号。</li>
+<li>在 pywrap_tensorflow_internal.cc 的实现中，静态注册了一个函数符号表，实现了 Python 函数名到 C 函数名的二元关系。在运行时，按照 Python 的函数名称，匹找到对应的 C 函数实现，最终实现 Python 到 c_api.c 具体实现的调用关系。</li>
+</ul>
+<h2 id="调整tensorflow运行的日志等级"><a href="#调整tensorflow运行的日志等级" class="headerlink" title="调整tensorflow运行的日志等级"></a>调整tensorflow运行的日志等级</h2><p>TF代码又两个函数打印日志,LOG以及VLOG<br>LOG是正常的打印日志，通过TF_CPP_MIN_LOG_LEVEL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=level</div></pre></td></tr></table></figure></p>
+<p>去设置，值越小，打印日志越多<br>VLOG通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_VLOG_LEVEL=level</div></pre></td></tr></table></figure></p>
+<p>去设置，但是VLOG只有在LOG等级为0的时候设置才有用<br>比如要打印mkl_layout_pass.cc初始化rewirte op时的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=0</div><div class="line">export TF_CPP_MIN_VLOG_LEVEL=1</div></pre></td></tr></table></figure></p>
+<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><p>添加 -c dbg选项<br>移除优化选项 –copt=-O3 以及 -c opt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
+<p>debug版本编译完大概有20G左右<br>export OMP_NUM_THREADS=1<br>设置intra和inter值为1</p>
+<h3 id="指定编译目录"><a href="#指定编译目录" class="headerlink" title="指定编译目录"></a>指定编译目录</h3><p>默认编译在/root/.cache/bazel目录下面，有时候root目录空间不够<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">build_dir=/home/lesliefang/bazel_build</div><div class="line">bazel --output_user_root=$build_dir clean</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
+<h3 id="编译报错找不到–march-broadwell"><a href="#编译报错找不到–march-broadwell" class="headerlink" title="编译报错找不到–march=broadwell"></a>编译报错找不到–march=broadwell</h3><p>使用gcc6.3以及以上版本，低版本的编译器不认识broadwell的选项</p>
+<h3 id="whell太大无法打包"><a href="#whell太大无法打包" class="headerlink" title="whell太大无法打包"></a>whell太大无法打包</h3><p><a href="https://github.com/tensorflow/tensorflow/issues/5538">https://github.com/tensorflow/tensorflow/issues/5538</a></p>
+<h2 id="替换mkldnn版本"><a href="#替换mkldnn版本" class="headerlink" title="替换mkldnn版本"></a>替换mkldnn版本</h2><p>以TF从0.18升级到0.19为例</p>
+<h3 id="下载mkldnn0-19计算sha256sum"><a href="#下载mkldnn0-19计算sha256sum" class="headerlink" title="下载mkldnn0.19计算sha256sum"></a>下载mkldnn0.19计算sha256sum</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/intel/mkl-dnn/archive/v0.19.tar.gz</div><div class="line">sha256sum v0.19.tar.gz</div><div class="line">记录这个结果</div><div class="line">ba39da6adb263df05c4ca2a120295641fc97be75b588922e4274cb628dbe1dcd</div><div class="line">后面会用到</div></pre></td></tr></table></figure>
+<h3 id="修改-tensorflow-root-tensorflow-workspace-bzl"><a href="#修改-tensorflow-root-tensorflow-workspace-bzl" class="headerlink" title="修改$tensorflow_root/tensorflow/workspace.bzl"></a>修改$tensorflow_root/tensorflow/workspace.bzl</h3><p>搜索mkl_dnn<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">121     # Important: If you are upgrading MKL-DNN, then update the version numbers</div><div class="line"> 122     # in third_party/mkl_dnn/mkldnn.BUILD. In addition, the new version of</div><div class="line"> 123     # MKL-DNN might require upgrading MKL ML libraries also. If they need to be</div><div class="line"> 124     # upgraded then update the version numbers on all three versions above</div><div class="line"> 125     # (Linux, Mac, Windows).</div><div class="line"> 126     tf_http_archive(</div><div class="line"> 127         name = &quot;mkl_dnn&quot;,</div><div class="line"> 128         build_file = clean_dep(&quot;//third_party/mkl_dnn:mkldnn.BUILD&quot;),</div><div class="line"> 129         sha256 = &quot;38a1c02104ee9f630c1ad68164119cd58ad0aaf59e04ccbe7bd5781add7bfbea&quot;,</div><div class="line"> 130         strip_prefix = &quot;mkl-dnn-0.18&quot;,</div><div class="line"> 131         urls = [</div><div class="line"> 132             &quot;http://mirror.tensorflow.org/github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 133             &quot;https://github.com/intel/mkl-dnn/archive/v0.18.tar.gz&quot;,</div><div class="line"> 134         ],</div><div class="line"> 135     )</div></pre></td></tr></table></figure></p>
+<ul>
+<li>把里面所有0.18替换成0.19</li>
+<li>替换上面得到的sha256sum</li>
+</ul>
+<h3 id="看第二步的注释和代码"><a href="#看第二步的注释和代码" class="headerlink" title="看第二步的注释和代码"></a>看第二步的注释和代码</h3><p>需要修改”//third_party/mkl_dnn:mkldnn.BUILD”<br>$tensorflow_root/tensorflow/workspace.bzl<br>vim $tensorflow_root/third_party/mkl_dnn/mkldnn.BUILD<br>把里面的版本号从0.18改到0.19</p>
+<p>注意：<br>tensorflow里面，mkldnn是被当做source code编译进去的，<br>所以不存在动态链接库</p>
+<p>check:<br>build_dir/b3a4cb07d89ceca0353d37b5d32ffadc/external/mkl_dnn<br>里面是mkldnn下载下来的代码<br>里面有个readme文件在开头的地方可以check版本是0.18还是0.19</p>
+<h2 id="gdb-调试"><a href="#gdb-调试" class="headerlink" title="gdb 调试"></a>gdb 调试</h2><p>二种方法方法去debug TF:<br>method1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. gdb python</div><div class="line">2. run file.py</div><div class="line">3. bt</div></pre></td></tr></table></figure></p>
+<p>method2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 跑测试</div><div class="line">2. top 看到python进程的pid</div><div class="line">3. gdb -p pid</div><div class="line">挂上之后，原来测试会挂住</div><div class="line">break 函数名或者其它打上断点,tensorflow找不到符号的情况下可以 文件名:line的方式去打断点</div><div class="line">continue 继续测试直到core-dump</div></pre></td></tr></table></figure></p>
+<p><strong>如何添加python的信息</strong> 参考这个blog<br><a href="http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/">http://jcf94.com/2018/01/13/2018-01-13-tfunpacking/</a></p>
+<h3 id="warning找不到文件"><a href="#warning找不到文件" class="headerlink" title="warning找不到文件"></a>warning找不到文件</h3><p>dir 目录<br>去指定文件的搜索根目录<br>使用gdbgui去调试的时候，也需要指定了目录之后才可以显示文件</p>
+<h3 id="调试前的参数设置以及技巧"><a href="#调试前的参数设置以及技巧" class="headerlink" title="调试前的参数设置以及技巧"></a>调试前的参数设置以及技巧</h3><p><strong>所有并行计算线程设置为1</strong>，避免多线程导致断点带来的麻烦<br>命令后加&amp;echo $! 输出PID，进行gdb -p的调试</p>
+<h2 id="mkldnn调试"><a href="#mkldnn调试" class="headerlink" title="mkldnn调试"></a>mkldnn调试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export MKLDNN_VERBOSE=1</div><div class="line">python ***</div></pre></td></tr></table></figure>
+<p>在运行测试之前，添加环境变量<br>可以打出mkldnn的信息<br>每一行的信息Each line with verbose information is formatted as a comma-separated list containing:</p>
+<ul>
+<li>mkldnn_verbose</li>
+<li>stage, e.g. create or exec</li>
+<li>primitive-kind, e.g. convolution, reorder, sum, …</li>
+<li>primitive implementation name</li>
+<li>propagation-kind, e.g. forward_training</li>
+<li>input/output data info, e.g. data type and data format</li>
+<li>auxiliary information, e.g. algorithm or number of input</li>
+<li>problem description<ul>
+<li>for convolution the problem description is dumped in benchdnn friendly format</li>
+<li>for reorder, sum, and concat problem description is simply logical dims</li>
+<li>for other primitives the problem description is similar to convolution one</li>
+</ul>
+</li>
+<li>execution time in milliseconds</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/27/tensorflow二次开发/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/搜索/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -551,143 +743,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/MKLDNN与AVX512/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/01/19/MKLDNN与AVX512/" itemprop="url">
-                  MKLDNN与AVX512
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T17:02:02+08:00">
-                2019-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/19/MKLDNN与AVX512/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/01/19/MKLDNN与AVX512/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>以caffe2为例子进行解释：<br>caffe2的输入的数据格式为NCHW<br>batchsize，channel，height和width</p>
-<ol>
-<li>对于caffe2来说，在每一层卷积的时候就会直接把这个NCHW的数据塞进mkldnn对应的primitive里面进行计算，</li>
-<li>mkldnn的primitive并行化计算包含两个层面，thread的层面和单个thread内部</li>
-</ol>
-<h3 id="NH方向的并行化"><a href="#NH方向的并行化" class="headerlink" title="NH方向的并行化"></a>NH方向的并行化</h3><p>对于NCHW的数据格式来说, N和H会对应了threads层面的并行化计算，也就是batchsize张图片或者一张图片很大也会被分配到多个不同的threads(每个thread可能绑定了CPU计算的core上)<br><strong>这解释了caffe2，detecture的时候batchsize从1增加到8，性能增加不明显的问题</strong><br>因为detecture的图片像素点很大1024<em>1024,正常resnet50的输入都是224</em>224，所以detecture的图片在H方向上已经在多threads上并行计算了，增大batchsize无法提高性能</p>
-<h3 id="为什么说c16（channel数是16的倍数）很重要"><a href="#为什么说c16（channel数是16的倍数）很重要" class="headerlink" title="为什么说c16（channel数是16的倍数）很重要"></a>为什么说c16（channel数是16的倍数）很重要</h3><p>channel数是16的倍数，我们经常看到卷积核的输出的channel经常是32,64等16的倍数</p>
-<h4 id="AVX512"><a href="#AVX512" class="headerlink" title="AVX512"></a>AVX512</h4><p>AVX512指令集的意思就是一次处理512bit的数据，一个FP32的数据占了32bit，所以一次性可以处理16个FP32的数据</p>
-<p>对应了上面的卷积计算来说，假设有个NCHW的数据，一个batchsize有32个通道，那我们定义的卷积核也有32的通道<br>在第一个像素点上的卷积，可以先读取16个channel(通道)的第一个像素点的数据进来，对应了前16个卷积核的第一个像素点数据，进行一次卷积运算</p>
-<p>同时，一个物理核(这里不确定是物理核还是逻辑核)会有 <strong>16？？</strong> 个AVX512可以读取的寄存器，每个寄存器可以存512bit，所以一次性可以读每个通道的前16个像素点进来，一共(16(通道数)<em>32(一个浮点数)</em>16(一组16个像素点组成的浮点数))一起存在16个AVX512的数据的寄存器里面</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -737,7 +792,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">73</span>
+                <span class="site-state-item-count">74</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

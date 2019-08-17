@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python调用C++]]></title>
+    <url>%2F2019%2F08%2F17%2Fpython%E8%B0%83%E7%94%A8C%2F</url>
+    <content type="text"><![CDATA[介绍Python调用C++时十分常见的方案，结合了Python的灵活以及C++的高效一般的实现是将C++代码编译是动态链接库，提供Python到C++调用的API，然后将Python库打包成wheel包的形式发布 实现方案常见的实现方案有boost.python, swig, ctypes, pybind11等tensorflow采用的是swig的方案boost.python为了兼容所有老的C++编译器，太重了本文重点介绍pybind11 pybind11的实现方案介绍setuptools定义wheel打包以及编译使用setuptools去打包成wheel包，编写setup.py文件，定义setup函数参考MLPerf的setup.py文件需要编译C++代码，setup函数中定义ext_modules字段指向一个Extension对象Extension对象里面指定了需要编译的文件，编译宏以及依赖文件之后借助setup.py我们可以进行打包，编译C++文件，生成wheel包12345CFLAGS=&quot;-std=c++14 -O3&quot; python setup.py bdist_wheel##debug versionCFLAGS=&quot;-std=c++14 -O0 -g&quot; python setup.py bdist_wheel可以直接用gdb去debug Pybind11 python到C++的接口参考介绍 以及官网PYBIND11_MODULE 语法糖去定义一个python接口到C++接口的转换关系]]></content>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[tensorflow中tfrecord数据格式]]></title>
     <url>%2F2019%2F07%2F03%2Ftensorflow%E4%B8%ADtfrecord%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[JPEG to Tfrecordtensorflow 在resnet50等模型上都用了imagnet的数据集tfrecord格式这个tfrecord格式的数据集是通过脚本从jpeg格式转换过来的:https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data.py关键有一行代码：1self._decode_jpeg = tf.image.decode_jpeg(self._decode_jpeg_data, channels=3) Tfrecord to Jpeg想往回转格式：benchmark/RN50/tensorflow-inference/fp32_models_benchmark/resnet50/eval_image_classifier_inference.py脚本在运行data_sess读到图片之后12345678#从tfrecord里面读取图片np_images, np_labels = data_sess.run([images, labels])#保存第一张图片img = tf.image.encode_jpeg(np_images[0], format=&apos;rgb&apos;)writeOp = tf.write_file(&quot;out_new.jpeg&quot;,img)sess = tf.Session()with sess.as_default(): sess.run(writeOp) np_images的shape应该是n,224,224,3n就是batchsize 类别对应的具体类型查询比如np_labels的值在脚本里面打印出来是998在这个地方去搜：https://blog.csdn.net/weixin_41770169/article/details/80482942但是数字要减一(998-1=997) 对应的类别就是bolete 读取单张图片送入模型]]></content>

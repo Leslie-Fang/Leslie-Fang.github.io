@@ -284,6 +284,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/22/powerManagement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/03/22/powerManagement/" itemprop="url">
+                  powerManagement
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T22:09:14+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/22/powerManagement/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/22/powerManagement/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Power-mode"><a href="#Power-mode" class="headerlink" title="Power mode"></a>Power mode</h2><p>设置cpupower模式为performance或者powersave<br>cpupower frequency-set -g performance(powersave)</p>
+<h2 id="修改kernel的启动参数"><a href="#修改kernel的启动参数" class="headerlink" title="修改kernel的启动参数"></a>修改kernel的启动参数</h2><p>如何添加kernel启动的参数<br>vi /boot/efi/EFI/redhat/grub.cfg<br>找到对应的启动的kernel<br>找到这一行<br>linuxefi /vmlinuz-3.10.0-514.6.1.el7.x86_64 root=UUID=b3343e70-94d7-4506-88e2-025037204d23 ro crashkernel=auto rhgb quiet LANG=en_US.UTF-8</p>
+<p>在这一行末尾添加参数，，以intel_pstate为例（<a href="https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html）" target="_blank" rel="external">https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html）</a><br>linuxefi /vmlinuz-3.10.0-514.6.1.el7.x86_64 root=UUID=b3343e70-94d7-4506-88e2-025037204d23 ro crashkernel=auto rhgb quiet LANG=en_US.UTF-8 intel_pstate=disable</p>
+<p>reboot机器之后会生效</p>
+<h2 id="Driver"><a href="#Driver" class="headerlink" title="Driver"></a>Driver</h2><p>有两种power manager的driver<br>intel_pstate 和 acpi-cpufreq</p>
+<p>通过 cpupower frequency-info 可以查看到当前使用的驱动<br>通过在kernel设置intel_pstate=disable来使用acpi-cpufreq</p>
+<p>intel_pstate会使用hardware P state control (HWP)去控制cpu的P state<br>acpi-cpufreq 不会使用hardware P state control (HWP)</p>
+<p>使用intel_pstate时，fixfreq的脚本不起作用<br>只有set 0x774寄存器<br>set 一下fixfreq的脚本<br>rdmsr -a 0x774<br>rdmsr -a 0x198 读取0x198的寄存器看频率数据<br>cpupower monitor(freqency-info) 去看看<br>会看到数值之间有差距</p>
+<p>使用acpi-cpufreq时，fixfreq的脚本起作用<br>set 一下fixfreq的脚本<br>rdmsr -a 0x774<br>rdmsr -a 0x198 读取0x198的寄存器看频率数据<br>cpupower monitor(freqency-info) 去看看</p>
+<h2 id="工作原理总结"><a href="#工作原理总结" class="headerlink" title="工作原理总结"></a>工作原理总结</h2><p>官方介绍文档,第一个总体介绍cpu 频率的调节原则，第二个具体介绍了其中的一种pstate算法<br><a href="https://www.kernel.org/doc/html/v4.19/admin-guide/pm/cpufreq.html" target="_blank" rel="external">https://www.kernel.org/doc/html/v4.19/admin-guide/pm/cpufreq.html</a><br><a href="https://www.kernel.org/doc/html/v4.12/admin-guide/pm/intel_pstate.html" target="_blank" rel="external">https://www.kernel.org/doc/html/v4.12/admin-guide/pm/intel_pstate.html</a><br>intel的owner rafael.j.wysocki@intel.com<br>看完官方文档再结合代码就明白了</p>
+<p>原来linux是用acpi-drive去调节cpu 频率<br>新的Intel cpu用intel-pstate drive去调节CPU频率<br>后来intel又提供了Hardware P 去调节CPU频率<br>要完全使用intel-pstate，需要在bios里面把Hardware disable掉,或者启动kernel的时候添加参数intel_pstate=no_hwp<br>看kernel这个代码drivers\cpufreq\intel_pstate.c写了：HWP存在的时候，intel-pstate会被ignore掉</p>
+<p>更底层的理解(可能不全面):操作系统的driver(acpi或者pstate)，根据目前cpu的负载(计算cpu在5种状态下的时间比例top命令可以看到)，计算得到的目标频率。请求ucode将这个目标频率写入某个pcode可以读的寄存器里面，pcode运行在硬件的pcu里面(pcode是一个单while循环，循环中间有checkpoint，每运行到一个checkpoint会去检查是否有更高优先级的事情要处理)，pcode读到这个目标频率之后生成一个rv,rv通过一系列的硬件序列化，检查阈值等操作得到最终的tv值，tv值就是真正的目标的运行频率。<br>pcu控制cpu的电压以及运行频率。</p>
+<p>acpi-drive支持5种governor的调节模式:Performance,powersave,Userspace,Ondemand和Conservative<br>intel-pstate只支持两种governor:Performance和powersave，intel-pstate的powersave的策略不同于acpi-drive，更像是acpi-drive的Ondemand策略</p>
+<p>利用kernel提供的cpupower工具可以查看当前kernel使用的driver以及governor类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">root# cpupower frequency-info</div><div class="line">analyzing CPU 0:</div><div class="line">  driver: intel_pstate</div><div class="line">  CPUs which run at the same hardware frequency: 0</div><div class="line">  CPUs which need to have their frequency coordinated by software: 0</div><div class="line">  maximum transition latency:  Cannot determine or is not supported.</div><div class="line">  hardware limits: 1.20 GHz - 3.80 GHz</div><div class="line">  available cpufreq governors: performance powersave</div><div class="line">  current policy: frequency should be within 1.20 GHz and 3.80 GHz.</div><div class="line">                  The governor &quot;performance&quot; may decide which speed to use</div><div class="line">                  within this range.</div><div class="line">  current CPU frequency: Unable to call hardware</div><div class="line">  current CPU frequency: 1.20 GHz (asserted by call to kernel)</div><div class="line">  boost state support:</div><div class="line">    Supported: yes</div><div class="line">    Active: yes</div></pre></td></tr></table></figure></p>
+<p>要修改driver，在boot选项中disable intel-pstate然后重启机器<br>要修改governor，可以hot-change，直接利用kernel工具,cpupower<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cpupower frequency-set -g performance</div></pre></td></tr></table></figure></p>
+<p>通过查看kernel源码：tools\power\cpupower\lib\cpupower.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">static unsigned int sysfs_cpufreq_write_file(unsigned int cpu,</div><div class="line">          const char *fname,</div><div class="line">          const char *value, size_t len)</div><div class="line">&#123;</div><div class="line"> char path[SYSFS_PATH_MAX];</div><div class="line"> int fd;</div><div class="line"> ssize_t numwrite;</div><div class="line"></div><div class="line"> snprintf(path, sizeof(path), PATH_TO_CPU &quot;cpu%u/cpufreq/%s&quot;,</div><div class="line">    cpu, fname);</div><div class="line"></div><div class="line"> fd = open(path, O_WRONLY);</div><div class="line"> if (fd == -1)</div><div class="line">  return 0;</div><div class="line"></div><div class="line"> numwrite = write(fd, value, len);</div><div class="line"> if (numwrite &lt; 1) &#123;</div><div class="line">  close(fd);</div><div class="line">  return 0;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> close(fd);</div><div class="line"></div><div class="line"> return (unsigned int) numwrite;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>知道这个工具其实是往sysfs对应的文件写入performance<br>/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor</p>
+<p>sysfs将内核空间的一些数据结构的接口暴露到了用户空间</p>
+<h3 id="进一步看intel-pstate调节的代码"><a href="#进一步看intel-pstate调节的代码" class="headerlink" title="进一步看intel-pstate调节的代码"></a>进一步看intel-pstate调节的代码</h3><p>代码在driver/cpufreq模块里面，有三层：core提供代码执行的框架，governor提供计算目标频率的算法，driver提供操作硬件的接口</p>
+<h5 id="整个初始化流程："><a href="#整个初始化流程：" class="headerlink" title="整个初始化流程："></a>整个初始化流程：</h5><ul>
+<li>调用driver’s -&gt;init() 函数：intel_pstate.c文件里面的intel_pstate_cpu_init函数</li>
+<li>调用governor’s -&gt;init() 和start函数: cpufreq.c文件cpufreq_init_governor以及cpufreq_start_governor函数<br>cpufreq_start_governor函数里面根据实例化的governor去调用start函数<br>如果是intel-pstate的话，governor安全被重写了成了intel_pstate.c的setpolicy函数</li>
+</ul>
+<h5 id="正常工作的流程："><a href="#正常工作的流程：" class="headerlink" title="正常工作的流程："></a>正常工作的流程：</h5><p>intel_pstate.c的setpolicy函数被kernel注册为<br><a href="https://www.kernel.org/doc/html/v4.19/admin-guide/pm/cpufreq.html" target="_blank" rel="external">https://www.kernel.org/doc/html/v4.19/admin-guide/pm/cpufreq.html</a><br>文档里面有描述:<br>Instead, the driver’s -&gt;setpolicy() callback is invoked to register per-CPU utilization update callbacks for each policy.<br>也就是说cpu的利用率更新的回调函数就是setpolicy函数，通过kernel去调度执行</p>
+<h5 id="看驱动代码"><a href="#看驱动代码" class="headerlink" title="看驱动代码"></a>看驱动代码</h5><p>drivers\cpufreq\intel_pstate.c<br>看cpufreq_driver这个结构体可以知道target和setpolicy必定要设置一个</p>
+<p>driver的setpolicy函数会在drivers\cpufreq\cpufreq.c文件里面被调用到<br>cpufreq_set_policy函数里面会调用cpufreq_driver-&gt;setpolicy<br>这个就对应了具体driver的setpolicy函数</p>
+<p>当driver是intel_pstate的时候<br>关键函数是setpolicy：intel_pstate_set_policy<br>首先调用intel_pstate_update_perf_limits 去获得最大以及最小频率值设置到cpudata这个结构体里面，cpudata这个结构体存了每个cpu实例的数据<br>intel_pstate_set_update_util_hook函数：这里hwp activate的话直接返回<br>否则调用cpufreq_add_update_util_hook函数，进一步调用intel_pstate_update_util函数<br>intel_pstate_update_util函数里面关键调用了intel_pstate_sample去读msr寄存器的值采集当前cpu的繁忙状态和intel_pstate_adjust_pstate函数去设置pstate，也就是写msr寄存器<br>hwp activate的话调用intel_pstate_hwp_set函数：<br>intel_pstate_hwp_set函数里面intel_pstate_get_epp函数去获得状态，intel_pstate_set_epb去设置pstate</p>
+<p>pstate 设置成passive模式的时候，driver就是intel_cpufreq<br>运行时的关键函数是target：intel_cpufreq_target，这个函数的执行流程：<br>cpufreq_freq_transition_begin函数：等待直到被唤醒<br>intel_pstate_prepare_request函数：获得target_pstate<br>如果target_pstate和当前pstate不相等: 写msr寄存器wrmsrl_on_cpu(msr:0x00000199)<br>intel_cpufreq_trace函数:先调用intel_pstate_sample函数去采样获得当前的cpu的繁忙状态，再调用trace_pstate_sample函数<br>等待唤醒</p>
+<p>drivers\devfreq目录下面有<br>各个governor对应的文件<br>governor_performance.c文件为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">subsys_initcall(devfreq_performance_init);</div></pre></td></tr></table></figure></p>
+<p>subsys_initcall的作用就是将初始化函数注册到一个特定的段里面<br>内核初始化的时候调用do_initcalls决定是否调用这个段对应的初始化函数<br>这个文件里面定义一个devfreq_performance_func回调函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">static int devfreq_performance_func(struct devfreq *df,</div><div class="line">        unsigned long *freq)</div><div class="line">&#123;</div><div class="line"> /*</div><div class="line">  * target callback should be able to get floor value as</div><div class="line">  * said in devfreq.h</div><div class="line">  */</div><div class="line"> if (!df-&gt;max_freq)</div><div class="line">  *freq = UINT_MAX;</div><div class="line"> else</div><div class="line">  *freq = df-&gt;max_freq;</div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>直接把目标freq设置成最大值<br>所以performance governor很暴力，每一次都把目标频率设置成最大值，交给pcu去调节</p>
+<h3 id="Intel-Pstate的turbo"><a href="#Intel-Pstate的turbo" class="headerlink" title="Intel-Pstate的turbo"></a>Intel-Pstate的turbo</h3><p>turbo状态是 <strong>不可持续</strong> 的<br>每个cpu有个turbo threshold的频率值，通过读msr可以知道对应cpu的这个值：</p>
+<p>高于这个值就是turbo状态，power不支持所有core同时进入turbo状态，也无法保证一个core在turbo状态下呆多久<br>低于这个值是非turbo状态，把频率fix在非turbo状态下的某个值，所有core都可以跑在这个值，不会低于这个值，但是某些core可以偶偶运行在高于这个值的频率上甚至turbo频率上面</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/搭建Spark机群/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -563,135 +723,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/odata/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/05/odata/" itemprop="url">
-                  odata
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T17:30:04+08:00">
-                2018-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/02/05/odata/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/05/odata/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>开放数据协议（Open Data Protocol，缩写 OData）是一种描述如何创建和访问 Restful 服务的 OASIS 标准。<br>sapui5和后端通过odata作为接口，odata的<a href="https://zh.wikipedia.org/wiki/OData%E5%8D%94%E5%AE%9A" target="_blank" rel="external">wiki介绍</a><br>,<a href="http://www.odata.org/getting-started/" target="_blank" rel="external">官网教程</a></p>
-<p><a href="https://www.jianshu.com/p/fb15a819e229" target="_blank" rel="external">sapui5+odata</a><br><a href="https://openui5.hana.ondemand.com/#/topic/3da5f4be63264db99f2e5b04c5e853db" target="_blank" rel="external">openui5的文档</a>搜索odata可以看到如何使用odata和后端交互数据<br>推荐使用：sap.ui.model.odata.v2.ODataModel</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -741,7 +772,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">73</span>
+                <span class="site-state-item-count">74</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
