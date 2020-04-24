@@ -284,6 +284,175 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/tensorflow-dataset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/04/24/tensorflow-dataset/" itemprop="url">
+                  tensorflow_dataset
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T20:35:54+08:00">
+                2020-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/24/tensorflow-dataset/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/04/24/tensorflow-dataset/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>tensorflow dataset是一个pipline，应该使用pipeline的思想去认识它<br>reference 资料:</p>
+<ul>
+<li>&lt;&lt;简单粗暴 TensorFlow 2.0&gt;&gt; 的第三章 <a href="https://tf.wiki/zh/basic/tools.html#tf-data" target="_blank" rel="external">https://tf.wiki/zh/basic/tools.html#tf-data</a></li>
+<li>官方API：<a href="https://www.tensorflow.org/api_docs/python/tf/data" target="_blank" rel="external">https://www.tensorflow.org/api_docs/python/tf/data</a><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2>示例代码 TF2.0：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">fake_data = np.arange(1500)</div><div class="line"></div><div class="line">dataset = tf.data.Dataset.from_tensor_slices(fake_data)</div><div class="line"></div><div class="line">if is_mpi:</div><div class="line">  dataset = dataset.shard(hvd.size(), hvd.rank())</div><div class="line">dataset = dataset.shuffle(buffer_size=100)</div><div class="line">dataset = dataset.repeat(num_epochs)</div><div class="line">dataset = dataset.batch(batch_size=10)</div><div class="line">dataset = dataset.map(parse_csv, num_parallel_calls=28)</div><div class="line">dataset = dataset.prefetch(1)</div><div class="line"></div><div class="line">for images, labels in dataset:</div><div class="line">  images</div><div class="line">  labels</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>tensorflow dataset 的使用代码可以分成三个阶段</p>
+<h3 id="阶段1：定义数据集的建立"><a href="#阶段1：定义数据集的建立" class="headerlink" title="阶段1：定义数据集的建立"></a>阶段1：定义数据集的建立</h3><ul>
+<li><p>tf.data.Dataset.from_tensor_slices<br>直接从内存中的数据来创建dataset，数据全部在内存，适用于小数据集</p>
+</li>
+<li><p>tf.data.TextLineDataset<br>传入文本文件名，创建的这个dataset时候，并不会将整个文件一起读到内存中</p>
+</li>
+<li><p>tf.data.TFRecordDataset<br>传入tfrecord格式数据，</p>
+</li>
+</ul>
+<h3 id="阶段2：数据集的转换"><a href="#阶段2：数据集的转换" class="headerlink" title="阶段2：数据集的转换"></a>阶段2：数据集的转换</h3><p>有很多转换的方法，根据需要我们可以选几种方法，推介使用这些方法的顺序：</p>
+<ul>
+<li><p>dataset.shard<br>利用horovod做分布式训练的时候，做数据并行化，shard数据集，每个train的实例分到一部分数据集来训练</p>
+</li>
+<li><p>shuffle<br>设定一个buffersize的缓存区，取数据集前buffersize个数据放进来，每次要取数据的时候，从这个缓存区随机取batchsize的数据出来，然后在从dataset里面顺序补进来batchsize数据</p>
+</li>
+</ul>
+<p>buffersize的值设定很重要，否则可能起不到shuffle的作用</p>
+<ul>
+<li><p>repeat<br>repeat 几个epoch的数据，在后面真实在使用dataset的时候，<br>比如 estimator.train(input_fn=dataset) 或者 for images, labels in dataset:<br>如果repeat的epoch数据对应计算出来的我们可以train的steps 小于 指定train的steps<br>会产生tf.errors.OutOfRange，从而没有达到我们指定的steps就终止train<br><a href="https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#train" target="_blank" rel="external">https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#train</a></p>
+</li>
+<li><p>batch<br>将batchsize个样本组成一个batch数据，也可以叫做example</p>
+</li>
+<li><p>map<br>设定我们原始dataset数据进行预处理的方法，返回一个新的dataset 也是(images,labels)元组的格式，num_parallel_calls指定预处理数据的时候可以使用多少个core<br>预处理不会立即执行，只有当我们访问dataset的iter去获取数据的时候才会执行</p>
+</li>
+<li><p>prefetch<br>有个buffsize的参数，可以存buffersize个example到prefetch buffer里面，一个example是batchsize个样本<br>刚刚初始化的时候，就先取buffersize个example 执行map函数指定的预处理，将预处理之后的结果放入prefetch buffer里面</p>
+</li>
+</ul>
+<p>在访问一次iter的时候，会从这个prefetch buffer里面取一个example的数据(batchsize个样本)，这些数据送进去开始step的计算，同时后台执行map的预处理函数生成一个新的样本放入到prefetch buffer里面 <strong>重要</strong> 这两个操作是overlap的</p>
+<h3 id="数据的真实读取"><a href="#数据的真实读取" class="headerlink" title="数据的真实读取"></a>数据的真实读取</h3><ul>
+<li><p>method1: 创建dataset_iter, 调用next(it)<br>调用一次，返回一个batchsize的数据</p>
+</li>
+<li><p>method2: TF2.0:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for images, labels in dataset:</div><div class="line">返回一个batchsize的数据</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里有一点很重要，如果设置了dataset.prefetch, 每一次遍历的时候只是从prefetch的buffer里面读取数据，不会阻塞的去做数据的预处理（执行dataset.map里面的函数），（下个step数据的预处理和这个step的计算同步做，填入到prefetch buffer）<br>如果没有设置prefetch，这里则会阻塞的去做数据的预处理，只有预处理好的数据才能读出来</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/自然语言处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -377,14 +546,22 @@
 <li><a href="http://www.manythings.org/anki/" target="_blank" rel="external">http://www.manythings.org/anki/</a></li>
 <li>kaggle</li>
 </ul>
-<h2 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h2><h3 id="NLTK"><a href="#NLTK" class="headerlink" title="NLTK"></a>NLTK</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">install NLTK Corpus.</div><div class="line">1) Go to http://www.nltk.org/nltk_data/ and download your desired NLTK Corpus file.</div><div class="line">2) Now in a Python shell check the value of nltk.data.path</div><div class="line">3) Choose one of the path that exists on your machine, and unzip the data files into the corpora sub directory inside.</div><div class="line">4) Now you can import the data from nltk.corpos import stopwords</div></pre></td></tr></table></figure>
-<h3 id="Gensim"><a href="#Gensim" class="headerlink" title="Gensim"></a>Gensim</h3><h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3><h2 id="逻辑回归与Softmax回归用于电影评论的情绪分析"><a href="#逻辑回归与Softmax回归用于电影评论的情绪分析" class="headerlink" title="逻辑回归与Softmax回归用于电影评论的情绪分析"></a>逻辑回归与Softmax回归用于电影评论的情绪分析</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><a href="https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews" target="_blank" rel="external">https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews</a></p>
+<h2 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h2><ul>
+<li><p>NLTK</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">install NLTK Corpus.</div><div class="line">1) Go to http://www.nltk.org/nltk_data/ and download your desired NLTK Corpus file.</div><div class="line">2) Now in a Python shell check the value of nltk.data.path</div><div class="line">3) Choose one of the path that exists on your machine, and unzip the data files into the corpora sub directory inside.</div><div class="line">4) Now you can import the data from nltk.corpos import stopwords</div></pre></td></tr></table></figure>
+</li>
+<li><p>Gensim</p>
+</li>
+<li>Tensorflow</li>
+</ul>
+<h2 id="逻辑回归与Softmax回归用于电影评论的情绪分析"><a href="#逻辑回归与Softmax回归用于电影评论的情绪分析" class="headerlink" title="逻辑回归与Softmax回归用于电影评论的情绪分析"></a>逻辑回归与Softmax回归用于电影评论的情绪分析</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><a href="https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews" target="_blank" rel="external">https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews</a></p>
 <h3 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h3><ul>
 <li>数据清洗<br>利用nltk库删除非alphabet的字符<br>利用nltk库删除停顿词</li>
 <li>利用tensorflow建立Softmax回归</li>
 <li>训练集合划分为训练集，验证集以及测试集</li>
-<li>训练直到验证集精度不再提高或达到指定的epoch数量<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><a href="https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression" target="_blank" rel="external">https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression</a></li>
+<li>训练直到验证集精度不再提高或达到指定的epoch数量</li>
 </ul>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p><a href="https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression" target="_blank" rel="external">https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression</a></p>
 <h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p>Seq2seq模型主要用于翻译，也可以用于其它任何先加码再解码的应用需求</p>
 <h3 id="seq2seq-模型的介绍："><a href="#seq2seq-模型的介绍：" class="headerlink" title="seq2seq 模型的介绍："></a>seq2seq 模型的介绍：</h3><p><a href="https://blog.csdn.net/wangyangzhizhou/article/details/77883152" target="_blank" rel="external">https://blog.csdn.net/wangyangzhizhou/article/details/77883152</a><br><a href="https://zhuanlan.zhihu.com/p/27608348" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27608348</a></p>
 <h3 id="利用seq2seq模型进行中英文翻译"><a href="#利用seq2seq模型进行中英文翻译" class="headerlink" title="利用seq2seq模型进行中英文翻译:"></a>利用seq2seq模型进行中英文翻译:</h3><p><a href="https://audier.github.io/2018/11/08/seq2seq-model-for-translation/" target="_blank" rel="external">https://audier.github.io/2018/11/08/seq2seq-model-for-translation/</a></p>
@@ -554,137 +731,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/python调用C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/08/17/python调用C/" itemprop="url">
-                  python调用C++
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T08:54:02+08:00">
-                2019-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/08/17/python调用C/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/08/17/python调用C/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Python调用C++时十分常见的方案，结合了Python的灵活以及C++的高效<br>一般的实现是将C++代码编译是动态链接库，提供Python到C++调用的API，然后将Python库打包成wheel包的形式发布</p>
-<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><p>常见的实现方案有boost.python, swig, ctypes, pybind11等<br>tensorflow采用的是swig的方案<br>boost.python为了兼容所有老的C++编译器，太重了<br>本文重点介绍pybind11</p>
-<h2 id="pybind11的实现方案介绍"><a href="#pybind11的实现方案介绍" class="headerlink" title="pybind11的实现方案介绍"></a>pybind11的实现方案介绍</h2><h3 id="setuptools定义wheel打包以及编译"><a href="#setuptools定义wheel打包以及编译" class="headerlink" title="setuptools定义wheel打包以及编译"></a>setuptools定义wheel打包以及编译</h3><p>使用setuptools去打包成wheel包，编写setup.py文件，定义setup函数<br>参考MLPerf的<a href="https://github.com/mlperf/inference/blob/master/loadgen/setup.py" target="_blank" rel="external">setup.py文件</a><br>需要编译C++代码，setup函数中定义ext_modules字段指向一个Extension对象<br>Extension对象里面指定了需要编译的文件，编译宏以及依赖文件<br>之后借助setup.py我们可以进行打包，编译C++文件，生成wheel包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CFLAGS=&quot;-std=c++14 -O3&quot; python setup.py bdist_wheel</div><div class="line"></div><div class="line">##debug version</div><div class="line">CFLAGS=&quot;-std=c++14 -O0 -g&quot; python setup.py bdist_wheel</div><div class="line">可以直接用gdb去debug</div></pre></td></tr></table></figure></p>
-<h3 id="Pybind11-python到C-的接口"><a href="#Pybind11-python到C-的接口" class="headerlink" title="Pybind11 python到C++的接口"></a>Pybind11 python到C++的接口</h3><p>参考<a href="https://blog.csdn.net/fitzzhang/article/details/78988682" target="_blank" rel="external">介绍</a> 以及<a href="https://pybind11.readthedocs.io/en/stable/index.html" target="_blank" rel="external">官网</a><br>PYBIND11_MODULE 语法糖去定义一个python接口到C++接口的转换关系</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -734,7 +780,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -789,7 +835,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

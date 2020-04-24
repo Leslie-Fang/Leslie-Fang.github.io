@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页教程主页
 编译安装mkldnn1234561. Git clone mkldnn2. source psxe3. Cd mkldnn &amp;amp;&amp;amp; mkdir build &amp;amp;&amp;amp; cd build4. CC=icc CXX=i">
-<meta property="og:updated_time" content="2019-06-21T15:03:53.570Z">
+<meta property="og:updated_time" content="2020-04-24T13:10:17.008Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MKLDNN">
 <meta name="twitter:description" content="介绍MKLDNN是一个Intel开发的基于Intel芯片架构的开源库，提供用于深度学习的API.Intel 开源软件中心MKLDNN Github 主页教程主页
@@ -435,8 +435,7 @@
 <h3 id="Dumping-JIT-kernels"><a href="#Dumping-JIT-kernels" class="headerlink" title="Dumping JIT-kernels"></a>Dumping JIT-kernels</h3><p>export MKLDNN_JIT_DUMP=1<br><a href="https://intel.github.io/mkl-dnn/perf_profile.html" target="_blank" rel="external">https://intel.github.io/mkl-dnn/perf_profile.html</a></p>
 <h3 id="VERBOSE如何工作"><a href="#VERBOSE如何工作" class="headerlink" title="VERBOSE如何工作"></a>VERBOSE如何工作</h3><p>环境变量设置了VERBOSE=1的话mkldnn_verbose()-&gt;level的值就是1<br>看这个文件cpu_engine_t.cpp<br>在stream在submit的时候，如果设置了verbose就会打印出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">status_t cpu_engine_t::submit(primitive_t *p, event_t *e,</div><div class="line">        event_vector &amp;prerequisites) &#123;</div><div class="line">    /* FIXME: this should live in primitive execute function... */</div><div class="line">    if (mkldnn_verbose()-&gt;level) &#123;</div><div class="line">        double ms = get_msec();</div><div class="line">        p-&gt;execute(e);</div><div class="line">        ms = get_msec() - ms;</div><div class="line">        printf(&quot;mkldnn_verbose,exec,%s,%g\n&quot;, p-&gt;pd()-&gt;info(), ms);</div><div class="line">        fflush(0);</div><div class="line">    &#125; else &#123;</div><div class="line">        p-&gt;execute(e);</div><div class="line">    &#125;</div><div class="line">    if (msan_enabled)</div><div class="line">        unpoison_outputs(p);</div><div class="line">    return success;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>p-&gt;pd()-&gt;info()就是这个primitive对应的pd的信息<br>p是mkldnn_primitive类型的<br>primitive.hpp文件定义了这个类的成员和函数<br>p-&gt;pd()<br>p-&gt;kind()</p>
-<h2 id="根据MKLDNN-VERBOSE输出内容查看对应调用到的primitive和kernel"><a href="#根据MKLDNN-VERBOSE输出内容查看对应调用到的primitive和kernel" class="headerlink" title="根据MKLDNN_VERBOSE输出内容查看对应调用到的primitive和kernel"></a>根据MKLDNN_VERBOSE输出内容查看对应调用到的primitive和kernel</h2><h3 id="设置verbose-1之后看到日志输入"><a href="#设置verbose-1之后看到日志输入" class="headerlink" title="设置verbose=1之后看到日志输入"></a>设置verbose=1之后看到日志输入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkldnn_verbose,exec,convolution,jit:avx512_common,backward_weights,fsrc:nChw16c fwei:OIhw16i16o fbia:undef fdst:nChw16c,alg:convolution_direct,mb64_ic32oc64_ih14oh14kh5sh1dh0ph2_iw14ow14kw5sw1dw0pw2,25.3359</div></pre></td></tr></table></figure>
-<p>关键字： jit:avx512_common</p>
+<h2 id="根据MKLDNN-VERBOSE输出内容查看对应调用到的primitive和kernel"><a href="#根据MKLDNN-VERBOSE输出内容查看对应调用到的primitive和kernel" class="headerlink" title="根据MKLDNN_VERBOSE输出内容查看对应调用到的primitive和kernel"></a>根据MKLDNN_VERBOSE输出内容查看对应调用到的primitive和kernel</h2><h3 id="设置verbose-1之后看到日志输入"><a href="#设置verbose-1之后看到日志输入" class="headerlink" title="设置verbose=1之后看到日志输入"></a>设置verbose=1之后看到日志输入</h3><p>关键字： jit:avx512_common</p>
 <h3 id="mkldnn找到这两个文件"><a href="#mkldnn找到这两个文件" class="headerlink" title="mkldnn找到这两个文件"></a>mkldnn找到这两个文件</h3><p>jit_avx512_common_convolution.hpp<br>jit_avx512_common_convolution.cpp</p>
 <p>hpp文件里面订了了这个primitive的类，里面pd_t的结构体就是这个promitive的desciptive<br>调用pd-&gt;create_primitive的时候就调用了这个pd_t结构体里面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">DECLARE_COMMON_PD_T(</div><div class="line">        JIT_IMPL_NAME_HELPER(&quot;jit:&quot;, avx512_common, &quot;&quot;),</div><div class="line">        jit_avx512_common_convolution_fwd_t);</div></pre></td></tr></table></figure></p>
 <p>这个内联函数，里面创建了这个primitive的实例<br>看这个primitive的构造函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">jit_avx512_common_convolution_fwd_t(const pd_t *apd,</div><div class="line">        const input_vector &amp;inputs, const output_vector &amp;outputs)</div><div class="line">    : cpu_primitive_t(apd, inputs, outputs)</div><div class="line">&#123;</div><div class="line">    kernel_ = new jit_avx512_common_conv_fwd_kernel(pd()-&gt;jcp_,</div><div class="line">                *pd()-&gt;attr());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -569,7 +568,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -640,7 +639,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

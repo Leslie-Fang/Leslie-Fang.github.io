@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/07/03/tensorflow中tfrecord数据格式/index.html">
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="JPEG to Tfrecordtensorflow 在resnet50等模型上都用了imagnet的数据集tfrecord格式这个tfrecord格式的数据集是通过脚本从jpeg格式转换过来的:https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data">
-<meta property="og:updated_time" content="2019-07-03T11:49:18.863Z">
+<meta property="og:updated_time" content="2020-04-24T12:43:43.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow中tfrecord数据格式">
 <meta name="twitter:description" content="JPEG to Tfrecordtensorflow 在resnet50等模型上都用了imagnet的数据集tfrecord格式这个tfrecord格式的数据集是通过脚本从jpeg格式转换过来的:https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data">
@@ -371,10 +371,10 @@
 
       
         <h2 id="JPEG-to-Tfrecord"><a href="#JPEG-to-Tfrecord" class="headerlink" title="JPEG to Tfrecord"></a>JPEG to Tfrecord</h2><p>tensorflow 在resnet50等模型上都用了imagnet的数据集tfrecord格式<br>这个tfrecord格式的数据集是通过脚本从jpeg格式转换过来的:<br><a href="https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data.py" target="_blank" rel="external">https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data.py</a><br>关键有一行代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self._decode_jpeg = tf.image.decode_jpeg(self._decode_jpeg_data, channels=3)</div></pre></td></tr></table></figure></p>
-<h2 id="Tfrecord-to-Jpeg"><a href="#Tfrecord-to-Jpeg" class="headerlink" title="Tfrecord to Jpeg"></a>Tfrecord to Jpeg</h2><p>想往回转格式：<br>benchmark/RN50/tensorflow-inference/fp32_models_benchmark/resnet50/eval_image_classifier_inference.py<br>脚本在运行data_sess读到图片之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#从tfrecord里面读取图片</div><div class="line">np_images, np_labels = data_sess.run([images, labels])</div><div class="line">#保存第一张图片</div><div class="line">img = tf.image.encode_jpeg(np_images[0], format=&apos;rgb&apos;)</div><div class="line">writeOp = tf.write_file(&quot;out_new.jpeg&quot;,img)</div><div class="line">sess = tf.Session()</div><div class="line">with sess.as_default():</div><div class="line">  sess.run(writeOp)</div></pre></td></tr></table></figure></p>
+<h2 id="Tfrecord-to-Jpeg"><a href="#Tfrecord-to-Jpeg" class="headerlink" title="Tfrecord to Jpeg"></a>Tfrecord to Jpeg</h2><p>脚本在运行data_sess读到图片之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#从tfrecord里面读取图片</div><div class="line">np_images, np_labels = data_sess.run([images, labels])</div><div class="line">#保存第一张图片</div><div class="line">img = tf.image.encode_jpeg(np_images[0], format=&apos;rgb&apos;)</div><div class="line">writeOp = tf.write_file(&quot;out_new.jpeg&quot;,img)</div><div class="line">sess = tf.Session()</div><div class="line">with sess.as_default():</div><div class="line">  sess.run(writeOp)</div></pre></td></tr></table></figure></p>
 <p>np_images的shape应该是n,224,224,3<br>n就是batchsize</p>
 <h3 id="类别对应的具体类型查询"><a href="#类别对应的具体类型查询" class="headerlink" title="类别对应的具体类型查询"></a>类别对应的具体类型查询</h3><p>比如np_labels的值在脚本里面打印出来是998<br>在这个地方去搜：<br><a href="https://blog.csdn.net/weixin_41770169/article/details/80482942" target="_blank" rel="external">https://blog.csdn.net/weixin_41770169/article/details/80482942</a><br>但是数字要减一(998-1=997) 对应的类别就是bolete</p>
-<h2 id="读取单张图片送入模型"><a href="#读取单张图片送入模型" class="headerlink" title="读取单张图片送入模型"></a>读取单张图片送入模型</h2>
+
       
     </div>
 
@@ -498,7 +498,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -546,7 +546,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG-to-Tfrecord"><span class="nav-number">1.</span> <span class="nav-text">JPEG to Tfrecord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tfrecord-to-Jpeg"><span class="nav-number">2.</span> <span class="nav-text">Tfrecord to Jpeg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类别对应的具体类型查询"><span class="nav-number">2.1.</span> <span class="nav-text">类别对应的具体类型查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取单张图片送入模型"><span class="nav-number">3.</span> <span class="nav-text">读取单张图片送入模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG-to-Tfrecord"><span class="nav-number">1.</span> <span class="nav-text">JPEG to Tfrecord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tfrecord-to-Jpeg"><span class="nav-number">2.</span> <span class="nav-text">Tfrecord to Jpeg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类别对应的具体类型查询"><span class="nav-number">2.1.</span> <span class="nav-text">类别对应的具体类型查询</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -569,7 +569,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

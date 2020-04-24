@@ -97,7 +97,7 @@
 <meta property="og:description" content="编译
 方法1：
 1234567./configurebazel build --config=opt //tensorflow/tools/pip_package:build_pip_packagebuild出错清理：/root/.cache/bazel把下面的之前出错的缓存文件给删除掉生成whell包bazel-bin/tensorflow/tools/pip_package/build_pip">
-<meta property="og:updated_time" content="2019-08-09T09:30:51.927Z">
+<meta property="og:updated_time" content="2020-04-24T13:01:27.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow二次开发">
 <meta name="twitter:description" content="编译
@@ -381,7 +381,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">./configure</div><div class="line">bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package</div><div class="line">build出错清理：</div><div class="line">/root/.cache/bazel</div><div class="line">把下面的之前出错的缓存文件给删除掉</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
 </li>
 <li><p>方法2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel build --config=mkl -c opt --copt=-O3 -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">生成whell包</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package /root/tensorflow/wheel_pkg/build_withSource</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="编译命令和过程分析"><a href="#编译命令和过程分析" class="headerlink" title="编译命令和过程分析"></a>编译命令和过程分析</h3><p>视频：<a href="https://www.youtube.com/watch?v=Rw-KrbfyABQ" target="_blank" rel="external">https://www.youtube.com/watch?v=Rw-KrbfyABQ</a><br><a href="https://www.cnblogs.com/shouhuxianjian/p/9416934.html" target="_blank" rel="external">https://www.cnblogs.com/shouhuxianjian/p/9416934.html</a></p>
@@ -399,9 +399,9 @@
 <h2 id="调整tensorflow运行的日志等级"><a href="#调整tensorflow运行的日志等级" class="headerlink" title="调整tensorflow运行的日志等级"></a>调整tensorflow运行的日志等级</h2><p>TF代码又两个函数打印日志,LOG以及VLOG<br>LOG是正常的打印日志，通过TF_CPP_MIN_LOG_LEVEL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=level</div></pre></td></tr></table></figure></p>
 <p>去设置，值越小，打印日志越多<br>VLOG通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_VLOG_LEVEL=level</div></pre></td></tr></table></figure></p>
 <p>去设置，但是VLOG只有在LOG等级为0的时候设置才有用<br>比如要打印mkl_layout_pass.cc初始化rewirte op时的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export TF_CPP_MIN_LOG_LEVEL=0</div><div class="line">export TF_CPP_MIN_VLOG_LEVEL=1</div></pre></td></tr></table></figure></p>
-<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><p>添加 -c dbg选项<br>移除优化选项 –copt=-O3 以及 -c opt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
+<h2 id="编译debug版本的tensorflow"><a href="#编译debug版本的tensorflow" class="headerlink" title="编译debug版本的tensorflow"></a>编译debug版本的tensorflow</h2><p>添加 -c dbg选项<br>移除优化选项 –copt=-O3 以及 -c opt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel build --config=mkl -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
 <p>debug版本编译完大概有20G左右<br>export OMP_NUM_THREADS=1<br>设置intra和inter值为1</p>
-<h3 id="指定编译目录"><a href="#指定编译目录" class="headerlink" title="指定编译目录"></a>指定编译目录</h3><p>默认编译在/root/.cache/bazel目录下面，有时候root目录空间不够<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">build_dir=/home/lesliefang/bazel_build</div><div class="line">bazel --output_user_root=$build_dir clean</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-mavx2 --copt=-O3 --copt=-DINTEL_MKL_QUANTIZED -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
+<h3 id="指定编译目录"><a href="#指定编译目录" class="headerlink" title="指定编译目录"></a>指定编译目录</h3><p>默认编译在/root/.cache/bazel目录下面，也可以自己指定编译目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">build_dir=/home/bazel_build</div><div class="line">bazel --output_user_root=$build_dir clean</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-mavx2 --copt=-O3 -s -c dbg //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
 <h3 id="编译报错找不到–march-broadwell"><a href="#编译报错找不到–march-broadwell" class="headerlink" title="编译报错找不到–march=broadwell"></a>编译报错找不到–march=broadwell</h3><p>使用gcc6.3以及以上版本，低版本的编译器不认识broadwell的选项</p>
 <h3 id="whell太大无法打包"><a href="#whell太大无法打包" class="headerlink" title="whell太大无法打包"></a>whell太大无法打包</h3><p><a href="https://github.com/tensorflow/tensorflow/issues/5538" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/issues/5538</a></p>
 <h2 id="替换mkldnn版本"><a href="#替换mkldnn版本" class="headerlink" title="替换mkldnn版本"></a>替换mkldnn版本</h2><p>以TF从0.18升级到0.19为例</p>
@@ -676,16 +676,16 @@
 <li>因为前面几步产生了一些不需要的节点，利用transform_graph 工具再移除一些不必要的节点strip_unused_nodes</li>
 <li>将INT8的conv和后面的requantize节点合并:fuse_quantized_conv_and_requantize</li>
 </ol>
-<h3 id="对比FP32以及INT8模型"><a href="#对比FP32以及INT8模型" class="headerlink" title="对比FP32以及INT8模型"></a>对比FP32以及INT8模型</h3><h4 id="FP32"><a href="#FP32" class="headerlink" title="FP32"></a>FP32</h4><p>model.pb是训练得到的FP32模型<br>BS1 精度： 0.94085<br>BS128时的Throughput：2300 FPS</p>
+<h3 id="对比FP32以及INT8模型"><a href="#对比FP32以及INT8模型" class="headerlink" title="对比FP32以及INT8模型"></a>对比FP32以及INT8模型</h3><h4 id="FP32"><a href="#FP32" class="headerlink" title="FP32"></a>FP32</h4><p>model.pb是训练得到的FP32模型</p>
 <ul>
 <li>conv层调用 op是Conv2D， 经过mkl_layer_pass之后对应了TF里面_mklconv这个op，对应了TF的MklConvOp这个kernel，<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">REGISTER_KERNEL_BUILDER(Name(&quot;_MklConv2D&quot;)                               \</div><div class="line">                            .Device(DEVICE_CPU)                          \</div><div class="line">                            .TypeConstraint&lt;T&gt;(&quot;T&quot;)                      \</div><div class="line">                            .Label(mkl_op_registry::kMklOpLabel),        \</div><div class="line">                        MklConvOp&lt;CPUDevice, float, float, float, float, \</div><div class="line">                                  float, int32, false, false&gt;);</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>根据这个函数去创建MklConvOp对象并调用Compute方法<br>对应mkldnn里面的jit_avx512_common_convolution_fwd_t这个primitive</p>
 <ul>
-<li>mkldnn verbose的输出：mkldnn_verbose,exec,convolution,jit:avx512_common,forward_training,fsrc:nChw16c fwei:OIhw16i16o fbia:undef fdst:nChw16c,alg:convolution_direct,mb128_ic32oc64_ih14oh14kh5sh1dh0ph2_iw14ow14kw5sw1dw0pw2,1.41382</li>
+<li>mkldnn verbose的输出：mkldnn_verbose,exec,convolution,jit:avx512_common,forward_training,fsrc:nChw16c fwei:OIhw16i16o fbia:undef fdst:nChw16c,alg:convolution_direct,mb128_ic32oc64_ih14oh14kh5sh1dh0ph2_iw14ow14kw5sw1dw0pw2,*</li>
 </ul>
-<h4 id="INT8"><a href="#INT8" class="headerlink" title="INT8"></a>INT8</h4><p>一步步量化得到的INT8模型是： min_max_frozen_int8_model.pb<br>BS1 精度： 0.93885<br>BS128时的Throughput： 2380.7939278833765 images/second<br>这个模型有两个卷积运算，第一个卷积运算没有INT8化，第二个卷积运算INT8化了<br>我们这里关注第二个卷积运算</p>
+<h4 id="INT8"><a href="#INT8" class="headerlink" title="INT8"></a>INT8</h4><p>一步步量化得到的INT8模型是： frozen_int8_model.pb<br>这个模型有两个卷积运算，第一个卷积运算没有INT8化，第二个卷积运算INT8化了<br>我们这里关注第二个卷积运算</p>
 <ul>
 <li>conv调用了 op是QuantizedConv2D， 经过mkl_layer_pass之后对应了TF里面_MklQuantizedConv2D这个op,TF的MklQuantizedConv2DOp这个kernel，MklQuantizedConv2DOp的Compute方法先调用了MklConvOp的Compute的方法<br>虽然也调用了MklConvOp的Compute的方法<br>但是MklQuantizedConv2DOp这个kernel是通过<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MklConvOp&lt;Device, quint8, qint8, Tbias, Toutput, Ttemp_output, int32,</div><div class="line">          biasEnabled, false&gt;::Compute(context);</div></pre></td></tr></table></figure>
 </li>
@@ -695,13 +695,10 @@
 <li>通过gdb去debug，证实了猜想</li>
 <li>export MKLDNN_JIT_DUMP=1 去看dump出来的bin，里面果然有mkldnn_dump__jit_avx512_core_x8s8s32x_conv_fwd_ker_t.23.bin<br>jit_avx512_core_x8s8s32x_convolution_fwd_t这个op里面在满足输入条件时会去调用VNNI的指令集VPDPBUSD</li>
 </ol>
-<p><strong>问题</strong><br>在运行测试时，dump jit-bin去查看是否调用了指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xed64 -ir mkldnn_dump__jit_avx512_core_x8s8s32x_conv_fwd_ker_t.23.bin | grep vpdpbusd</div></pre></td></tr></table></figure></p>
-<p>我们这里没有看到调用VNNI的指令集<br><strong>重要 加-64选项</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xed64 -ir mkldnn_dump__jit_avx512_core_x8s8s32x_conv_fwd_ker_t.23.bin -64 | grep vpdpbusd</div></pre></td></tr></table></figure></p>
-<p>这样就可以看到VPDPBUSD的指令被dump出来了<br>我们单步调试，看到mkldnn里面jit_avx512_core_x8s8s32x_convolution_fwd_t里面jcp_ver 是 ver_vnni<br>同时compute_ker函数(jit_avx512_core_x8s8s32x_conv_kernel.cpp)里面的cpmpute部分也的确调用到了vpdpbusd</p>
+<p>反汇编dump出来的bin文件，VPDPBUSD的指令被dump出来了<br>我们单步调试，看到mkldnn里面jit_avx512_core_x8s8s32x_convolution_fwd_t里面jcp_ver 是 ver_vnni<br>同时compute_ker函数(jit_avx512_core_x8s8s32x_conv_kernel.cpp)里面的cpmpute部分也的确调用到了vpdpbusd</p>
 <ul>
-<li>mkldnn verbose的输出：<br>mkldnn_verbose,exec,convolution,jit_int8:avx512_core,forward_training,fsrc:nhwc fwei:OIhw4i16o4i fbia:undef fdst:nhwc,alg:convolution_direct,mb128_ic32oc64_ih14oh14kh5sh1dh0ph2_iw14ow14kw5sw1dw0pw2,0.535156</li>
+<li>mkldnn verbose的输出：<br>mkldnn_verbose,exec,convolution,jit_int8:avx512_core,forward_training,fsrc:nhwc fwei:OIhw4i16o4i fbia:undef fdst:nhwc,alg:convolution_direct,mb128_ic32oc64_ih14oh14kh5sh1dh0ph2_iw14ow14kw5sw1dw0pw2,*</li>
 </ul>
-<p>看到精度只掉了0.002<br>但是Throughput也没有显著提高<br>但是只看这一层的性能从1.4ms提高到了0.53ms</p>
 <h2 id="GDB打印变量值"><a href="#GDB打印变量值" class="headerlink" title="GDB打印变量值"></a>GDB打印变量值</h2><ul>
 <li>Tensor变量<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Tensor* out</div><div class="line">p *(unsigned long *)(out-&gt;buf_-&gt;data_)</div></pre></td></tr></table></figure>
 </li>
@@ -842,7 +839,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -913,7 +910,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
