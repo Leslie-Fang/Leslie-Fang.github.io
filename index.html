@@ -284,6 +284,178 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/20/tensorflow-lite/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/09/20/tensorflow-lite/" itemprop="url">
+                  tensorflow_lite
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-20T18:53:55+08:00">
+                2020-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/20/tensorflow-lite/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/09/20/tensorflow-lite/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>tfllite 有两个部分组成:</p>
+<p>convert: 用于将模型转换成tflite格式,可以从keras模型，也可以从各种tf1.x的模型转换出来(比如save model, pb model)<br>interpreter: tflite 运行时，调试的时候可以直接用集成在tf里面，部署的时候有单独的whl包作为更小的一个运行时(<a href="https://www.tensorflow.org/lite/guide/python" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/python</a>)</p>
+<h2 id="转换模型"><a href="#转换模型" class="headerlink" title="转换模型"></a>转换模型</h2><p>推荐用SavedModel的格式<br><a href="https://www.tensorflow.org/lite/guide/get_started#2_convert_the_model_format" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/get_started#2_convert_the_model_format</a><br><a href="https://www.tensorflow.org/lite/convert" target="_blank" rel="external">https://www.tensorflow.org/lite/convert</a></p>
+<p>TF1.x<br><a href="https://www.tensorflow.org/api_docs/python/tf/compat/v1/lite/TFLiteConverter#from_frozen_graph" target="_blank" rel="external">https://www.tensorflow.org/api_docs/python/tf/compat/v1/lite/TFLiteConverter#from_frozen_graph</a><br><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/r1/convert/python_api.md#checkpoints" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/r1/convert/python_api.md#checkpoints</a></p>
+<h2 id="如何单独编译tflite的运行时"><a href="#如何单独编译tflite的运行时" class="headerlink" title="如何单独编译tflite的运行时"></a>如何单独编译tflite的运行时</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># only build C++ so</div><div class="line">bazel --output_user_root=$build_dir build -c opt //tensorflow/lite:tensorflowlite</div><div class="line"></div><div class="line"># Build whl package</div><div class="line">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/pip_package</div><div class="line"># install dependecy and run script</div><div class="line">yum install swig libjpeg-devel</div><div class="line"></div><div class="line">pip install numpy pybind11</div><div class="line">tensorflow/lite/tools/make/download_dependencies.sh</div><div class="line">tensorflow/lite/tools/pip_package/build_pip_package.sh</div><div class="line"></div><div class="line">从中setup.py提取出C++ build的命令</div><div class="line">make SHELL=/bin/bash BUILD_WITH_NNAPI=false BUILD_WITH_RUY=true -C /home/lesliefang/tflite/tensorflow_test/tensorflow-2.3.0 -f tensorflow/lite/tools/make/Makefile -j 220</div><div class="line"></div><div class="line">看build_pip_package.sh 的输出日志或者</div><div class="line">在代码目录下搜索：tflite_runtime-2.1.0-cp36-cp36m-linux_x86_64.whl</div><div class="line">可以找到对应的生成的whl package</div></pre></td></tr></table></figure>
+<p>一个tflite模型可以被多个解释器调用，每个解释器需要独占一个线程(多线程不能共享解释器)</p>
+<h2 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h2><p><a href="https://www.tensorflow.org/lite/guide/faq" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/faq</a> 最下面提到<br><a href="https://www.tensorflow.org/lite/performance/measurement" target="_blank" rel="external">https://www.tensorflow.org/lite/performance/measurement</a><br><a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark</a></p>
+<ol>
+<li><p>编译benchmark model</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel build -c opt //tensorflow/lite/tools/benchmark:benchmark_model</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用benchmark Model</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel-bin/tensorflow/lite/tools/benchmark/benchmark_model   --graph=your_model.tflite --num_threads=4</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>benchmark的参数<br><a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark#parameters" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark#parameters</a></p>
+<p>例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/home/lesliefang/tflite/tensorflow/tensorflow-2.3.0/bazel-bin/tensorflow/lite/tools/benchmark/benchmark_model --graph=/home/lesliefang/tflite/mnist/Mnist_LeNet/tflite/converted_model.tflite --num_threads=4 --enable_op_profiling=true --profiling_output_csv_file=/root/fp32.csv --verbose</div></pre></td></tr></table></figure></p>
+<p>profileing 的结果放到 /root/fp32.csv 文件里面</p>
+<h2 id="MLIR"><a href="#MLIR" class="headerlink" title="MLIR"></a>MLIR</h2><p><a href="https://www.tensorflow.org/mlir" target="_blank" rel="external">https://www.tensorflow.org/mlir</a><br><a href="https://mlir.llvm.org/" target="_blank" rel="external">https://mlir.llvm.org/</a></p>
+<h2 id="添加算子"><a href="#添加算子" class="headerlink" title="添加算子"></a>添加算子</h2><p><a href="https://www.tensorflow.org/lite/guide/inference#write_a_custom_operator" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/inference#write_a_custom_operator</a><br><a href="https://www.tensorflow.org/lite/guide/ops_custom" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/ops_custom</a></p>
+<p>好像没有单个op的benchmark工具，要测试单个op的性能，需要创建只包含这个op的模型，然后使用benchmark工具</p>
+<h2 id="写C-应用"><a href="#写C-应用" class="headerlink" title="写C++ 应用"></a>写C++ 应用</h2><p>用bazel的话，参考这个<br><a href="https://www.tensorflow.org/lite/guide/inference#load_and_run_a_model_in_c" target="_blank" rel="external">https://www.tensorflow.org/lite/guide/inference#load_and_run_a_model_in_c</a></p>
+<p>用Makefile参考 tensorflow/lite/tools/make/Makefile<br>里面会去build一个label_image的例子<br><a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/examples/label_image" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/examples/label_image</a></p>
+<p>即使用bazel build的话，也会生成tflite的静态链接库<br>libtensorflow-lite.a</p>
+<p>C++ API的地址<br><a href="https://www.tensorflow.org/lite/api_docs/cc/class/tflite/impl/interpreter#classtflite_1_1impl_1_1_interpreter_1a259df676187dc3fb312d4b7e3417a7de" target="_blank" rel="external">https://www.tensorflow.org/lite/api_docs/cc/class/tflite/impl/interpreter#classtflite_1_1impl_1_1_interpreter_1a259df676187dc3fb312d4b7e3417a7de</a></p>
+<h2 id="Tflite-SGX"><a href="#Tflite-SGX" class="headerlink" title="Tflite+SGX"></a>Tflite+SGX</h2><p><a href="https://github.com/occlum/occlum/tree/master/demos/tensorflow_lite" target="_blank" rel="external">https://github.com/occlum/occlum/tree/master/demos/tensorflow_lite</a></p>
+<h3 id="eigen-gzip报错-eigen-没有下载全"><a href="#eigen-gzip报错-eigen-没有下载全" class="headerlink" title="eigen gzip报错(eigen 没有下载全)"></a>eigen gzip报错(eigen 没有下载全)</h3><p>设置https代理成http代理</p>
+<h2 id="3-个计算库的区别"><a href="#3-个计算库的区别" class="headerlink" title="3 个计算库的区别"></a>3 个计算库的区别</h2><p>这三个计算库根据编译宏以及硬件等的不同，都可能被使用到，具体用到哪个计算库，要看具体代码实现</p>
+<ul>
+<li><p>eigen 是个blas库，google可能贡献tensor比较多，主要外面maintain吧<br>这个我理解blas是个线性代数库，可能包含的支持的算子最全</p>
+</li>
+<li><p>ruy只有gemm，支持quant（这个我理解就是支持int8）</p>
+</li>
+<li><p>xnnpack是面向ml 的算子</p>
+</li>
+</ul>
+<h3 id="RUY"><a href="#RUY" class="headerlink" title="RUY"></a>RUY</h3><h2 id="Bazel-Build"><a href="#Bazel-Build" class="headerlink" title="Bazel Build"></a>Bazel Build</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel --output_user_root=$build_dir build //ruy:ruy</div></pre></td></tr></table></figure>
+<ul>
+<li><p>Enable AVX512</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel --output_user_root=$build_dir build -c dbg --copt=-march=native //ruy:benchmark_f32_f32_f32_f32</div></pre></td></tr></table></figure>
+</li>
+<li><p>Run benchmark</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">bazel --output_user_root=$build_dir build -c dbg --copt=-march=native //ruy:ruy</div><div class="line">bazel --output_user_root=$build_dir build -c dbg --copt=-march=native //ruy:benchmark_f32_f32_f32_f32</div><div class="line"></div><div class="line">export ROWS=1</div><div class="line">export DEPTH=1</div><div class="line">export COLS=1</div><div class="line">./bazel-bin/ruy/benchmark_f32_f32_f32_f32</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/tensorflow-dataset/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -597,140 +769,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/eigen/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/08/30/eigen/" itemprop="url">
-                  eigen
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T06:57:44+08:00">
-                2019-08-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/08/30/eigen/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/08/30/eigen/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>数值计算库，在tensorflow中作为默认的数学库</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>直接下载即可，不需要安装<br>全部都是头文件</p>
-<h2 id="测试安装"><a href="#测试安装" class="headerlink" title="测试安装"></a>测试安装</h2><p>编写 test.cc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Dense&gt;</div><div class="line">using Eigen::MatrixXd;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  MatrixXd m(2,2);</div><div class="line">  m(0,0) = 3;</div><div class="line">  m(1,0) = 2.5;</div><div class="line">  m(0,1) = -1;</div><div class="line">  m(1,1) = m(1,0) + m(0,1);</div><div class="line">  std::cout &lt;&lt; m &lt;&lt; std::endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>编译：<br>g++ -I ./eigen/eigen-eigen-323c052e1731 test.cc -o test</p>
-<h2 id="计算对数值"><a href="#计算对数值" class="headerlink" title="计算对数值"></a>计算对数值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Core&gt;</div><div class="line">#include &quot;Eigen/src/Core/functors/UnaryFunctors.h&quot;</div><div class="line">#include &lt;iomanip&gt;</div><div class="line">using namespace Eigen;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  double res = Eigen::internal::scalar_log_op&lt;double&gt;()(280.41303540865516);</div><div class="line">  std::cout &lt;&lt; res &lt;&lt; std::endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="修改数组"><a href="#修改数组" class="headerlink" title="修改数组"></a>修改数组</h2><p>使用unaryExpr的方法修改数组中的每个元素<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Core&gt;</div><div class="line">#include &quot;Eigen/src/Core/functors/UnaryFunctors.h&quot;</div><div class="line">#include &lt;iomanip&gt;</div><div class="line">using namespace Eigen;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  Eigen::Matrix&lt;float, 100, 1&gt; tmp = Eigen::Matrix&lt;float, 100, 1&gt;::Constant(100, 1, 280.41303540865516);</div><div class="line">cout &lt;&lt; setprecision(8) &lt;&lt; tmp &lt;&lt; endl &lt;&lt; &quot;becomes: &quot; &lt;&lt; endl &lt;&lt; tmp.unaryExpr(internal::scalar_log_op&lt;float&gt;()) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>tensorflow的Log等去对数的函数就调用了<a href="http://eigen.tuxfamily.org/dox/classEigen_1_1ArrayBase.html#title85" target="_blank" rel="external">unaryExpr方法</a>去计算数组的每个元素的对数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#./tensorflow/core/kernels/cwise_ops_common.h:541:</div><div class="line">Assign(d, out, in.unaryExpr(typename Functor::func()));</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -780,7 +818,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">77</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
