@@ -284,6 +284,159 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/自然语言处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/11/01/自然语言处理/" itemprop="url">
+                  自然语言处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T22:07:05+08:00">
+                2019-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/01/自然语言处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/01/自然语言处理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文主要记录自己在学习NLP过程中的心得体会</p>
+<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><ul>
+<li><a href="http://statmt.org/wmt18/translation-task.html#download" target="_blank" rel="external">http://statmt.org/wmt18/translation-task.html#download</a></li>
+<li><a href="http://www.manythings.org/anki/" target="_blank" rel="external">http://www.manythings.org/anki/</a></li>
+<li>kaggle</li>
+</ul>
+<h2 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h2><ul>
+<li><p>NLTK</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">install NLTK Corpus.</div><div class="line">1) Go to http://www.nltk.org/nltk_data/ and download your desired NLTK Corpus file.</div><div class="line">2) Now in a Python shell check the value of nltk.data.path</div><div class="line">3) Choose one of the path that exists on your machine, and unzip the data files into the corpora sub directory inside.</div><div class="line">4) Now you can import the data from nltk.corpos import stopwords</div></pre></td></tr></table></figure>
+</li>
+<li><p>Gensim</p>
+</li>
+<li>Tensorflow</li>
+</ul>
+<h2 id="逻辑回归与Softmax回归用于电影评论的情绪分析"><a href="#逻辑回归与Softmax回归用于电影评论的情绪分析" class="headerlink" title="逻辑回归与Softmax回归用于电影评论的情绪分析"></a>逻辑回归与Softmax回归用于电影评论的情绪分析</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><a href="https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews" target="_blank" rel="external">https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews</a></p>
+<h3 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h3><ul>
+<li>数据清洗<br>利用nltk库删除非alphabet的字符<br>利用nltk库删除停顿词</li>
+<li>利用tensorflow建立Softmax回归</li>
+<li>训练集合划分为训练集，验证集以及测试集</li>
+<li>训练直到验证集精度不再提高或达到指定的epoch数量</li>
+</ul>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p><a href="https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression" target="_blank" rel="external">https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression</a></p>
+<h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p>Seq2seq模型主要用于翻译，也可以用于其它任何先加码再解码的应用需求</p>
+<h3 id="seq2seq-模型的介绍："><a href="#seq2seq-模型的介绍：" class="headerlink" title="seq2seq 模型的介绍："></a>seq2seq 模型的介绍：</h3><p><a href="https://blog.csdn.net/wangyangzhizhou/article/details/77883152" target="_blank" rel="external">https://blog.csdn.net/wangyangzhizhou/article/details/77883152</a><br><a href="https://zhuanlan.zhihu.com/p/27608348" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27608348</a></p>
+<h3 id="利用seq2seq模型进行中英文翻译"><a href="#利用seq2seq模型进行中英文翻译" class="headerlink" title="利用seq2seq模型进行中英文翻译:"></a>利用seq2seq模型进行中英文翻译:</h3><p><a href="https://audier.github.io/2018/11/08/seq2seq-model-for-translation/" target="_blank" rel="external">https://audier.github.io/2018/11/08/seq2seq-model-for-translation/</a></p>
+<h3 id="seq2seq-tool用于explainable-AI"><a href="#seq2seq-tool用于explainable-AI" class="headerlink" title="seq2seq_tool用于explainable AI"></a>seq2seq_tool用于explainable AI</h3><p><a href="https://seq2seq-vis.io/" target="_blank" rel="external">https://seq2seq-vis.io/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/eigen/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -540,142 +693,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/03/tensorflow中tfrecord数据格式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/07/03/tensorflow中tfrecord数据格式/" itemprop="url">
-                  tensorflow中tfrecord数据格式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-03T19:47:54+08:00">
-                2019-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/03/tensorflow中tfrecord数据格式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/03/tensorflow中tfrecord数据格式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="JPEG-to-Tfrecord"><a href="#JPEG-to-Tfrecord" class="headerlink" title="JPEG to Tfrecord"></a>JPEG to Tfrecord</h2><p>tensorflow 在resnet50等模型上都用了imagnet的数据集tfrecord格式<br>这个tfrecord格式的数据集是通过脚本从jpeg格式转换过来的:<br><a href="https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data.py" target="_blank" rel="external">https://github.com/tensorflow/models/blob/master/research/inception/inception/data/build_imagenet_data.py</a><br>关键有一行代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self._decode_jpeg = tf.image.decode_jpeg(self._decode_jpeg_data, channels=3)</div></pre></td></tr></table></figure></p>
-<h2 id="Tfrecord-to-Jpeg"><a href="#Tfrecord-to-Jpeg" class="headerlink" title="Tfrecord to Jpeg"></a>Tfrecord to Jpeg</h2><p>脚本在运行data_sess读到图片之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#从tfrecord里面读取图片</div><div class="line">np_images, np_labels = data_sess.run([images, labels])</div><div class="line">#保存第一张图片</div><div class="line">img = tf.image.encode_jpeg(np_images[0], format=&apos;rgb&apos;)</div><div class="line">writeOp = tf.write_file(&quot;out_new.jpeg&quot;,img)</div><div class="line">sess = tf.Session()</div><div class="line">with sess.as_default():</div><div class="line">  sess.run(writeOp)</div></pre></td></tr></table></figure></p>
-<p>np_images的shape应该是n,224,224,3<br>n就是batchsize</p>
-<h3 id="类别对应的具体类型查询"><a href="#类别对应的具体类型查询" class="headerlink" title="类别对应的具体类型查询"></a>类别对应的具体类型查询</h3><p>比如np_labels的值在脚本里面打印出来是998<br>在这个地方去搜：<br><a href="https://blog.csdn.net/weixin_41770169/article/details/80482942" target="_blank" rel="external">https://blog.csdn.net/weixin_41770169/article/details/80482942</a><br>但是数字要减一(998-1=997) 对应的类别就是bolete</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -720,7 +742,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

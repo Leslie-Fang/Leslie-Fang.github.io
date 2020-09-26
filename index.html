@@ -284,6 +284,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/26/tensorflow-benchmark-机制分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/09/26/tensorflow-benchmark-机制分析/" itemprop="url">
+                  tensorflow_benchmark_机制分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-26T21:47:29+08:00">
+                2020-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/26/tensorflow-benchmark-机制分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/09/26/tensorflow-benchmark-机制分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文介绍Tensorflow Op 级别的benchmark的用法以及代码调用</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">* 编译并运行</div><div class="line">bazel --output_user_root=$build_dir run --config=mkl --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test --benchmarks=../</div><div class="line"></div><div class="line">* 先编译再运行</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test</div><div class="line">设置环境变量</div><div class="line">TF_NUM_INTEROP_THREADS=1 TF_NUM_INTRAOP_THREADS=28 OMP_NUM_THREADS=28</div><div class="line">numactl --localalloc --physcpubind 0-27 ./bazel-bin/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test --benchmarks=../</div><div class="line"></div><div class="line">* 编译静态链接可移植的二进制</div><div class="line">bazel --output_user_root=$build_dir build --config=monolithic --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test</div></pre></td></tr></table></figure>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="Benchmark文件"><a href="#Benchmark文件" class="headerlink" title="Benchmark文件"></a>Benchmark文件</h3><p><a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test.cc" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test.cc</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#define BM_CombinedNonMaxSuppressionDev(DEVICE, B, BN, CN, Q)                \</div><div class="line">  static void BM_CombinedNMS_##DEVICE##_##B##_##BN##_##CN##_##Q(int iters) &#123; \</div><div class="line">    testing::ItemsProcessed(iters* B);                                       \</div><div class="line">    test::Benchmark(#DEVICE, BM_CombinedNonMaxSuppression(B, BN, CN, Q))     \</div><div class="line">        .Run(iters);                                                         \</div><div class="line">  &#125;                                                                          \</div><div class="line">  BENCHMARK(BM_CombinedNMS_##DEVICE##_##B##_##BN##_##CN##_##Q);</div></pre></td></tr></table></figure></p>
+<h3 id="封装构造testing-Benchmark"><a href="#封装构造testing-Benchmark" class="headerlink" title="封装构造testing::Benchmark"></a>封装构造testing::Benchmark</h3><h4 id="Step1"><a href="#Step1" class="headerlink" title="Step1:"></a>Step1:</h4><p>BENCHMARK(BM<em>CombinedNMS</em>##DEVICE##<em>##B##</em>##BN##<em>##CN##</em>##Q);</p>
+<h4 id="Step2-注册benchmark-进入all-benchmark这个全局变量"><a href="#Step2-注册benchmark-进入all-benchmark这个全局变量" class="headerlink" title="Step2 注册benchmark 进入all_benchmark这个全局变量:"></a>Step2 注册benchmark 进入all_benchmark这个全局变量:</h4><p><a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.h#L28-L33" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.h#L28-L33</a></p>
+<ul>
+<li>TF_ATTRIBUTE_UNUSED <strong>attribute</strong>((unused)) 忽略GCC 告警： <a href="https://www.jianshu.com/p/21aef14340a8" target="_blank" rel="external">https://www.jianshu.com/p/21aef14340a8</a></li>
+<li>new ::tensorflow::testing::Benchmark(#n, (n)) 将这个函数注册到all_benchmark这个全局变量里面 里面 <a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43</a></li>
+</ul>
+<h4 id="Step3-注册之后进入test-main执行benchmark"><a href="#Step3-注册之后进入test-main执行benchmark" class="headerlink" title="Step3 注册之后进入test_main执行benchmark"></a>Step3 注册之后进入test_main执行benchmark</h4><p>这一部分我理解应该是在bazel build的时候加到non_max_suppression_op_benchmark_test.cc 里面的</p>
+<ul>
+<li>test_main.cc:main</li>
+<li><p>test_benchmark.cc:Benchmark::Run(const char* pattern)<br>遍历所有all_benchmark 一个一个去执行，并打印出每个的运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b-&gt;Run(arg.first, arg.second, &amp;iters, &amp;seconds); #这个b就是具体的某个benchmark</div></pre></td></tr></table></figure>
+</li>
+<li><p>test_benchmark.cc:Benchmark::Run(int arg1, int arg2, int<em> run_count, double</em> run_seconds)  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(\*fn0_)(iters);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里就调用回到了执行这个函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">BM_CombinedNMS_##DEVICE##_##B##_##BN##_##CN##_##Q(int iters)</div><div class="line"></div><div class="line">test::Benchmark(#DEVICE, BM_CombinedNonMaxSuppression(B, BN, CN, Q))     \</div><div class="line">        .Run(iters); #进入下面的分析实际运行test::benchmark</div></pre></td></tr></table></figure></p>
+<h3 id="实际运行test-benchmark"><a href="#实际运行test-benchmark" class="headerlink" title="实际运行test::benchmark"></a>实际运行test::benchmark</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">test::Benchmark(#DEVICE, BM_CombinedNonMaxSuppression(B, BN, CN, Q))     \</div><div class="line">        .Run(iters);</div></pre></td></tr></table></figure>
+<p>调用进入 <a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/common_runtime/kernel_benchmark_testlib.cc#L136" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/common_runtime/kernel_benchmark_testlib.cc#L136</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/20/tensorflow-lite/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -616,164 +765,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/自然语言处理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/11/01/自然语言处理/" itemprop="url">
-                  自然语言处理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T22:07:05+08:00">
-                2019-11-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/11/01/自然语言处理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/01/自然语言处理/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文主要记录自己在学习NLP过程中的心得体会</p>
-<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><ul>
-<li><a href="http://statmt.org/wmt18/translation-task.html#download" target="_blank" rel="external">http://statmt.org/wmt18/translation-task.html#download</a></li>
-<li><a href="http://www.manythings.org/anki/" target="_blank" rel="external">http://www.manythings.org/anki/</a></li>
-<li>kaggle</li>
-</ul>
-<h2 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h2><ul>
-<li><p>NLTK</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">install NLTK Corpus.</div><div class="line">1) Go to http://www.nltk.org/nltk_data/ and download your desired NLTK Corpus file.</div><div class="line">2) Now in a Python shell check the value of nltk.data.path</div><div class="line">3) Choose one of the path that exists on your machine, and unzip the data files into the corpora sub directory inside.</div><div class="line">4) Now you can import the data from nltk.corpos import stopwords</div></pre></td></tr></table></figure>
-</li>
-<li><p>Gensim</p>
-</li>
-<li>Tensorflow</li>
-</ul>
-<h2 id="逻辑回归与Softmax回归用于电影评论的情绪分析"><a href="#逻辑回归与Softmax回归用于电影评论的情绪分析" class="headerlink" title="逻辑回归与Softmax回归用于电影评论的情绪分析"></a>逻辑回归与Softmax回归用于电影评论的情绪分析</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><a href="https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews" target="_blank" rel="external">https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews</a></p>
-<h3 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h3><ul>
-<li>数据清洗<br>利用nltk库删除非alphabet的字符<br>利用nltk库删除停顿词</li>
-<li>利用tensorflow建立Softmax回归</li>
-<li>训练集合划分为训练集，验证集以及测试集</li>
-<li>训练直到验证集精度不再提高或达到指定的epoch数量</li>
-</ul>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p><a href="https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression" target="_blank" rel="external">https://github.com/Leslie-Fang/kaggle/tree/master/SentimentAnalysisonMovieReviews/SoftmaxRegression</a></p>
-<h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p>Seq2seq模型主要用于翻译，也可以用于其它任何先加码再解码的应用需求</p>
-<h3 id="seq2seq-模型的介绍："><a href="#seq2seq-模型的介绍：" class="headerlink" title="seq2seq 模型的介绍："></a>seq2seq 模型的介绍：</h3><p><a href="https://blog.csdn.net/wangyangzhizhou/article/details/77883152" target="_blank" rel="external">https://blog.csdn.net/wangyangzhizhou/article/details/77883152</a><br><a href="https://zhuanlan.zhihu.com/p/27608348" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27608348</a></p>
-<h3 id="利用seq2seq模型进行中英文翻译"><a href="#利用seq2seq模型进行中英文翻译" class="headerlink" title="利用seq2seq模型进行中英文翻译:"></a>利用seq2seq模型进行中英文翻译:</h3><p><a href="https://audier.github.io/2018/11/08/seq2seq-model-for-translation/" target="_blank" rel="external">https://audier.github.io/2018/11/08/seq2seq-model-for-translation/</a></p>
-<h3 id="seq2seq-tool用于explainable-AI"><a href="#seq2seq-tool用于explainable-AI" class="headerlink" title="seq2seq_tool用于explainable AI"></a>seq2seq_tool用于explainable AI</h3><p><a href="https://seq2seq-vis.io/" target="_blank" rel="external">https://seq2seq-vis.io/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -818,7 +814,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
