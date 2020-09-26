@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍本文介绍Tensorflow Op 级别的benchmark的用法以及代码调用
 用法1234567891011* 编译并运行bazel --output_user_root=$build_dir run --config=mkl --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test --">
-<meta property="og:updated_time" content="2020-09-26T13:48:14.023Z">
+<meta property="og:updated_time" content="2020-09-26T13:50:12.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow_benchmark_机制分析">
 <meta name="twitter:description" content="介绍本文介绍Tensorflow Op 级别的benchmark的用法以及代码调用
@@ -382,6 +382,7 @@
 <li>TF_ATTRIBUTE_UNUSED <strong>attribute</strong>((unused)) 忽略GCC 告警： <a href="https://www.jianshu.com/p/21aef14340a8" target="_blank" rel="external">https://www.jianshu.com/p/21aef14340a8</a></li>
 <li>new ::tensorflow::testing::Benchmark(#n, (n)) 将这个函数注册到all_benchmark这个全局变量里面 里面 <a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43" target="_blank" rel="external">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43</a></li>
 </ul>
+<a id="more"></a>
 <h4 id="Step3-注册之后进入test-main执行benchmark"><a href="#Step3-注册之后进入test-main执行benchmark" class="headerlink" title="Step3 注册之后进入test_main执行benchmark"></a>Step3 注册之后进入test_main执行benchmark</h4><p>这一部分我理解应该是在bazel build的时候加到non_max_suppression_op_benchmark_test.cc 里面的</p>
 <ul>
 <li>test_main.cc:main</li>
