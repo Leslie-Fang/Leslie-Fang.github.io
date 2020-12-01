@@ -284,6 +284,137 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/python调用C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/08/17/python调用C/" itemprop="url">
+                  python调用C++
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T08:54:02+08:00">
+                2019-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/17/python调用C/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/08/17/python调用C/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Python调用C++时十分常见的方案，结合了Python的灵活以及C++的高效<br>一般的实现是将C++代码编译是动态链接库，提供Python到C++调用的API，然后将Python库打包成wheel包的形式发布</p>
+<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><p>常见的实现方案有boost.python, swig, ctypes, pybind11等<br>tensorflow采用的是swig的方案<br>boost.python为了兼容所有老的C++编译器，太重了<br>本文重点介绍pybind11</p>
+<h2 id="pybind11的实现方案介绍"><a href="#pybind11的实现方案介绍" class="headerlink" title="pybind11的实现方案介绍"></a>pybind11的实现方案介绍</h2><h3 id="setuptools定义wheel打包以及编译"><a href="#setuptools定义wheel打包以及编译" class="headerlink" title="setuptools定义wheel打包以及编译"></a>setuptools定义wheel打包以及编译</h3><p>使用setuptools去打包成wheel包，编写setup.py文件，定义setup函数<br>参考MLPerf的<a href="https://github.com/mlperf/inference/blob/master/loadgen/setup.py" target="_blank" rel="external">setup.py文件</a><br>需要编译C++代码，setup函数中定义ext_modules字段指向一个Extension对象<br>Extension对象里面指定了需要编译的文件，编译宏以及依赖文件<br>之后借助setup.py我们可以进行打包，编译C++文件，生成wheel包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CFLAGS=&quot;-std=c++14 -O3&quot; python setup.py bdist_wheel</div><div class="line"></div><div class="line">##debug version</div><div class="line">CFLAGS=&quot;-std=c++14 -O0 -g&quot; python setup.py bdist_wheel</div><div class="line">可以直接用gdb去debug</div></pre></td></tr></table></figure></p>
+<h3 id="Pybind11-python到C-的接口"><a href="#Pybind11-python到C-的接口" class="headerlink" title="Pybind11 python到C++的接口"></a>Pybind11 python到C++的接口</h3><p>参考<a href="https://blog.csdn.net/fitzzhang/article/details/78988682" target="_blank" rel="external">介绍</a> 以及<a href="https://pybind11.readthedocs.io/en/stable/index.html" target="_blank" rel="external">官网</a><br>PYBIND11_MODULE 语法糖去定义一个python接口到C++接口的转换关系</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/03/tensorflow中tfrecord数据格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -550,181 +681,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/BigDL源码分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/04/19/BigDL源码分析/" itemprop="url">
-                  BigDL源码分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T08:10:34+08:00">
-                2019-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/19/BigDL源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/04/19/BigDL源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><h3 id="先安装spark"><a href="#先安装spark" class="headerlink" title="先安装spark"></a>先安装spark</h3><p><a href="https://spark.apache.org/downloads.html" target="_blank" rel="external">https://spark.apache.org/downloads.html</a></p>
-<h3 id="编译bigdl"><a href="#编译bigdl" class="headerlink" title="编译bigdl"></a>编译bigdl</h3><p><a href="https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/" target="_blank" rel="external">https://bigdl-project.github.io/master/#ScalaUserGuide/install-build-src/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash make-dist.sh -P spark_2.x</div></pre></td></tr></table></figure></p>
-<h2 id="运行的例子"><a href="#运行的例子" class="headerlink" title="运行的例子"></a>运行的例子</h2><p>每个model下面都有具体该如何运行的例子<br><a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/models/lenet</a></p>
-<p>训练的时候<br>java虚拟机的堆空间溢出<br>java.lang.OutOfMemoryError: Java heap space</p>
-<p>设置driver的memory<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --driver-memory 12g --master local[1] --class com.intel.analytics.bigdl.models.vgg.Train dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/cifar10/cifar-10-batches-bin -b 4</div></pre></td></tr></table></figure></p>
-<h2 id="Issue"><a href="#Issue" class="headerlink" title="Issue"></a>Issue</h2><ol>
-<li>requirement failed: only mini-batch supported (2D tensor), got 1D tensor instead<br>-b 指定的batchszie应该是core数量的4倍<br><a href="https://github.com/intel-analytics/BigDL/issues/462" target="_blank" rel="external">https://github.com/intel-analytics/BigDL/issues/462</a></li>
-</ol>
-<h2 id="源代码阅读"><a href="#源代码阅读" class="headerlink" title="源代码阅读"></a>源代码阅读</h2><p>如何在intellij中导入项目<br><a href="https://www.jianshu.com/p/81a484ac83ae" target="_blank" rel="external">https://www.jianshu.com/p/81a484ac83ae</a><br><a href="http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/" target="_blank" rel="external">http://dengfengli.com/blog/how-to-run-and-debug-spark-source-code-locally/</a></p>
-<h3 id="设计概念"><a href="#设计概念" class="headerlink" title="设计概念"></a>设计概念</h3><ol>
-<li>运行初始化时的模型构建<br>BigDL的设计是初始化的时候，一层一层将模型的读入，然后转化（每一层都寻找合适的BigDL的层，根据你输入的参数engine类型等），构建一个内部的图存在内存里面，以后的train或者inference的时候就使用这个内部的图</li>
-</ol>
-<p>BigDL的INT8化也是这么做的，是在inference初始化的时候，读取FP32的模型，然后一层层转换成INT8的层，放到运行时内部的模型，正式inference的时候就使用这个内部模型</p>
-<ol>
-<li><p>latency的问题<br>Spark适合进行批处理<br>但是针对一张图片进行inference的时候，因为spark需要构造图等初始化的工作，导致效率比较低<br>所以BigDL针对一张图片的latency的测试 <strong>不使用spark</strong>，走另外一套逻辑</p>
-</li>
-<li><p>MKLDNN的调用<br>通过JNI接口去调用C++ 代码<br>例子：</p>
-</li>
-<li>模型中的调用ConvForwardDescInit</li>
-<li><p>MklDnn.class 中的JNI函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public static native long ConvForwardDescInit(int var0, int var1, long var2, long var4, long var6, long var8, int[] var10, int[] var11, int[] var12, int var13);</div></pre></td></tr></table></figure>
-</li>
-<li><p>ConvForwardDescInit 是定义在子项目 BigDL-core里面<br>native-dnn/src/main/c/conv.c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">JNIEXPORT long JNICALL Java_com_intel_analytics_bigdl_mkl_MklDnn_DilatedConvForwardDescInit(</div><div class="line">  JNIEnv *env, jclass cls,</div><div class="line">  int prop_kind,</div><div class="line">  int alg_kind,</div><div class="line">  long src_desc,</div><div class="line">  long weights_desc,</div><div class="line">  long bias_desc,</div><div class="line">  long dst_desc,</div><div class="line">  jintArray strides,</div><div class="line">  jintArray dilates,</div><div class="line">  jintArray padding_l,</div><div class="line">  jintArray padding_r,</div><div class="line">  int padding_kind)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Resnet代码示例"><a href="#Resnet代码示例" class="headerlink" title="Resnet代码示例"></a>Resnet代码示例</h3><p>看这个package：package com.intel.analytics.bigdl.models.resnet<br>目录里面的文件和结构：<br>ResNet 构建resnet的模型<br>DataSet<br>TrainCIFAR10这个例子</p>
-<h2 id="碎片知识"><a href="#碎片知识" class="headerlink" title="碎片知识"></a>碎片知识</h2><h3 id="设置和读取环境变量"><a href="#设置和读取环境变量" class="headerlink" title="设置和读取环境变量"></a>设置和读取环境变量</h3><p>System.getProperty(“leslie”, “false”)<br>可以在编译的时候-Dleslie=100去设定这个环境变量<br>在intellij里面为VM的参数<br>然后通过System.getProperty(“leslie”, “false”)就可以去获取这个变量的值了，false这个地方填的是默认值</p>
-<h3 id="this-synchronized-原子操作"><a href="#this-synchronized-原子操作" class="headerlink" title="this.synchronized 原子操作"></a>this.synchronized 原子操作</h3><p><a href="https://www.jianshu.com/p/0cc4c330f25a" target="_blank" rel="external">https://www.jianshu.com/p/0cc4c330f25a</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def getUniqueId() = this.synchronized &#123;</div><div class="line">    val freshUid = uidCount + 1</div><div class="line">    uidCount = freshUid</div><div class="line">    freshUid</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p>把这个函数定义成原子操作，也就是多个线程调用这个函数的时候，必须等一个线程调用结束之后，另一个线程才可以开始调用</p>
-<h2 id="INT8"><a href="#INT8" class="headerlink" title="INT8"></a>INT8</h2><h3 id="scaling"><a href="#scaling" class="headerlink" title="scaling"></a>scaling</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --executor-memory 100G --executor-cores 32 --total-executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.GenerateInt8Scales ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet --batchSize 4 --model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl</div></pre></td></tr></table></figure>
-<h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --conf &quot;spark.serializer=org.apache.spark.serializer.JavaSerializer&quot; --conf &quot;spark.network.timeout=1000000&quot; --conf &quot;spark.driver.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true&quot; --conf &quot;spark.executor.extraJavaOptions=-Dbigdl.engineType=mkldnn -Dbigdl.mkldnn.fusion=true&quot; --executor-memory 100G --executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.ImageNetInference ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/bigdl_imagenet --batchSize 4 --model /home/lesliefang/bigdl/pre-trained-models/resnet-50.quantized.bigdl 2&gt;&amp;1 | tee test.log</div></pre></td></tr></table></figure>
-<h2 id="Lenet的例子"><a href="#Lenet的例子" class="headerlink" title="Lenet的例子"></a>Lenet的例子</h2><h3 id="解决问题1："><a href="#解决问题1：" class="headerlink" title="解决问题1："></a>解决问题1：</h3><p>Lenet 现在用了LeNet5 和 dnnGraph 两种方式，生成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#125; else &#123;</div><div class="line">  Engine.getEngineType() match &#123;</div><div class="line">    case MklBlas =&gt; LeNet5(10)</div><div class="line">    case MklDnn =&gt; LeNet5.dnnGraph(param.batchSize / Engine.nodeNumber(), 10)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样导致mkldnn train后的模型也是用dnnGraph保存这会带来错误</p>
-<p>现在新的BigDL的代码都已经改成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LeNet5(10)</div></pre></td></tr></table></figure></p>
-<p>用这个序列化的原始模型就可以了， MKLDNN 改写参考MKLDNN章节</p>
-<h3 id="解决问题2："><a href="#解决问题2：" class="headerlink" title="解决问题2："></a>解决问题2：</h3><p>INT8化之前，模型需要保存成protubuf的格式而不是java的格式<br>解决方法：<br>java 的序列化方式是  model.save 和 Module.load，protobuf 对应的是 model.saveModule 和 Module.loadModule<br>Method 1: 在train的时候saveModel函数 用model.saveModule 而不是 model.save(推荐修改成这种method)<br>Method 2: 之前lenet train的时候模型是java序列化之后保存的，改下GenerateInt8Scales 用Module.load去载入模型</p>
-<p>否则INT8化会报错<br>Exception in thread “main” java.lang.NullPointerException<br>        at com.intel.analytics.bigdl.utils.serializer.ModuleLoader$.initTensorStorage(ModuleLoader.scala:122)</p>
-<h3 id="FP32-train"><a href="#FP32-train" class="headerlink" title="FP32 train"></a>FP32 train</h3><p>MKL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --driver-class-path ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar --class com.intel.analytics.bigdl.models.lenet.Train ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --checkpoint /root/mnist_type1_trainsave/model</div></pre></td></tr></table></figure></p>
-<p>/root/mnist_type1_trainsave/model 目录下生成训练好的模型，取最新保存的一个作为test</p>
-<h3 id="FP32-Test"><a href="#FP32-Test" class="headerlink" title="FP32 Test"></a>FP32 Test</h3><p>MKL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --class com.intel.analytics.bigdl.models.lenet.Test ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure></p>
-<p>Top1Accuracy is Accuracy(correct: 9854, count: 10000, accuracy: 0.9854)</p>
-<p>MKLDNN<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[26] --conf &quot;spark.driver.extraJavaOptions=-Dbigdl.engineType=mkldnn&quot; --class com.intel.analytics.bigdl.models.lenet.Test ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 -b 104 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure></p>
-<p>Top1Accuracy is Accuracy(correct: 9854, count: 10000, accuracy: 0.9854)</p>
-<h3 id="INT8-化"><a href="#INT8-化" class="headerlink" title="INT8 化"></a>INT8 化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-submit --master local[1] --driver-memory 50G --executor-memory 100G --executor-cores 32 --total-executor-cores 1 --class com.intel.analytics.bigdl.example.mkldnn.int8.GenerateInt8Scales ./dist/lib/bigdl-0.8.0-jar-with-dependencies.jar -f /home/dataset/mnist/type1 --batchSize 4 --model /root/mnist_type1_trainsave/model/20190813_000408/model.8656</div></pre></td></tr></table></figure>
-<h2 id="MKLDNN-改写"><a href="#MKLDNN-改写" class="headerlink" title="MKLDNN 改写"></a>MKLDNN 改写</h2><h3 id="Train的时候"><a href="#Train的时候" class="headerlink" title="Train的时候"></a>Train的时候</h3><p>普通的sequential模型(不用DNNGraph)在DistriOptimizer第548行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">val convertedModel = ConversionUtils.convert(model)</div></pre></td></tr></table></figure></p>
-<p>会去做原始OP向MKLDNN OP的转换的过程，但是和tensorflow不同的一点是，BigDL不会去插入reorder的节点，reorder的操作都是在运算过程中动态判断，动态生成的<br>生成的convertedModel模型，在第一次forward的计算的时候会去做MKLDNN的初始化操作</p>
-<h3 id="Test的时候"><a href="#Test的时候" class="headerlink" title="Test的时候"></a>Test的时候</h3><p>Evaluator.scala 的test函数做MKLDNN化的改写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">val modelBroad = ModelBroadcast[T]().broadcast(dataset.sparkContext,</div><div class="line">  ConversionUtils.convert(model.evaluate()))</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -774,7 +730,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -787,7 +743,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
