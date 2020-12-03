@@ -284,6 +284,150 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/12/Intel-Intrinsic-Functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/05/12/Intel-Intrinsic-Functions/" itemprop="url">
+                  Intel_Intrinsic_Functions
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-12T21:23:38+08:00">
+                2019-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/12/Intel-Intrinsic-Functions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/12/Intel-Intrinsic-Functions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="SSE"><a href="#SSE" class="headerlink" title="SSE"></a>SSE</h3><p>128位的SIMD指令集<br><a href="https://blog.csdn.net/woxiaohahaa/article/details/51014425" target="_blank" rel="external">https://blog.csdn.net/woxiaohahaa/article/details/51014425</a><br>SSE有8个128位寄存器，XMM0 ~XMM7</p>
+<h3 id="AVX2"><a href="#AVX2" class="headerlink" title="AVX2"></a>AVX2</h3><p>AVX2 expands most integer commands to 256 bits and introduces fused multiply-accumulate (FMA) operations.<br>AVX uses sixteen YMM registers. Each YMM register contains:</p>
+<ul>
+<li>eight 32-bit single-precision floating point numbers or</li>
+<li>four 64-bit double-precision floating point numbers.</li>
+</ul>
+<h3 id="AVX512"><a href="#AVX512" class="headerlink" title="AVX512"></a>AVX512</h3><p>AVX-512 are 512-bit extensions to the 256-bit Advanced Vector Extensions SIMD instructions for x86 instruction set architecture (ISA)</p>
+<h3 id="一般的流程"><a href="#一般的流程" class="headerlink" title="一般的流程"></a>一般的流程</h3><p>参考这个知乎的回答<br><a href="https://www.zhihu.com/question/51206237" target="_blank" rel="external">https://www.zhihu.com/question/51206237</a></p>
+<ol>
+<li>load：将数据从内存载入到寄存器里面</li>
+<li>计算</li>
+<li>save, 将数据从寄存器写入到内存变量里面</li>
+</ol>
+<h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><p>Intrinsic functions 是直接提供给客户去调用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#include &lt;immintrin.h&gt;</div></pre></td></tr></table></figure></p>
+<p>每个Intrinsic函数封装了调用了一些汇编</p>
+<h3 id="api手册"><a href="#api手册" class="headerlink" title="api手册"></a>api手册</h3><p>查看这个link<br><a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/" target="_blank" rel="external">https://software.intel.com/sites/landingpage/IntrinsicsGuide/</a><br>打开一个函数，可以看到里面的汇编</p>
+<h3 id="反汇编查看"><a href="#反汇编查看" class="headerlink" title="反汇编查看"></a>反汇编查看</h3><p>示例代码：<br><a href="https://github.com/Leslie-Fang/Intel_Intrinsic_Functions" target="_blank" rel="external">https://github.com/Leslie-Fang/Intel_Intrinsic_Functions</a><br>在这个示例代码里面，调用了sse的_mm_add_ps(Intrinsic functions)去做加法，objdump -d main反汇编之后可以看到调用了addps的汇编指令，查看上面的API手册_mm_add_ps(Intrinsic functions)函数就是封装了这条指令</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/BigDL源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -597,142 +741,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/推荐系统/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/07/推荐系统/" itemprop="url">
-                  推荐系统
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T20:39:51+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/03/07/推荐系统/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/07/推荐系统/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="推荐系统介绍"><a href="#推荐系统介绍" class="headerlink" title="推荐系统介绍"></a>推荐系统介绍</h2><p><a href="https://zhuanlan.zhihu.com/p/54464005" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/54464005</a><br>包含召回和排序两个阶段</p>
-<h2 id="所有推荐系统的论文"><a href="#所有推荐系统的论文" class="headerlink" title="所有推荐系统的论文"></a>所有推荐系统的论文</h2><p><a href="https://github.com/talentlei/PaperList" target="_blank" rel="external">https://github.com/talentlei/PaperList</a><br><a href="https://www.jianshu.com/p/28a1849f6707" target="_blank" rel="external">https://www.jianshu.com/p/28a1849f6707</a></p>
-<h2 id="TF实现代码"><a href="#TF实现代码" class="headerlink" title="TF实现代码"></a>TF实现代码</h2><p><a href="https://github.com/tensorflow/models/tree/master/official/wide_deep" target="_blank" rel="external">https://github.com/tensorflow/models/tree/master/official/wide_deep</a></p>
-<h2 id="美团实战的文章"><a href="#美团实战的文章" class="headerlink" title="美团实战的文章"></a>美团实战的文章</h2><p><a href="https://gitbook.cn/books/5aa0dd15cfbe2c144b71906d/index.html" target="_blank" rel="external">https://gitbook.cn/books/5aa0dd15cfbe2c144b71906d/index.html</a></p>
-<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><ul>
-<li>one-hot编码：<a href="https://www.jianshu.com/p/a47a1c1fa3f1，onehot编码神经网络处理不来，用在线性模型里面" target="_blank" rel="external">https://www.jianshu.com/p/a47a1c1fa3f1，onehot编码神经网络处理不来，用在线性模型里面</a></li>
-<li>特征嵌入Embedding:<a href="https://blog.csdn.net/pipisorry/article/details/76095118" target="_blank" rel="external">https://blog.csdn.net/pipisorry/article/details/76095118</a><br><a href="https://juejin.im/post/599183c6f265da3e2e5717d2" target="_blank" rel="external">https://juejin.im/post/599183c6f265da3e2e5717d2</a><h3 id="输入数据特征"><a href="#输入数据特征" class="headerlink" title="输入数据特征"></a>输入数据特征</h3>特征处理的文章：<a href="https://mp.weixin.qq.com/s/847h4ITQMtUlZcurJ9Vlvg?scene=25##" target="_blank" rel="external">https://mp.weixin.qq.com/s/847h4ITQMtUlZcurJ9Vlvg?scene=25##</a><br>wide侧：离散特征(高维离散特征)<br>deep侧：组合特征和连续特征<br>离散特征进行one-hot编码<br>连续特征进行归一化<br>组合特征：由低维的离散特征Embedding得到,one-hot编码编码之后数据量太大，通过矩阵映射到一个底维度的空间</li>
-</ul>
-<p>用哪些特征作为输入<br><a href="https://zhuanlan.zhihu.com/p/32781570" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/32781570</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -782,7 +790,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -795,7 +803,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

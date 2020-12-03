@@ -284,6 +284,192 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/21/docker/" itemprop="url">
+                  docker
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T19:20:39+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/21/docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/docker/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>docker daemon</li>
+<li>image</li>
+<li>container</li>
+<li>network</li>
+<li>label:<a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/">https://docs.docker.com/engine/userguide/labels-custom-metadata/</a></li>
+<li>storage driver:<a href="http://dockone.io/article/1765">http://dockone.io/article/1765</a></li>
+<li>volumes</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>centos上面用这个区安装<br><a href="https://docs.docker.com/install/linux/docker-ce/centos/">https://docs.docker.com/install/linux/docker-ce/centos/</a></p>
+<p>像Suse这样的OS找不到镜像的话，可以直接下载二进制包去安装<br><a href="https://docs.docker.com/install/linux/docker-ce/binaries/">https://docs.docker.com/install/linux/docker-ce/binaries/</a><br>参考docker-ce 里面的Binaries下面的方法<br>安装之后，follow这个链接的最下面去创建systemd的配置项<br><a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy">https://docs.docker.com/config/daemon/systemd/#httphttps-proxy</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li>docker ps: 查看正在运行的container</li>
+<li>通过dockerfile去定义image： <a href="https://docs.docker.com/get-started/part2/#apppy">https://docs.docker.com/get-started/part2/#apppy</a></li>
+<li>dockerbuild 利用dockerfile去生成image  docker build -t friendlyhello .  (friendlyhello 镜像名)<br><strong>important</strong>: 在dockerfile里面用pip去安装包的时候也需要配置代理</li>
+<li>docker images 查看有没有生成镜像</li>
+<li>docker run -p 4000:80 friendlyhello (-p 4000:80 把container的80端口映射到 主机的4000端口)<br>docker run -d -p 4000:80 friendlyhello（-d 参数表示运行在后台，in detached mode）</li>
+<li>attach a container<br>docker attach container_name<br>这样就会进入contaienr内部<br>要deattach这个container，Ctrl+P+Q</li>
+<li>docker container ls(只显示activate的container)<br>查看所有的container: docker container ls -a<br>查看到container id</li>
+<li>停止正在运行的container<br>docker stop container_id<br>在容器内部直接exit</li>
+<li>删除container<br>docker rm container_id</li>
+<li>删除image<br>docker image rm image_id（必须要保证这个image没有container在使用）</li>
+<li>copy文件<br>docker copy * #copy文件</li>
+</ul>
+<h3 id="常用的一系列用法"><a href="#常用的一系列用法" class="headerlink" title="常用的一系列用法"></a>常用的一系列用法</h3><p>下载好image以后<br>docker run -tid imagename<br>docker container ls<br>docker attach container-id #进入容器<br>host上docker cp等进行修改<br>docker commit container-id new-name #保存成新的镜像</p>
+<h4 id="Error-messgae"><a href="#Error-messgae" class="headerlink" title="Error messgae:"></a>Error messgae:</h4><p>commit的时候看到error message<br>Error response from daemon: Error processing tar file(exit status 1): unexpected EOF<br>看dockerd的日志，是zip文件不能保存</p>
+<p>docker save -o update1.tar update //镜像的导出<br>docker load  &lt; update1.tar //镜像的导入</p>
+<h3 id="删除文件-减小镜像大小"><a href="#删除文件-减小镜像大小" class="headerlink" title="删除文件,减小镜像大小"></a>删除文件,减小镜像大小</h3><p>在container中删除文件之后，再commit发现镜像大小不变<br>是因为docker commit会保留原来的layer的信息</p>
+<p>用export<br>docker export container_id &gt; name_tag.tar<br>再次导入<br>docker import name_tag.tar name:tag</p>
+<h3 id="无法使用numa的问题"><a href="#无法使用numa的问题" class="headerlink" title="无法使用numa的问题"></a>无法使用numa的问题</h3><ol>
+<li><p>docker run -itd –privileged image<br>–privileged可以给container权限<br>推荐用这个方法</p>
+</li>
+<li><p>方法二<br>docker run -itd –cap-add=SYS_NICE image<br>当方法1的performance掉了的话，用这个方法试试看</p>
+</li>
+</ol>
+<h3 id="代理设置"><a href="#代理设置" class="headerlink" title="代理设置"></a>代理设置</h3><p>为docker-run设置代理<br><a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy">https://docs.docker.com/config/daemon/systemd/#httphttps-proxy</a></p>
+<p>为docker容器本身设置代理<br>和普通OS一样直接设置代理，试过可以工作<br>export http_proxy=<a href="http://***">http://***</a><br>export https_proxy=<a href="https://***">https://***</a></p>
+<p>在启动container的时候可以添加参数<br><a href="https://docs.docker.com/network/proxy/">https://docs.docker.com/network/proxy/</a></p>
+<p><a href="http://www.vadmin-land.com/2018/09/using-docker-behind-a-proxy/">http://www.vadmin-land.com/2018/09/using-docker-behind-a-proxy/</a></p>
+<h2 id="设置docker的工作目录"><a href="#设置docker的工作目录" class="headerlink" title="设置docker的工作目录"></a>设置docker的工作目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/docker/daemon.json</div></pre></td></tr></table></figure>
+<p>And add the following to tell docker to put all its files in this folder, e.g:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;graph&quot;:&quot;/workspace&quot;</div><div class="line">&#125;</div><div class="line">systemctl restart docker 之后</div></pre></td></tr></table></figure></p>
+<p>docker的工作目录就到了/workspace的目录下面</p>
+<h3 id="镜像目录"><a href="#镜像目录" class="headerlink" title="镜像目录"></a>镜像目录</h3><p>/workspace/docker_data/images</p>
+<h3 id="container目录"><a href="#container目录" class="headerlink" title="container目录"></a>container目录</h3><p>/workspace/docker_data/containers/</p>
+<h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>/workspace/docker_data/volumes</p>
+<ul>
+<li>管理命令<br>docker volume ls</li>
+</ul>
+<p>docker volume rm volume_name</p>
+<ul>
+<li>指定volume的挂载位置<br>指定挂在位置<br>docker run -itd -v /data/:/data1 centos  bash // -v 用来指定挂载目录,<br>-v的格式为<host path>:<container path></li>
+</ul>
+<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>docker login<br>位image添加标签  docker tag image username/repository:tag<br>docker tag test1 lesliefang/get-started:v.0</p>
+<p>docker image ls<br>会看到这个lesliefang/get-started:v.0 image</p>
+<p>上传<br>docker push username/repository:tag<br>登录docker hub 可以看到相关的信息<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/21/docker/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/深度学习知识点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -576,144 +762,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/创建和发布npm包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/05/创建和发布npm包/" itemprop="url">
-                  创建和发布npm包
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-05T21:13:16+08:00">
-                2017-08-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/05/创建和发布npm包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/05/创建和发布npm包/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="创建包"><a href="#创建包" class="headerlink" title="创建包"></a>创建包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//在初始化话时我们定义了module的入口文件是index.js</div><div class="line">//在初始化的时候输入的package的名字就是后面npm install时的名字，后面也可以再package.json里面修改</div><div class="line">npm init</div></pre></td></tr></table></figure>
-<p>在index.js中定义需要export出来的函数</p>
-<h2 id="发布包"><a href="#发布包" class="headerlink" title="发布包"></a>发布包</h2><p>新用户,先去npm的网站<a href="!https://npmjs.org/">注册</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//输入注册npm时的账号密码以及邮箱</div><div class="line">npm adduser</div><div class="line"></div><div class="line">//查看信息</div><div class="line">npm config ls</div><div class="line"></div><div class="line">//发布</div><div class="line">npm publish</div></pre></td></tr></table></figure>
-<h2 id="更新包"><a href="#更新包" class="headerlink" title="更新包"></a>更新包</h2><p>修改的原有的包的代码之后不可以直接publish的已有的仓库和版本当中,会提示我们没有权限复写已经publish的包<br>这时候需要修改package.json里面包的版本号</p>
-<p>在已经依赖于这个的包的用户这边<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm update</div></pre></td></tr></table></figure></p>
-<p>可以将使用的包更新的最新</p>
-<h2 id="包的使用"><a href="#包的使用" class="headerlink" title="包的使用"></a>包的使用</h2><p>需要使用这个package的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install pkg-name --save(--save-dev)</div></pre></td></tr></table></figure></p>
-<h2 id="删除已经发布的包"><a href="#删除已经发布的包" class="headerlink" title="删除已经发布的包"></a>删除已经发布的包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm unpublish [&lt;@scope&gt;/]&lt;pkg&gt;[@&lt;version&gt;]</div></pre></td></tr></table></figure>
-<h2 id="在Git上维护自己的包"><a href="#在Git上维护自己的包" class="headerlink" title="在Git上维护自己的包"></a>在Git上维护自己的包</h2><p>新建一个主分支和一个开发分支<br>每一部分开发完成开一个版本分支，将版本的分支publish到npm上面</p>
-<p>在develop分支上进行开发，开发完成切换到对应的版本的备选分支，review备选分支的代码，没有问题的话merge的备选分支里面<br>修改package.json里面的版本号，上传到git以及发布到npm<br>切回到develop分支进行新的开发</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -763,7 +811,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -776,7 +824,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

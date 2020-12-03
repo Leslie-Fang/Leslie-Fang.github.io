@@ -284,6 +284,140 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/eigen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/08/30/eigen/" itemprop="url">
+                  eigen
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T06:57:44+08:00">
+                2019-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/30/eigen/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/08/30/eigen/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>数值计算库，在tensorflow中作为默认的数学库</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>直接下载即可，不需要安装<br>全部都是头文件</p>
+<h2 id="测试安装"><a href="#测试安装" class="headerlink" title="测试安装"></a>测试安装</h2><p>编写 test.cc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Dense&gt;</div><div class="line">using Eigen::MatrixXd;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  MatrixXd m(2,2);</div><div class="line">  m(0,0) = 3;</div><div class="line">  m(1,0) = 2.5;</div><div class="line">  m(0,1) = -1;</div><div class="line">  m(1,1) = m(1,0) + m(0,1);</div><div class="line">  std::cout &lt;&lt; m &lt;&lt; std::endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译：<br>g++ -I ./eigen/eigen-eigen-323c052e1731 test.cc -o test</p>
+<h2 id="计算对数值"><a href="#计算对数值" class="headerlink" title="计算对数值"></a>计算对数值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Core&gt;</div><div class="line">#include &quot;Eigen/src/Core/functors/UnaryFunctors.h&quot;</div><div class="line">#include &lt;iomanip&gt;</div><div class="line">using namespace Eigen;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  double res = Eigen::internal::scalar_log_op&lt;double&gt;()(280.41303540865516);</div><div class="line">  std::cout &lt;&lt; res &lt;&lt; std::endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="修改数组"><a href="#修改数组" class="headerlink" title="修改数组"></a>修改数组</h2><p>使用unaryExpr的方法修改数组中的每个元素<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;Eigen/Core&gt;</div><div class="line">#include &quot;Eigen/src/Core/functors/UnaryFunctors.h&quot;</div><div class="line">#include &lt;iomanip&gt;</div><div class="line">using namespace Eigen;</div><div class="line">using namespace std;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">  Eigen::Matrix&lt;float, 100, 1&gt; tmp = Eigen::Matrix&lt;float, 100, 1&gt;::Constant(100, 1, 280.41303540865516);</div><div class="line">cout &lt;&lt; setprecision(8) &lt;&lt; tmp &lt;&lt; endl &lt;&lt; &quot;becomes: &quot; &lt;&lt; endl &lt;&lt; tmp.unaryExpr(internal::scalar_log_op&lt;float&gt;()) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>tensorflow的Log等去对数的函数就调用了<a href="http://eigen.tuxfamily.org/dox/classEigen_1_1ArrayBase.html#title85" target="_blank" rel="external">unaryExpr方法</a>去计算数组的每个元素的对数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#./tensorflow/core/kernels/cwise_ops_common.h:541:</div><div class="line">Assign(d, out, in.unaryExpr(typename Functor::func()));</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/python调用C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -537,150 +671,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/12/Intel-Intrinsic-Functions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/05/12/Intel-Intrinsic-Functions/" itemprop="url">
-                  Intel_Intrinsic_Functions
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-12T21:23:38+08:00">
-                2019-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/12/Intel-Intrinsic-Functions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/12/Intel-Intrinsic-Functions/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="SSE"><a href="#SSE" class="headerlink" title="SSE"></a>SSE</h3><p>128位的SIMD指令集<br><a href="https://blog.csdn.net/woxiaohahaa/article/details/51014425" target="_blank" rel="external">https://blog.csdn.net/woxiaohahaa/article/details/51014425</a><br>SSE有8个128位寄存器，XMM0 ~XMM7</p>
-<h3 id="AVX2"><a href="#AVX2" class="headerlink" title="AVX2"></a>AVX2</h3><p>AVX2 expands most integer commands to 256 bits and introduces fused multiply-accumulate (FMA) operations.<br>AVX uses sixteen YMM registers. Each YMM register contains:</p>
-<ul>
-<li>eight 32-bit single-precision floating point numbers or</li>
-<li>four 64-bit double-precision floating point numbers.</li>
-</ul>
-<h3 id="AVX512"><a href="#AVX512" class="headerlink" title="AVX512"></a>AVX512</h3><p>AVX-512 are 512-bit extensions to the 256-bit Advanced Vector Extensions SIMD instructions for x86 instruction set architecture (ISA)</p>
-<h3 id="一般的流程"><a href="#一般的流程" class="headerlink" title="一般的流程"></a>一般的流程</h3><p>参考这个知乎的回答<br><a href="https://www.zhihu.com/question/51206237" target="_blank" rel="external">https://www.zhihu.com/question/51206237</a></p>
-<ol>
-<li>load：将数据从内存载入到寄存器里面</li>
-<li>计算</li>
-<li>save, 将数据从寄存器写入到内存变量里面</li>
-</ol>
-<h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><p>Intrinsic functions 是直接提供给客户去调用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#include &lt;immintrin.h&gt;</div></pre></td></tr></table></figure></p>
-<p>每个Intrinsic函数封装了调用了一些汇编</p>
-<h3 id="api手册"><a href="#api手册" class="headerlink" title="api手册"></a>api手册</h3><p>查看这个link<br><a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/" target="_blank" rel="external">https://software.intel.com/sites/landingpage/IntrinsicsGuide/</a><br>打开一个函数，可以看到里面的汇编</p>
-<h3 id="反汇编查看"><a href="#反汇编查看" class="headerlink" title="反汇编查看"></a>反汇编查看</h3><p>示例代码：<br><a href="https://github.com/Leslie-Fang/Intel_Intrinsic_Functions" target="_blank" rel="external">https://github.com/Leslie-Fang/Intel_Intrinsic_Functions</a><br>在这个示例代码里面，调用了sse的_mm_add_ps(Intrinsic functions)去做加法，objdump -d main反汇编之后可以看到调用了addps的汇编指令，查看上面的API手册_mm_add_ps(Intrinsic functions)函数就是封装了这条指令</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -730,7 +720,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -743,7 +733,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

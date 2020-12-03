@@ -284,6 +284,226 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/03/tensorflow编译系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/12/03/tensorflow编译系统/" itemprop="url">
+                  tensorflow编译系统
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-03T21:57:07+08:00">
+                2020-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/12/03/tensorflow编译系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/12/03/tensorflow编译系统/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文以一组tensorflow的常用编译命令为例，去介绍tensorflow的编译系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export build_dir=$path_var #定义编译输出目录</div><div class="line">yes &quot;&quot; | python configure.py</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --config=opt --copt=-O3 -s //tensorflow/tools/pip_package:build_pip_package</div><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package $build_dir</div></pre></td></tr></table></figure></p>
+<h2 id="Step1"><a href="#Step1" class="headerlink" title="Step1"></a>Step1</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yes &quot;&quot; | python configure.py</div></pre></td></tr></table></figure></p>
+<p>执行configure.py脚本，主要作用是把编译选项写入.tf_configure.bazelrc 文件<br>.tf_configure.bazelrc文件会被.bazelrc 文件import<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">try-import %workspace%/.tf_configure.bazelrc</div></pre></td></tr></table></figure></p>
+<p>我的理解.bazelrc 文件里面定义的就是hardcode的编译选项<br>.tf_configure.bazelrc文件通过configure.py暴露了一些可配置的选项给用户去配置</p>
+<h2 id="Step2"><a href="#Step2" class="headerlink" title="Step2"></a>Step2</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel --output_user_root=$build_dir build --config=mkl --config=opt --copt=-O3 -s //tensorflow/tools/pip_package:build_pip_package</div></pre></td></tr></table></figure></p>
+<h3 id="解析编译命令"><a href="#解析编译命令" class="headerlink" title="解析编译命令"></a>解析编译命令</h3><ul>
+<li>根据–config的定义，解析.tf_configure.bazelrc 和 .bazelrc文件生成各个定义–define值</li>
+</ul>
+<h3 id="解析WORKSPACE文件"><a href="#解析WORKSPACE文件" class="headerlink" title="解析WORKSPACE文件"></a>解析WORKSPACE文件</h3><ul>
+<li><p>WORKSPACE 里面加载了tensorflow/workspace.bzl 的tf_repositories函数<br>tf_repositories函数里面定义了各种外部依赖，一旦被调用到就会执行tf_http_archive 函数去下载并解压各种依赖库(包括<strong>mkldnn</strong>）<br>tf_http_archive 是一个repository_rule（详见下面术语的解释），函数定义在//third_party:repo.bzl 文件里面<br><strong>注意</strong> 这里只是定义，不会立刻去下载，解压，只是定义了target，这个target一旦在某个地方呗调用到了，就会去执行下载，解压的操作</p>
+</li>
+<li><p>WORKSPACE 里面加载了load(“@bazel_tools//tools/build_defs/repo:http.bzl”, “http_archive”)<br>http_archive 函数也定义一些用于下载依赖的压缩包的target</p>
+</li>
+</ul>
+<h3 id="调用target目标"><a href="#调用target目标" class="headerlink" title="调用target目标"></a>调用target目标</h3><h4 id="build-pip-package-这个target"><a href="#build-pip-package-这个target" class="headerlink" title="build_pip_package 这个target"></a>build_pip_package 这个target</h4><p>//tensorflow/tools/pip_package:build_pip_package  找到 //tensorflow/tools/pip_package目录下面BUILD文件，找到build_pip_package name<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sh_binary(</div><div class="line">   name = &quot;build_pip_package&quot;,</div><div class="line">   srcs = [&quot;build_pip_package.sh&quot;],</div><div class="line">   data = COMMON_PIP_DEPS +</div><div class="line">          select(&#123;</div><div class="line">              &quot;//tensorflow:windows&quot;: [</div><div class="line">                  &quot;:simple_console_for_windows&quot;,</div><div class="line">              ],</div><div class="line">              &quot;//conditions:default&quot;: [</div><div class="line">                  &quot;:simple_console&quot;,</div><div class="line">              ],</div><div class="line">          &#125;) + if_mkl_ml([&quot;//third_party/mkl:intel_binary_blob&quot;]),</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>这里最主要的依赖是COMMON_PIP_DEPS，从这里会延伸到各个需要build的target上面<br>一条我认为比较重要的编译依赖链路：</p>
+<ul>
+<li>//tensorflow/tools/pip_package:build_pip_package</li>
+<li>COMMON_PIP_DEPS</li>
+<li>//tensorflow/python:while_v2</li>
+<li>//tensorflow/python:framework_ops</li>
+<li>//tensorflow/python:platform</li>
+<li>//tensorflow/python:lib</li>
+<li>//tensorflow/python:pywrap_tensorflow</li>
+<li>//tensorflow/python:pywrap_tensorflow_internal<br>从pywrap_tensorflow_internal会调用到各个C/C++ 实现的依赖(core,kernel,op)上面</li>
+</ul>
+<p>接上面看下怎么调用到下载编译mkldnn</p>
+<ul>
+<li>//tensorflow/c:c_api</li>
+<li>//tensorflow/c:c_api_internal</li>
+<li>//tensorflow/core:core_cpu</li>
+<li>//tensorflow/core/common_runtime:core_cpu</li>
+<li>mkl_deps()<br>如下面的解释，mkl_deps函数定义在third_party/mkl/build_defs.bzl 会去下载和编译MKKLDNN</li>
+</ul>
+<h2 id="Step3"><a href="#Step3" class="headerlink" title="Step3"></a>Step3</h2><p>命令：打包生成wheel包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package $build_dir</div></pre></td></tr></table></figure></p>
+<p>调用step2生成的target去打包生成wheel文件</p>
+<h2 id="各个文件的作用"><a href="#各个文件的作用" class="headerlink" title="各个文件的作用"></a>各个文件的作用</h2><ul>
+<li><p>.bazelrc<br>bazel build的时候会从.bazelrc文件里面提取编译定义选项</p>
+</li>
+<li><p>WORKSPACE<br>workspace文件，一个项目只有一个workspace文件</p>
+</li>
+<li><p>BUILD<br>每个目录都有一个BUILD文件，里面定义了这个目录需要包含的所有target<br>比如这个target： //tensorflow/tools/pip_package:build_pip_package  就在//tensorflow/tools/pip_package/BUILD文件里面定义<br>BUILD文件可以去引用别的BUILD文件里面定义的target</p>
+</li>
+<li><p>build_defs.bzl<br>一般定义了一些函数，可以被BUILD文件load去使用</p>
+</li>
+</ul>
+<h2 id="bazel-build的各个关键字"><a href="#bazel-build的各个关键字" class="headerlink" title="bazel build的各个关键字"></a>bazel build的各个关键字</h2><h3 id="Build命令中的关键字"><a href="#Build命令中的关键字" class="headerlink" title="Build命令中的关键字"></a>Build命令中的关键字</h3><p><a href="https://docs.bazel.build/versions/master/user-manual.html" target="_blank" rel="external">https://docs.bazel.build/versions/master/user-manual.html</a></p>
+<ul>
+<li>–config 用来使能bazelrc文件里面的选项 <strong>-c的选项有可能是–config的缩写</strong><br>参考一部分.bazelrc 文件关于mkl的编译部分：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># Please note that MKL on MacOS or windows is still not supported.</div><div class="line"># If you would like to use a local MKL instead of downloading, please set the</div><div class="line"># environment variable &quot;TF_MKL_ROOT&quot; every time before build.</div><div class="line">build:mkl --define=build_with_mkl=true --define=enable_mkl=true</div><div class="line">build:mkl --define=tensorflow_mkldnn_contraction_kernel=0</div><div class="line">build:mkl --define=build_with_openmp=true</div><div class="line">build:mkl -c opt</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>build 后面接的都是默认生效的编译参数<br>build:mkl 后面接的编译参数只有当bazel build –config=mkl的时候mkl后面的编译参数才会起作用</p>
+<ul>
+<li><p>–copt： This option takes an argument which is to be passed to the compiler. 所以–copt后面传进来的都是gcc或者是icc的编译参数</p>
+</li>
+<li><p>–strip 是否删除debug信息，never表示不删除debug信息<br>默认值是sometimes表示取决于其它选项<br>always表示会删除<br><a href="https://docs.bazel.build/versions/master/user-manual.html#flag--strip" target="_blank" rel="external">https://docs.bazel.build/versions/master/user-manual.html#flag--strip</a></p>
+</li>
+</ul>
+<h3 id="build和bazel文件里面的关键字"><a href="#build和bazel文件里面的关键字" class="headerlink" title="build和bazel文件里面的关键字"></a>build和bazel文件里面的关键字</h3><ul>
+<li><p>–define=var=val 定义一个变量var，它的值是val</p>
+</li>
+<li><p>config_setting 根据bazel build传入的参数定义对应的变量<br>这个例子解释的很好</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">config_setting(</div><div class="line">    name = &quot;x86_mode&quot;,</div><div class="line">    values = &#123; &quot;cpu&quot;: &quot;x86&quot; &#125;</div><div class="line">)</div><div class="line">config_setting(</div><div class="line">    name = &quot;arm_mode&quot;,</div><div class="line">    values = &#123; &quot;cpu&quot;: &quot;arm&quot; &#125;</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果我们<br>bazel build target –cpu x86 那么x86_mode 这个变量就被定义了<br>bazel build target –cpu arm 那么arm_mode 这个变量就被定义了</p>
+<ul>
+<li><p>http_archive<br>定义在@bazel_tools//tools/build_defs/repo:http.bzl里面，用来下载压缩包<br><a href="https://docs.bazel.build/versions/master/repo/http.html#http_archive" target="_blank" rel="external">https://docs.bazel.build/versions/master/repo/http.html#http_archive</a></p>
+</li>
+<li><p>load<br>去载入别的工具或者target<br>@： 表示从bazel默认的工具目录开始找<br>//： 表示从当前workspace的根目录开始找</p>
+</li>
+<li><p>repository_rule<br><a href="https://docs.bazel.build/versions/master/skylark/repository_rules.html" target="_blank" rel="external">https://docs.bazel.build/versions/master/skylark/repository_rules.html</a><br>例子：<br>比如mkldnn的下载:<br>workspace.bzl 文件里面定义了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">tf_http_archive(</div><div class="line">    name = &quot;mkl_dnn_v1&quot;,</div><div class="line">    build_file = clean_dep(&quot;//third_party/mkl_dnn:mkldnn_v1.BUILD&quot;),</div><div class="line">    sha256 = &quot;5369f7b2f0b52b40890da50c0632c3a5d1082d98325d0f2bff125d19d0dcaa1d&quot;,</div><div class="line">    strip_prefix = &quot;oneDNN-1.6.4&quot;,</div><div class="line">    urls = [</div><div class="line">    ],</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>third_party/mkl/build_defs.bzl 定义了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def mkl_deps():</div><div class="line">    &quot;&quot;&quot;Shorthand for select() to pull in the correct set of MKL library deps.</div><div class="line"></div><div class="line">    Can pull in MKL-ML, MKL-DNN, both, or neither depending on config settings.</div><div class="line"></div><div class="line">    Returns:</div><div class="line">      a select evaluating to a list of library dependencies, suitable for</div><div class="line">      inclusion in the deps attribute of rules.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    return select(&#123;</div><div class="line">        &quot;@org_tensorflow//third_party/mkl:build_with_mkl&quot;: [&quot;@mkl_dnn_v1//:mkl_dnn&quot;],</div><div class="line">        &quot;@org_tensorflow//third_party/mkl:build_with_mkl_aarch64&quot;: [&quot;@mkl_dnn_v1//:mkl_dnn_aarch64&quot;],</div><div class="line">        &quot;//conditions:default&quot;: [],</div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+<p>所以在某个地方调用到了mkl_deps()函数，此时如果–define=build_with_mkl=true 被定义了(通过.bazelrc文件)， [“@mkl_dnn_v1//:mkl_dnn”] 就会作为一个依赖被返回<br>作为依赖，[“@mkl_dnn_v1//:mkl_dnn”] 就会被执行<br>这里的@mkl_dnn_v1 就是通过repository_rule(tf_http_archive(name = “mkl_dnn_v1”))定义的</p>
+<h2 id="Example1：build-pip-package的target"><a href="#Example1：build-pip-package的target" class="headerlink" title="Example1：build_pip_package的target"></a>Example1：build_pip_package的target</h2><p>这是个例子和解释是关于如何去阅读bazel的编译文件，<strong>这个例子并不是在讲mkldnn的target是如何被编译到的</strong></p>
+<p>//tensorflow/tools/pip_package:build_pip_package  找到 //tensorflow/tools/pip_package目录下面BUILD文件，找到build_pip_package name<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sh_binary(</div><div class="line">   name = &quot;build_pip_package&quot;,</div><div class="line">   srcs = [&quot;build_pip_package.sh&quot;],</div><div class="line">   data = COMMON_PIP_DEPS +</div><div class="line">          select(&#123;</div><div class="line">              &quot;//tensorflow:windows&quot;: [</div><div class="line">                  &quot;:simple_console_for_windows&quot;,</div><div class="line">              ],</div><div class="line">              &quot;//conditions:default&quot;: [</div><div class="line">                  &quot;:simple_console&quot;,</div><div class="line">              ],</div><div class="line">          &#125;) + if_mkl_ml([&quot;//third_party/mkl:intel_binary_blob&quot;]),</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>src里面可以看到会去执行build_pip_package.sh 脚本</li>
+<li>data symbol的含义：<a href="https://docs.bazel.build/versions/master/be/common-definitions.html#common.data" target="_blank" rel="external">https://docs.bazel.build/versions/master/be/common-definitions.html#common.data</a>, data 后面跟着的就是这个target所有需要的文件<br>COMMON_PIP_DEPS 在同一个文件里面定义了一系列的依赖</li>
+<li><p>select：  {conditionA: valuesA, conditionB: valuesB, …} 格式，满足条件A就执行值A :<a href="https://docs.bazel.build/versions/master/be/functions.html#select" target="_blank" rel="external">https://docs.bazel.build/versions/master/be/functions.html#select</a><br>config_setting根据bazel build传入的参数定义对应的变量<br>select根据config_setting定义的变量选择对应的表达式<br>select只能返回一个满足条件的选项，的时候如果多个条件都满足，选择一个条件最严苛的（子集）。如果几个满足条件的选项是并列的关系，bazel直接fail</p>
+</li>
+<li><p>if_mkl_ml 是一个函数<br>加载//third_party/mkl/build_defs.bzl 文件，并且把这个文件里面的if_mkl，if_mkl_ml添加到当前BUILD文件中<br>在这里被加载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">load(&quot;//third_party/mkl:build_defs.bzl&quot;, &quot;if_mkl&quot;, &quot;if_mkl_ml&quot;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>看 if_mkl_ml 函数的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def if_mkl_ml(if_true, if_false = []):</div><div class="line">    &quot;&quot;&quot;Shorthand for select()&apos;ing on whether we&apos;re building with MKL-ML.</div><div class="line"></div><div class="line">    Args:</div><div class="line">      if_true: expression to evaluate if building with MKL-ML.</div><div class="line">      if_false: expression to evaluate if building without MKL-ML</div><div class="line">        (i.e. without MKL at all, or with MKL-DNN only).</div><div class="line"></div><div class="line">    Returns:</div><div class="line">      a select evaluating to either if_true or if_false as appropriate.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    return select(&#123;</div><div class="line">        &quot;@org_tensorflow//third_party/mkl_dnn:build_with_mkl_opensource&quot;: if_false,</div><div class="line">        &quot;@org_tensorflow//third_party/mkl:build_with_mkl&quot;: if_true,</div><div class="line">        &quot;//conditions:default&quot;: if_false,</div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+<p>看这个函数@org_tensorflow//third_party/mkl:build_with_mkl<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">config_setting(</div><div class="line">    name = &quot;build_with_mkl&quot;,</div><div class="line">    define_values = &#123;</div><div class="line">        &quot;build_with_mkl&quot;: &quot;true&quot;,</div><div class="line">    &#125;,</div><div class="line">    visibility = [&quot;//visibility:public&quot;],</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>如果定义了build_with_mkl (build_with_mkl是在.bazelrc里面，如果–config=mkl就会被定义)，这个config_setting(name = “build_with_mkl”)就会被定义，所以”@org_tensorflow//third_party/mkl:build_with_mkl”存在(满足条件)，if_true就会返回，if_true是传进来的参数在这里就对应了 //third_party/mkl:intel_binary_blob 这个依赖</p>
+<h4 id="intel-binary-blob-这个target"><a href="#intel-binary-blob-这个target" class="headerlink" title="intel_binary_blob 这个target"></a>intel_binary_blob 这个target</h4><p>intel_binary_blob 定义在 //third_party/mkl/BUILD<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">cc_library(</div><div class="line">    name = &quot;intel_binary_blob&quot;,</div><div class="line">    visibility = [&quot;//visibility:public&quot;],</div><div class="line">    deps = select(&#123;</div><div class="line">        &quot;@org_tensorflow//tensorflow:linux_x86_64&quot;: [</div><div class="line">            &quot;:mkl_libs_linux&quot;,</div><div class="line">        ],</div><div class="line">        &quot;@org_tensorflow//tensorflow:macos&quot;: [</div><div class="line">            &quot;:mkl_libs_darwin&quot;,</div><div class="line">        ],</div><div class="line">        &quot;@org_tensorflow//tensorflow:windows&quot;: [</div><div class="line">            &quot;:mkl_libs_windows&quot;,</div><div class="line">        ],</div><div class="line">        &quot;//conditions:default&quot;: [],</div><div class="line">    &#125;),</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>这里依赖于mkl_libs_linux</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/图计算/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -569,143 +789,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/20/tensorflow-lite/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2020/09/20/tensorflow-lite/" itemprop="url">
-                  tensorflow_lite
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-20T18:53:55+08:00">
-                2020-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/09/20/tensorflow-lite/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/09/20/tensorflow-lite/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>tfllite 有两个部分组成:</p>
-<p>convert: 用于将模型转换成tflite格式,可以从keras模型，也可以从各种tf1.x的模型转换出来(比如save model, pb model)<br>interpreter: tflite 运行时，调试的时候可以直接用集成在tf里面，部署的时候有单独的whl包作为更小的一个运行时(<a href="https://www.tensorflow.org/lite/guide/python">https://www.tensorflow.org/lite/guide/python</a>)</p>
-<h2 id="转换模型"><a href="#转换模型" class="headerlink" title="转换模型"></a>转换模型</h2><p>推荐用SavedModel的格式<br><a href="https://www.tensorflow.org/lite/guide/get_started#2_convert_the_model_format">https://www.tensorflow.org/lite/guide/get_started#2_convert_the_model_format</a><br><a href="https://www.tensorflow.org/lite/convert">https://www.tensorflow.org/lite/convert</a></p>
-<p>TF1.x<br><a href="https://www.tensorflow.org/api_docs/python/tf/compat/v1/lite/TFLiteConverter#from_frozen_graph">https://www.tensorflow.org/api_docs/python/tf/compat/v1/lite/TFLiteConverter#from_frozen_graph</a><br><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/r1/convert/python_api.md#checkpoints">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/r1/convert/python_api.md#checkpoints</a></p>
-<h2 id="如何单独编译tflite的运行时"><a href="#如何单独编译tflite的运行时" class="headerlink" title="如何单独编译tflite的运行时"></a>如何单独编译tflite的运行时</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># only build C++ so</div><div class="line">bazel --output_user_root=$build_dir build -c opt //tensorflow/lite:tensorflowlite</div><div class="line"></div><div class="line"># Build whl package</div><div class="line">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/pip_package</div><div class="line"># install dependecy and run script</div><div class="line">yum install swig libjpeg-devel</div><div class="line"></div><div class="line">pip install numpy pybind11</div><div class="line">tensorflow/lite/tools/make/download_dependencies.sh</div><div class="line">tensorflow/lite/tools/pip_package/build_pip_package.sh</div><div class="line"></div><div class="line">从中setup.py提取出C++ build的命令</div><div class="line">make SHELL=/bin/bash BUILD_WITH_NNAPI=false BUILD_WITH_RUY=true -C /home/lesliefang/tflite/tensorflow_test/tensorflow-2.3.0 -f tensorflow/lite/tools/make/Makefile -j 220</div><div class="line"></div><div class="line">看build_pip_package.sh 的输出日志或者</div><div class="line">在代码目录下搜索：tflite_runtime-2.1.0-cp36-cp36m-linux_x86_64.whl</div><div class="line">可以找到对应的生成的whl package</div></pre></td></tr></table></figure>
-<p>一个tflite模型可以被多个解释器调用，每个解释器需要独占一个线程(多线程不能共享解释器)</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/09/20/tensorflow-lite/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -755,7 +838,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -768,7 +851,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
