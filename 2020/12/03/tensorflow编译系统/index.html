@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/2020/12/03/tensorflow编译系统/index.html">
 <meta property="og:site_name" content="沉思语录">
 <meta property="og:description" content="介绍本文以一组tensorflow的常用编译命令为例，去介绍tensorflow的编译系统1234export build_dir=$path_var #定义编译输出目录yes &amp;quot;&amp;quot; | python configure.pybazel --output_user_root=$build_dir build --config=mkl --config=opt --copt=-O">
-<meta property="og:updated_time" content="2020-12-03T13:57:59.156Z">
+<meta property="og:updated_time" content="2020-12-07T12:44:03.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow编译系统">
 <meta name="twitter:description" content="介绍本文以一组tensorflow的常用编译命令为例，去介绍tensorflow的编译系统1234export build_dir=$path_var #定义编译输出目录yes &amp;quot;&amp;quot; | python configure.pybazel --output_user_root=$build_dir build --config=mkl --config=opt --copt=-O">
@@ -404,6 +404,7 @@
 <li>//tensorflow/core/common_runtime:core_cpu</li>
 <li>mkl_deps()<br>如下面的解释，mkl_deps函数定义在third_party/mkl/build_defs.bzl 会去下载和编译MKKLDNN</li>
 </ul>
+<a id="more"></a>
 <h2 id="Step3"><a href="#Step3" class="headerlink" title="Step3"></a>Step3</h2><p>命令：打包生成wheel包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bazel-bin/tensorflow/tools/pip_package/build_pip_package $build_dir</div></pre></td></tr></table></figure></p>
 <p>调用step2生成的target去打包生成wheel文件</p>
 <h2 id="各个文件的作用"><a href="#各个文件的作用" class="headerlink" title="各个文件的作用"></a>各个文件的作用</h2><ul>
