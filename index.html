@@ -284,6 +284,185 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/04/pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2021/01/04/pytorch/" itemprop="url">
+                  pytorch
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-04T19:41:26+08:00">
+                2021-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/01/04/pytorch/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2021/01/04/pytorch/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git clone --recursive *.git</div><div class="line"></div><div class="line">如果要修改已有的checkin</div><div class="line">rm -rf third_party</div><div class="line">git submodule sync</div><div class="line">git submodule update --init --recursive</div><div class="line"></div><div class="line">## Build</div><div class="line">python setup.py build</div><div class="line">python setup.py install</div><div class="line">python setup.py clean --all</div><div class="line"></div><div class="line">生成wheel包</div><div class="line">python setup.py bdist_wheel</div></pre></td></tr></table></figure>
+<p>quantized::linear python 接口定义在<br>torch/nn/quantized/modules/linear.py</p>
+<h3 id="Pytorch-运行单元测试"><a href="#Pytorch-运行单元测试" class="headerlink" title="Pytorch 运行单元测试"></a>Pytorch 运行单元测试</h3><p><a href="https://github.com/pytorch/pytorch/tree/master/benchmarks/operator_benchmark">https://github.com/pytorch/pytorch/tree/master/benchmarks/operator_benchmark</a><br>numactl -c 0 -m 0 python -m pt.qlinear_test –omp_num_threads 28 –mkl_num_threads 28</p>
+<p>运行FBGEMM的benchmark<br>FBGEMM的run to run 变化很大，因为它会自动cflush去刷新内存</p>
+<h3 id="Python-和C-之间的接口"><a href="#Python-和C-之间的接口" class="headerlink" title="Python 和C++之间的接口"></a>Python 和C++之间的接口</h3><h4 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h4><p>pytorch里面有两种方式：</p>
+<ul>
+<li>使用pybind11</li>
+<li>直接使用CPython，python.h 以及使用pyobject*，ATEN相关的函数映射(如下面提高的conv2d)是用这种方式实现的</li>
+</ul>
+<h4 id="conv2d的例子"><a href="#conv2d的例子" class="headerlink" title="conv2d的例子"></a>conv2d的例子</h4><p>通过conv2d的例子来看下python和C++之间的接口层：</p>
+<ul>
+<li>torch/nn/modules/conv.py -&gt; nn.Conv2d<br>调用了F.conv2d</li>
+<li>torch/nn/functional.py -&gt; conv2d<br>这个函数里面调用到了 torch.conv2d， 这个实现在C++里面</li>
+<li>torch/csrc/autograd/generated/python_torch_functions.cpp -&gt; THPVariable_conv2d<br>generated 目录下面的文件都是在编译时生成的，python_torch_functions.cpp文件生成过程的细节参考下面的section<br>这里简单看一下这个文件的做函数映射的内容：<br>python_torch_functions.cpp的PyMethodDef torch_functions[]里面定义了映射关系，从而将torch.conv2d 映射到了函数THPVariable_conv2d<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&quot;conv2d&quot;, (PyCFunction)(void(*)(void))THPVariable_conv2d, METH_VARARGS | METH_KEYWORDS | METH_STATIC, NULL&#125;,</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>THPVariable_conv2d 调用lambda函数dispatch_conv2d，进一步调用到函数at::conv2d</p>
+<ul>
+<li>aten/src/ATen/native/Convolution.cpp -&gt; at::conv2d</li>
+<li>aten/src/ATen/native/Convolution.cpp -&gt; at::convolution</li>
+<li>aten/src/ATen/native/Convolution.cpp -&gt; at::_convolution<br>这个函数会将卷积派发到mkldnn或者cuda去直接计算,下面先看mkldnn的部分</li>
+<li>aten/src/ATen/native/mkldnn/Conv.cpp -&gt; at::mkldnn_convolution</li>
+<li>aten/src/ATen/native/mkldnn/Conv.cpp -&gt; at::_mkldnn_conv2d</li>
+<li>ideep/computations.hpp -&gt; compute_impl<br><strong>compute_impl 是convolution_forward 这个结构体的成员函数</strong><br>看一下compute_impl这个函数的细节，如何创建mkldnn的Primitive和执行计算：<br>首先是计算一些mkldnn创建PD需要的参数，然后将这些参数传入这个重点函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fetch_or_create_m(comp, key, src_desc, weights_desc, bias_desc, dst_desc_in, strides, dilates,</div><div class="line">        padding_l, padding_r, op_attr, std::forward&lt;Ts&gt;(args)...);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>fetch_or_create_m 定义在ideep/include/ideep/lru_cache.hpp 里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#define fetch_or_create_m(op, key, ...)                 \</div><div class="line">    auto it = find(key);                                \</div><div class="line">    if (it == end()) &#123; it = create(key, __VA_ARGS__); &#125; \</div><div class="line">    auto op = fetch(it);</div></pre></td></tr></table></figure></p>
+<p>进一步跟进fetch_or_create_m函数，发现调用到了computation_cache::create 方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">auto it = t_store().insert(std::make_pair(key,value_t(std::forward&lt;Ts&gt;(args)...)));</div></pre></td></tr></table></figure></p>
+<p>value_t(std::forward<Ts>(args)…)) 就是进入了创建primitive的函数<br>value_t是通过computation_cache的模板传入的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">template &lt;class value_t, size_t capacity = 1024, class key_t = std::string&gt;</div><div class="line">class computation_cache &#123;</div></pre></td></tr></table></figure></p>
+<p>同时注意到，compute_impl是convolution_forward结构体的成员函数，convolution_forward结构体继承了computation 以及computation_cache 结构体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">struct convolution_forward: public computation,</div><div class="line">  public utils::computation_cache&lt;convolution_forward&gt;</div></pre></td></tr></table></figure></p>
+<p>所以这里的value_t就是convolution_forward<br>这里通过value_t 去创建了一个convolution_forward的结构体的对象，然后存入到primitive cache里面，方便后面再次调用，避免重复创建</p>
+<ul>
+<li>ideep/computations.hpp::convolution_forward 的构造函数 convolution_forward<br>convolution_forward 结构体继承自computation结构体，继承自primitive_group结构体，继承自c_wrapper<mkldnn_primitive_t><br>这个构造函数，做了两件事情<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">descriptor forward_descriptor(src_desc, std::forward&lt;Ts&gt;(args)...); #descriptor 继承自primitive descriptor,这里创建了对应的pd</div><div class="line">computation::init(forward_descriptor); #这里通过PD去创建primitive</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="细节python-torch-functions-cpp"><a href="#细节python-torch-functions-cpp" class="headerlink" title="细节python_torch_functions.cpp"></a>细节python_torch_functions.cpp</h4><p>来具体看下python_torch_functions.cpp 这个文件是如何生成的：<br><strong>主要做的事情就是读取yaml文件的内容，去替换template文件对应的部分，生成新的文件</strong></p>
+<p>build的时候会去执行这个脚本tools/setup_helpers/generate_code.py<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">build/build.ninja:41358:  COMMAND = cd /home/lesliefang/pytorch/pytorch &amp;&amp; /home/lesliefang/pytorch/anaconda3/envs/pytorch_leslie/bin/python tools/setup_helpers/generate_code.py --declarations-path /home/lesliefang/pytorch/pytorch/build/aten/src/ATen/Declarations.yaml --nn-path aten/src</div></pre></td></tr></table></figure></p>
+<p><strong>/home/lesliefang/pytorch/pytorch/build/aten/src/ATen/Declarations.yaml 这个文件和torch/share/ATen/Declarations.yaml 是一个文件</strong>，例如conv2d的函数就是申明在这个文件里面，通过查这个yaml文件，我们就可以知道Python函数名和C++函数名之间的映射关系</p>
+<ul>
+<li>tools/setup_helpers/generate_code.py:main -&gt;</li>
+<li>tools/setup_helpers/generate_code.py:generate_code -&gt;</li>
+<li>tools/autograd/gen_autograd.py:gen_autograd_python -&gt;<br>这个函数首先通过去载入Declarations.yaml文件去解析所有的函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aten_decls = load_aten_declarations(aten_path)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>然后调用gen_py_torch_functions</p>
+<ul>
+<li>tools/autograd/gen_python_functions.py:gen_py_torch_functions<br>在这个函数里面去创建了python_torch_functions.cpp 文件<br>第一步：这个函数首先读取templates目录下面python_torch_functions.cpp的同名模板文件<br>第二步：然后通过get_py_torch_functions函数解析yaml文件里面的声明函数，创建py_torch_functions列表<br>第三步：调用create_python_bindings 函数进一步格式化yaml文件中读到的内容<br>第四步：调用wirte函数去创建torch/csrc/autograd/generated/python_torch_functions.cpp 文件，用yaml文件里面解析到的内容去替换template文件对应的位置</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/01/04/pytorch/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/03/tensorflow编译系统/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -610,151 +789,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/26/tensorflow-benchmark-机制分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2020/09/26/tensorflow-benchmark-机制分析/" itemprop="url">
-                  tensorflow_benchmark_机制分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-26T21:47:29+08:00">
-                2020-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/09/26/tensorflow-benchmark-机制分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/09/26/tensorflow-benchmark-机制分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文介绍Tensorflow Op 级别的benchmark的用法以及代码调用</p>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">* 编译并运行</div><div class="line">bazel --output_user_root=$build_dir run --config=mkl --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test --benchmarks=../</div><div class="line"></div><div class="line">* 先编译再运行</div><div class="line">bazel --output_user_root=$build_dir build --config=mkl --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test</div><div class="line">设置环境变量</div><div class="line">TF_NUM_INTEROP_THREADS=1 TF_NUM_INTRAOP_THREADS=28 OMP_NUM_THREADS=28</div><div class="line">numactl --localalloc --physcpubind 0-27 ./bazel-bin/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test --benchmarks=../</div><div class="line"></div><div class="line">* 编译静态链接可移植的二进制</div><div class="line">bazel --output_user_root=$build_dir build --config=monolithic --copt=-O3 //tensorflow/core/kernels/image:non_max_suppression_op_benchmark_test</div></pre></td></tr></table></figure>
-<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="Benchmark文件"><a href="#Benchmark文件" class="headerlink" title="Benchmark文件"></a>Benchmark文件</h3><p><a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test.cc">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/kernels/image/non_max_suppression_op_benchmark_test.cc</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#define BM_CombinedNonMaxSuppressionDev(DEVICE, B, BN, CN, Q)                \</div><div class="line">  static void BM_CombinedNMS_##DEVICE##_##B##_##BN##_##CN##_##Q(int iters) &#123; \</div><div class="line">    testing::ItemsProcessed(iters* B);                                       \</div><div class="line">    test::Benchmark(#DEVICE, BM_CombinedNonMaxSuppression(B, BN, CN, Q))     \</div><div class="line">        .Run(iters);                                                         \</div><div class="line">  &#125;                                                                          \</div><div class="line">  BENCHMARK(BM_CombinedNMS_##DEVICE##_##B##_##BN##_##CN##_##Q);</div></pre></td></tr></table></figure></p>
-<h3 id="封装构造testing-Benchmark"><a href="#封装构造testing-Benchmark" class="headerlink" title="封装构造testing::Benchmark"></a>封装构造testing::Benchmark</h3><h4 id="Step1"><a href="#Step1" class="headerlink" title="Step1:"></a>Step1:</h4><p>BENCHMARK(BM<em>CombinedNMS</em>##DEVICE##<em>##B##</em>##BN##<em>##CN##</em>##Q);</p>
-<h4 id="Step2-注册benchmark-进入all-benchmark这个全局变量"><a href="#Step2-注册benchmark-进入all-benchmark这个全局变量" class="headerlink" title="Step2 注册benchmark 进入all_benchmark这个全局变量:"></a>Step2 注册benchmark 进入all_benchmark这个全局变量:</h4><p><a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.h#L28-L33">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.h#L28-L33</a></p>
-<ul>
-<li>TF_ATTRIBUTE_UNUSED <strong>attribute</strong>((unused)) 忽略GCC 告警： <a href="https://www.jianshu.com/p/21aef14340a8">https://www.jianshu.com/p/21aef14340a8</a></li>
-<li>new ::tensorflow::testing::Benchmark(#n, (n)) 将这个函数注册到all_benchmark这个全局变量里面 里面 <a href="https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43">https://github.com/tensorflow/tensorflow/blob/e8598ce0454c440fca64e4ebc4aeedfa7afd5c97/tensorflow/core/platform/default/test_benchmark.cc#L39-L43</a></li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/09/26/tensorflow-benchmark-机制分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -799,7 +838,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-count">82</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -812,7 +851,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -854,7 +893,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

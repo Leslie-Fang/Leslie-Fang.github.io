@@ -284,6 +284,153 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/wnd代码阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leslie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/popeve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沉思语录">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/03/16/wnd代码阅读/" itemprop="url">
+                  wnd代码阅读
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T21:56:54+08:00">
+                2019-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/16/wnd代码阅读/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/16/wnd代码阅读/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="两个工具"><a href="#两个工具" class="headerlink" title="两个工具"></a>两个工具</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//tensorflow/tools/graph_transforms:transform_graph</div><div class="line">//tensorflow/tools/graph_transforms:summarize_graph</div><div class="line"></div><div class="line">看对应的代码</div><div class="line">summarize_graph_main.cc</div><div class="line">transform_graph_main.cc</div></pre></td></tr></table></figure>
+<p>summarize这个工具代码比较简单，主要用来打印出所有的节点的名字<br>transform才是用来对计算图进行转换，这个很重要</p>
+<h2 id="看transform-graph-main-cc"><a href="#看transform-graph-main-cc" class="headerlink" title="看transform_graph_main.cc"></a>看transform_graph_main.cc</h2><h3 id="ParseFlagsAndTransformGraph-解析命令行参数"><a href="#ParseFlagsAndTransformGraph-解析命令行参数" class="headerlink" title="ParseFlagsAndTransformGraph 解析命令行参数"></a>ParseFlagsAndTransformGraph 解析命令行参数</h3><p>调用ParseTransformParameters解析–transforms传进来的所有要执行的转换操作<br>TransformGraph正式执行转换</p>
+<h3 id="ParseTransformParameters"><a href="#ParseTransformParameters" class="headerlink" title="ParseTransformParameters"></a>ParseTransformParameters</h3><p>调用scanner去解析–transforms传进来的文本</p>
+<h3 id="TransformGraph"><a href="#TransformGraph" class="headerlink" title="TransformGraph"></a>TransformGraph</h3><p>遍历–transforms传进来的所有操作<br>调用<br>Status transform_result =<br>    transform_func(*graph_def, context, &amp;transformed_graph_def);去执行转换<br>transform_func时通过GetTransformRegistry仓库拿到的</p>
+<h3 id="GetTransformRegistry"><a href="#GetTransformRegistry" class="headerlink" title="GetTransformRegistry"></a>GetTransformRegistry</h3><p>有个TransformRegistry对象<br>TransformRegistrar类是个仓库<br>调用REGISTER_GRAPH_TRANSFORM往仓库里面注册transform的操作</p>
+<p>代码里grep -rni “REGISTER_GRAPH_TRANSFORM”<br>可以看到所有注册操作的地方</p>
+<p>看具体注册的操作<br>grep -rni “REGISTER_GRAPH_TRANSFORM(\”fuse_quantized_matmul_and_requantize”</p>
+<h2 id="一个转换的例子："><a href="#一个转换的例子：" class="headerlink" title="一个转换的例子："></a>一个转换的例子：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ $TF_SRC_ROOT/bazel-bin/tensorflow/tools/graph_transforms/transform_graph \</div><div class="line">--in_graph=a.pb \</div><div class="line">--out_graph=b.pb \</div><div class="line">--inputs=&apos;Placeholder*&apos; \</div><div class="line">--outputs=&apos;Output&apos;  \</div><div class="line">--transforms=&apos;strip_unused_nodes&apos;</div></pre></td></tr></table></figure>
+<h3 id="先看strip-unused-nodes操作"><a href="#先看strip-unused-nodes操作" class="headerlink" title="先看strip_unused_nodes操作"></a>先看strip_unused_nodes操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-bash-4.2# grep -rni &quot;REGISTER_GRAPH_TRANSFORM(\&quot;strip&quot;</div><div class="line">tensorflow/tools/graph_transforms/strip_unused_nodes.cc:192:REGISTER_GRAPH_TRANSFORM(&quot;strip_unused_nodes&quot;, StripUnusedNodes);</div></pre></td></tr></table></figure>
+<h2 id="看模型"><a href="#看模型" class="headerlink" title="看模型"></a>看模型</h2><p>运行读取pb<br>tensorboard –logdir log/<br>对比INT8和FP32两个模型，发现主要区别在DNN模型上面</p>
+<h2 id="INT8-DNN-模型"><a href="#INT8-DNN-模型" class="headerlink" title="INT8 DNN 模型"></a>INT8 DNN 模型</h2><p>TF 代码使用分支:<br>git checkout remotes/origin/dungeon_wnd</p>
+<p>INT8 DNN从tensorboard上面看到调用op是<br>QuantizedMatMulWithBiasAndReluAndRequantize</p>
+<p>在代码里面grep这个op<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tensorflow/core/kernels/mkl_qmatmul_op.cc:1182:REGISTER_KERNEL_BUILDER(Name(&quot;QuantizedMatMulWithBiasAndReluAndRequantize&quot;)</div><div class="line">tensorflow/core/kernels/mkl_qmatmul_op.cc:1190:REGISTER_KERNEL_BUILDER(Name(&quot;QuantizedMatMulWithBiasAndReluAndRequantize&quot;)</div></pre></td></tr></table></figure></p>
+<p>但是这两个op对应的实现都是NoOp<br>在计算启动的时候进过mkl层添加_Mkl前缀</p>
+<h2 id="如何具体看MKLDNN的调用关系"><a href="#如何具体看MKLDNN的调用关系" class="headerlink" title="如何具体看MKLDNN的调用关系"></a>如何具体看MKLDNN的调用关系</h2><h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><p>首先export MKLDNN_VERBOSE=1<br>运行代码，得到mkldnn调用到的具体的kernel的名字，比如igemm_s8u8s32:blas</p>
+<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><p>在代码里面搜索igemm_s8u8s32:blas，得到对应的执行的代码在gemm_x8s8s32x_inner_product.cpp第62行的generate函数去执行</p>
+<h3 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h3><p>编译debug版本的tensorflow，gdb调试，断点打在gemm_x8s8s32x_inner_product.cpp第62行<br>bt 去看调用栈<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#0  mkldnn::impl::cpu::gemm_x8s8s32x_inner_product_fwd_t&lt;(mkldnn_data_type_t)6, (mkldnn_data_type_t)6&gt;::pp_kernel_t::generate (this=this@entry=0x32ea900) at external/mkl_dnn/src/cpu/gemm_x8s8s32x_inner_product.cpp:62</div><div class="line">#1  0x00007fc231ee0048 in mkldnn::impl::cpu::gemm_x8s8s32x_inner_product_fwd_t&lt;(mkldnn_data_type_t)6, (mkldnn_data_type_t)6&gt;::pp_kernel_t::pp_kernel_t (this=0x32ea900, pd=0x59cd000, dst_is_acc=&lt;optimized out&gt;)</div><div class="line">    at external/mkl_dnn/src/cpu/gemm_x8s8s32x_inner_product.cpp:58</div><div class="line">#2  0x00007fc231be7613 in gemm_x8s8s32x_inner_product_fwd_t (outputs=..., inputs=..., apd=0x59cd000, this=0x395e300)</div><div class="line">    at external/mkl_dnn/src/cpu/gemm_x8s8s32x_inner_product.hpp:118</div><div class="line">#3  mkldnn::impl::cpu::gemm_x8s8s32x_inner_product_fwd_t&lt;(mkldnn_data_type_t)6, (mkldnn_data_type_t)6&gt;::pd_t::create_primitive (this=0x59cd000, primitive=0x7fc20f8b4550, inputs=0x7fc20f8b4560, outputs=&lt;optimized out&gt;)</div><div class="line">    at external/mkl_dnn/src/cpu/gemm_x8s8s32x_inner_product.hpp:44</div><div class="line">#4  0x00007fc22ee367cc in mkldnn::inner_product_forward::inner_product_forward (this=0x4f11990,</div><div class="line">    aprimitive_desc=..., src=..., weights=..., bias=..., dst=...) at external/mkl_dnn/include/mkldnn.hpp:2813</div><div class="line">#5  0x00007fc22ee390bb in tensorflow::MklIPFwdPrimitive&lt;float, Eigen::QUInt8, Eigen::QInt8, Eigen::QInt32, Eigen::QUInt8&gt;::Setup (this=this@entry=0x38df300, IPFwdDims=...) at tensorflow/core/kernels/mkl_qmatmul_op.cc:267</div><div class="line">#6  0x00007fc22ee3965b in tensorflow::MklIPFwdPrimitive&lt;float, Eigen::QUInt8, Eigen::QInt8, Eigen::QInt32, Eigen::QUInt8&gt;::MklIPFwdPrimitive (this=0x38df300, IPFwdDims=...) at tensorflow/core/kernels/mkl_qmatmul_op.cc:77</div><div class="line">#7  0x00007fc22ee3a48c in Get (do_not_cache=false, IPFwdDims=...) at tensorflow/core/kernels/mkl_qmatmul_op.cc:298</div><div class="line">#8  tensorflow::MklIPOp&lt;Eigen::ThreadPoolDevice, Eigen::QUInt8, Eigen::QInt8, Eigen::QInt32, Eigen::QUInt8, Eigen::QUInt8, true&gt;::Compute (this=0x1a69760, context=context@entry=0x7fc20f8b6730)</div><div class="line">    at tensorflow/core/kernels/mkl_qmatmul_op.cc:499</div><div class="line">#9  0x00007fc22ee40f0b in tensorflow::MklQuantizedIPOp&lt;Eigen::ThreadPoolDevice, Eigen::QInt32, Eigen::QUInt8, Eigen::QUInt8, true&gt;::Compute (this=&lt;optimized out&gt;, context=0x7fc20f8b6730)</div><div class="line">    at tensorflow/core/kernels/mkl_qmatmul_op.cc:752</div><div class="line">#10 0x00007fc229a1ca4c in tensorflow::(anonymous namespace)::ExecutorState::Process (this=&lt;optimized out&gt;,</div><div class="line">    tagged_node=..., scheduled_nsec=0) at tensorflow/core/common_runtime/executor.cc:1817</div></pre></td></tr></table></figure></p>
+<p>看到对应的tensorflow的kernel是MklIPFwdPrimitive</p>
+<h2 id="wnd数据集"><a href="#wnd数据集" class="headerlink" title="wnd数据集"></a>wnd数据集</h2><p>google搜索criteo-kaggle<br>Display Advertising Challenge<br><a href="https://blog.csdn.net/horizonheart/article/details/78891501" target="_blank" rel="external">https://blog.csdn.net/horizonheart/article/details/78891501</a><br><a href="https://www.kaggle.com/c/criteo-display-ad-challenge" target="_blank" rel="external">https://www.kaggle.com/c/criteo-display-ad-challenge</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/推荐系统/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -603,148 +750,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/搜索/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leslie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/popeve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沉思语录">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/02/08/搜索/" itemprop="url">
-                  搭建电商搜索引擎
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-08T21:51:40+08:00">
-                2019-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/08/搜索/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/08/搜索/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍做的一个电商的搜索引擎"><a href="#介绍做的一个电商的搜索引擎" class="headerlink" title="介绍做的一个电商的搜索引擎"></a>介绍做的一个电商的搜索引擎</h2><p>使用elk作为后台架构，elastic提供搜索的接口，logstash作为mysql和elastic之间数据同步的桥梁</p>
-<p>其实这个只是常用引擎的第一步，一般的搜索引擎为了提高用户的点击率，在得到所有相关的物品之后，会进一步输入到一个模型当中，包含了用户的使用行为等参数，最后根据用户可能的购买率进行排序。<br>参考wide&amp;deep模型：<a href="https://zhuanlan.zhihu.com/p/29640272">https://zhuanlan.zhihu.com/p/29640272</a></p>
-<h2 id="logstash配置"><a href="#logstash配置" class="headerlink" title="logstash配置"></a>logstash配置</h2><p>logstash的基本安装和配置可以参考logstash的文章<br>如何做数据同步参考这边文章<br><a href="https://zhuanlan.zhihu.com/p/40177683">https://zhuanlan.zhihu.com/p/40177683</a></p>
-<p>logstash 每次只同步更新一条数据的问题<br><a href="https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search">https://stackoverflow.com/questions/41418060/logstash-is-indexing-only-one-row-of-select-query-from-mysql-to-elastic-search</a></p>
-<p>配置的参数的官方文档：<br><a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html">https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html</a></p>
-<h2 id="完整的logstash的配置"><a href="#完整的logstash的配置" class="headerlink" title="完整的logstash的配置"></a>完整的logstash的配置</h2><p>初始化时候的配置,logstash-es-mysql.conf<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/08/搜索/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -789,7 +799,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-count">82</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -802,7 +812,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -844,7 +854,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
